@@ -1,0 +1,113 @@
+#screen-loading {
+  height: 100%;
+  background-image: url('../../assets/Landing_bg.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: relative;
+}
+
+#screen-loading .brand-logo {
+  position: absolute;
+  top: 36px;
+  left: 50%;
+  transform: translate(-50%);
+  width: 208px;
+  height: 20px;
+}
+
+.title-group {
+  padding-top: 25%;
+  text-align: center;
+}
+
+.title-group .title {
+  text-transform: uppercase;
+  color: white;
+  margin: 0;
+}
+
+.title-group .title.en {
+  font-size: 18px !important;
+  font-weight: normal;
+  font-family: 'Futura', Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.title-group .title.ch {
+  font-size: 34px !important;
+  line-height: 40px !important;
+  /* font-family: 'Noto Sans SC', Roboto, 'Open Sans', 'Helvetica Neue', sans-serif; */
+  font-weight: normal;
+}
+
+.subtitle {
+  font-size: 18px !important;
+  color: white;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 36px;
+  margin-top: 8px;
+}
+
+.subtitle p {
+  margin: 0;
+  z-index: 1;
+}
+
+.subtitle .bg-container {
+  background: url('../../assets/Landing_subtitle_bg.png');
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 0;
+  width: 316px;
+  height: 100%;
+}
+
+.start-btn {
+  background: transparent linear-gradient(156deg, #a36e1f 0%, #ffdfb4d4 51%, #794600 100%) 0% 0% no-repeat padding-box;
+  box-shadow: 0px 0px 2px #FFEFD976;
+  border-radius: 23px;
+  line-height: 28px;
+  padding: 2px;
+  width: 132px;
+  height: 46px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin: 16px auto;
+}
+
+.start-btn .btn-bg {
+  background: #2a1102 0% 0% no-repeat padding-box;
+  box-shadow: 0px 0px 2px #FFEFD976;
+  border-radius: 23px;
+  opacity: 0.56;
+  padding: 7px 26px;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 128px;
+  height: 32px;
+  width: 80px;
+}
+
+.start-btn p {
+  margin: 0;
+  color: white;
+  font-size: 19px;
+  font-weight: 500;
+  z-index: 1;
+}
+
+.disclaimer {
+  font-size: 9px;
+  color: white;
+  line-height: 12px;
+  width: 137px;
+  position: absolute;
+  bottom: 18px;
+  left: 8%;
+}
