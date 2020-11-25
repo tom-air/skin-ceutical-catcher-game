@@ -1,16 +1,12 @@
 #screen-selfie {                     
   color: white;
-  /* display: none; */
+  position: relative;
 }
 
 .topbar {
   width: 100%;
-  padding: 18px 0 0;
+  padding: 2.3vh 0 0;
   background: url('../../assets/Selfie_topbar.png');
-  /* height: 110px; */
-  /* flex: 1; */
-  font-size: 22px;
-  line-height: 30px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -18,52 +14,96 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  position: absolute;
-  top: 0;
   z-index: 1;
 }
 
 .topbar .brand-logo {
-  width: 170px;
-  height: 16px;
+  width: 21.2vh;
+}
+
+.topbar p {
+  font-size: 2.7vh;
+  margin: 2.7vh;
+  line-height: 2.7vh;
+}
+
+#main-canvas {
+  position: relative;
+  /* height: 100%; */
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  display: flex;
+  /* height: 131.5vw; */
+}
+
+#main-canvas canvas {
+  position: absolute;
+  width: 75%;
+  height: 75vw;
+  top: 4%;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+#main-canvas p {
+  margin: 1.9vh;
+  z-index: 22;
+  font-size: 3vh;
+}
+
+#selfie-target {
+  width: 30vh;
+  transition: 0.8s;
+  opacity: 1;
+  position: absolute;
+  top: 9vh;
+  max-width: 240px;
 }
 
 #video {
   position: absolute;
-  top: 0px;
-  width: 100%;
-  height: 100%;
+  left: 0;
+  z-index: -1;
+  width: 46.182266009vh;
 }
 
-/* .main-canvas {
-  flex: 1;
-  position: relative;
-  width: 100%;
-  height: 100%;
-} */
+#circle-frame {
+  margin-top: 7vh;
+  width: 92.5%;
+  height: 43.182vh;
+  max-width: 480px;
+  max-height: 480px;
+  border-radius: 50%;
+  z-index: 4;
+  background: url('../../assets/selfieCircle.svg') no-repeat;
+  box-shadow: 0 0 999px #ff6c14;
+  background-size: contain;
+}
 
 .lowbar {
   background: url('../../assets//Selfie_low\ bar.png');
   width: 100%;
-  /* flex: 1; */
-  padding: 38px 0;
+  padding: 4vh 0;
   display: flex;
   justify-content: center;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  position: absolute;
   bottom: 0;
   z-index: 1;
 }
 
 .lowbar #selfie-button {
-  width: 76px;
-  height: 76px;
+  width: 9.9vh;
+  height: 9.5vh;
+  background: transparent;
   border-radius: 50%;
   box-shadow: 0px 3px 14px #FFFFFF3B;
   border: none;
   position: relative;
+  filter: grayscale();
 }
 
 .lowbar #selfie-button:focus {
@@ -71,9 +111,10 @@
 }
 
 .lowbar #selfie-button img {
-  width: 118px;
-  height: 118px;
+  width: 15vh;
+  height: 15vh;
   position: absolute;
-  top: -18px;
-  left: -21px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

@@ -33,6 +33,7 @@ const LandingPage = () => {
 
   const startGame = () => {
     if (window.isCameraAccessAllowed) {
+      window.startApp = true;
       history.push('/selfie');
     } else {
       alert(
@@ -43,18 +44,20 @@ const LandingPage = () => {
 
   return (
     <section id="screen-loading">
-      <img className="brand-logo" src={BrandLogo} />
-      <div className="title-group">
-        <h3 className="title en">the antioxidant authority</h3>
-        <h3 className="title ch">修丽可抗氧魔镜</h3>
-      </div>
-      <div className="subtitle">
-        <p>收集皇牌逆龄因子 体验抗氧修护术</p>
-        <div className="bg-container"></div>
-      </div>
-      <div className="start-btn" onClick={startGame}>
-        <p>开始体验</p>
-        <div className="btn-bg"></div>
+      <div class="top-container">
+        <img className="brand-logo" src={BrandLogo} />
+        <div className="title-group">
+          <h3 className="title en">the antioxidant authority</h3>
+          <h3 className="title ch">修丽可抗氧魔镜</h3>
+        </div>
+        <div className="subtitle">
+          <p>收集皇牌逆龄因子 体验抗氧修护术</p>
+          <div className="bg-container"></div>
+        </div>
+        <div className="start-btn" onClick={startGame}>
+          <p>开始体验</p>
+          <div className="btn-bg"></div>
+        </div>
       </div>
       <div className="disclaimer">
         *“CE经典抗氧瓶”为产品眤称，

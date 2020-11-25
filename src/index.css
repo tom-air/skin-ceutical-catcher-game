@@ -19,8 +19,24 @@ html, body {
   font-weight: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: black;
 }
 
 #root {
+  position: fixed;
+  top: 0;
+  width: 100vw;
   height: 100%;
+  background: black;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+#root >section {
+  text-align: center;
+  margin: 0 auto;
+  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
+  width: 46.182266009vh;
 }
