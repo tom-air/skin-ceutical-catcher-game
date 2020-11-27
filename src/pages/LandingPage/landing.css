@@ -1,9 +1,9 @@
 #screen-loading {
-  background-image: url('../../assets/Landing_bg.png');
-  background-size: cover;
+  /* background-image: url('../../assets/Landing_bg.png'); */
+  /* background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  position: relative;
+  position: relative; */
 }
 
 #screen-loading .top-container {
@@ -106,5 +106,5 @@
   width: 17vh;
   position: absolute;
   bottom: 4%;
-  left: 8%;
+  left: 6vh;
 }

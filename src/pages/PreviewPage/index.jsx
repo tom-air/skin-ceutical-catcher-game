@@ -6,6 +6,7 @@ import ReshootButton from '../../assets/selfie_result_reshoot_btn.png';
 import CatchCTAArrow from '../../assets/selfie_result_cta_arrow.png';
 import SelfieResultCircle from '../../assets/selfie_result_circle.png';
 import Background from '../../assets/Selfie_result_bg.png';
+import SelfieResultWinkles from '../../assets/selfie_result_wrinkle.png';
 import './preview.css';
 
 const PreviewPage = () => {
@@ -14,23 +15,18 @@ const PreviewPage = () => {
   const pageRef = useRef(null)
 
   useEffect(() => {
-    if (!window.startApp) {
-      history.replace('/');
-    }
+    // if (!window.startApp) {
+    //   history.replace('/');
+    // }
 
     const root = document.getElementById('root');
     root.style.backgroundImage = `url(${Background})`;
-
+    
+    if (!window.selfieURI) {
+      window.selfieURI = 'https://www.w3schools.com/images/picture.jpg';
+    }
     console.log('(((+++', window.pageYOffset, window.selfieURI);
   }, []);
-
-  useEffect(() => {
-    if (pageRef.current && pageRef.current.offsetTop === 0) {
-      console.log('MEMEME', pageRef, window.pageYOffset, pageRef.current.offsetTop)
-      // window.scrollTo(0, 1);
-      pageRef.current.scrollTo(0, 1);
-    }
-  }, [pageRef.current])
   
   useEffect(() => {
     if (meterRef.current) {
@@ -39,14 +35,19 @@ const PreviewPage = () => {
   }, [meterRef.current]);
 
   const drawImage = () => {
-    const canvas = document.createElement('selfie-preview');
-    const selfieCanvas = document.getElementById('preview-container');
+    const canvas = document.getElementById('selfie-preview');
+    // const selfieCanvas = document.getElementById('preview-container');
     // const input = document.getElementById('video');
-    canvas.width = selfieCanvas.offsetWidth;
-    canvas.height = selfieCanvas.offsetHeight;
-    canvas.getContext('2d').drawImage(window.selfieURI, 0, 0, canvas.width, canvas.height);
+    // canvas.width = selfieCanvas.offsetWidth;
+    // canvas.height = selfieCanvas.offsetHeight;
+    canvas.getContext('2d').drawImage(window.selfieURI);
   }
 
+  const onClickReshoot = () => {
+    history.goBack();
+  }
+
+  console.log('>>>>img', window.selfieURI)
   return (
     <section id="screen-preview" ref={pageRef}>
       <div className="top-section">
@@ -58,12 +59,16 @@ const PreviewPage = () => {
       <div className="preview-container">
         <img id="result-circle" src={SelfieResultCircle} />
         <div className="container-bg"></div>
-        <canvas id="selfie-preview"></canvas>
+        <div id="selfie-filter">
+          <img id="selfie-winkles" src={SelfieResultWinkles} />
+          <img id="selfie-preview" src={window.selfieURI} />
+        </div>
       </div>
       <div className="preview-info">
         <div className="text-info">
           <p>你的抗老力:</p>
-          <h3>25%</h3>
+          <h3>25</h3>
+          <h4>%</h4>
         </div>
         <div className="meter-bar">
           <p>低</p>
@@ -76,11 +81,16 @@ const PreviewPage = () => {
         </div>
         <div className="submit-text">
           <p>立即提升抗老力</p>
+          <img id="cta-arrow" src={CatchCTAArrow} />
         </div>
       </div>
       <div className="bottom-section">
         <button id="start-game-button" onClick={() => {}}>
           <img src={CatchButton} />
+        </button>
+        <button id="reshoot-button" onClick={onClickReshoot}>
+          <img src={ReshootButton} />
+          <p>重拍</p>
         </button>
       </div>
     </section>

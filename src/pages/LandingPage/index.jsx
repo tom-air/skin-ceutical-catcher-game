@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import BrandLogo from '../../assets/Logo_white.png';
+import Background from '../../assets/Landing_bg.png';
 import './landing.css';
 
 const LandingPage = () => {
   const history = useHistory();
 
-  useEffect(() => {
+  const getCameraAccess = () => {
     const constraints = {
       audio: false,
       video: true,
@@ -20,6 +21,8 @@ const LandingPage = () => {
         .getUserMedia(constraints)
         .then(() => {
           window.isCameraAccessAllowed = true;
+          window.startApp = true;
+          history.push('/game');
         })
         .catch((error) => {
           console.log('navigator.MediaDevices.getUserMedia error: ', error.message, error.name);
@@ -29,22 +32,48 @@ const LandingPage = () => {
         'Mobile camera is not supported by browser, or there is no camera detected/connected',
       );
     }
-  }, []);
+  }
 
-  const startGame = () => {
-    if (window.isCameraAccessAllowed) {
-      window.startApp = true;
-      history.push('/selfie');
+  const getDeviceOrientationAccess = () => {
+    if (DeviceOrientationEvent.requestPermission) {
+      DeviceOrientationEvent.requestPermission()
+      .then(permissionState => {
+        if (permissionState === 'granted') {
+          console.log('granttedd')
+          window.isAccessOrientationGranted = true;
+          getCameraAccess();
+        }
+      })
+      .catch(console.error);
     } else {
       alert(
-        'Mobile camera is not supported by browser, or there is no camera detected/connected',
+        'Device is not supported for orientation, please try with mobile device',
       );
     }
   }
 
+  useEffect(() => {
+    // getCameraAccess();
+    const root = document.getElementById('root');
+    root.style.backgroundImage = `url(${Background})`;
+  }, []);
+
+  const startGame = () => {
+    getDeviceOrientationAccess()
+    // if (window.isCameraAccessAllowed) {
+    //   window.startApp = true;
+    //   history.push('/game');
+    //   // history.push('/selfie');
+    // } else {
+    //   alert(
+    //     'Mobile camera is not supported by browser, or there is no camera detected/connected',
+    //   );
+    // }
+  }
+
   return (
     <section id="screen-loading">
-      <div class="top-container">
+      <div className="top-container">
         <img className="brand-logo" src={BrandLogo} />
         <div className="title-group">
           <h3 className="title en">the antioxidant authority</h3>

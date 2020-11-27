@@ -1,9 +1,16 @@
+@keyframes moveUpDown {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+
 #screen-preview {
-  /* background-image: url('../../assets/Selfie_result_bg.png'); */
-  /* background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  position: relative;*/
   color: white;
 }
 
@@ -12,28 +19,25 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 3% 0 0;
+  padding: 2.3vh 0 0;
 }
 
 .top-section .brand-logo {
-  width: 170px;
-  height: 16px;
+  width: 21.2vh;
 }
 
 .highlight-box {
   position: relative;
   color: white;
-  font-size: 18px;
-  line-height: 24px;
-  margin-top: 2%;
+  margin-top: 2.3vh;
   width: 100%;
   text-align: center;
 }
 
 .highlight-box p {
-  margin: 1% 0;
-  font-size: 16px;
-  line-height: 21px;
+  margin: 0.3vh 0;
+  font-size: 2.5vh;
+  line-height: 3.3vh;
 }
 
 .highlight-box::before,
@@ -42,7 +46,7 @@
   position: absolute;
   left: 50%;
   transform: translate(-50%);
-  height: 2px;
+  height: 0.25vh;
   width: 90%;
   background: transparent linear-gradient(90deg, #D08A2B00 0%, #FFECD1 51%, #D08A2B00 100%) 0% 0% no-repeat padding-box;
 }
@@ -57,7 +61,6 @@
 
 .preview-container {
   width: 100%;
-  padding: 3% 0 0;
   position: relative;
   display: flex;
   justify-content: center;
@@ -75,30 +78,65 @@
 }
 
 #result-circle {
-  width: 70vw;
-  height: 70vw;
+  width: 100%;
+  margin: 3vh 3.8vh 0;
+  max-height: calc(46.182266009vh - 3.8vh - 3.8vh);
+  -webkit-animation:spin 24s linear infinite;
+  animation:spin 24s linear infinite;
 }
 
 #selfie-preview {
-  position: absolute;
-  height: 92%;
+  height: 100%;
+  object-fit: cover;
   width: 100%;
+  mix-blend-mode: multiply;
+}
+
+#selfie-winkles {
+  height: 90%;
+  object-fit: cover;
+  width: 90%;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+#selfie-filter {
+  width: calc(100% - 3.8vh - 3.8vh);
+  box-sizing: border-box;
+  border: 5.6vh solid transparent;
+  border-radius: 50%;
+  margin: 3vh 0 0;
+  position: absolute;
+  height: calc(100% - 3vh);
+  top: 0;
+  left: 50%;
+  transform: translate(-50%);
+  overflow: hidden;
 }
 
 .preview-info .text-info {
   text-shadow: 0px 0px 10px #F89029;
   text-align: center;
+  letter-spacing: 0.28px;
 }
 
 .preview-info .text-info p {
   display: inline;
-  font-size: 14px;
+  font-size: 1.8vh;
+  line-height: 2.1vh;
 }
 
 .preview-info .text-info h3 {
   display: inline;
-  font-size: 20px;
-  margin-left: 2px;
+  font-size: 3vh;
+  margin: 0 0.4vh;
+}
+
+.preview-info .text-info h4 {
+  display: inline;
+  font-size: 2.1vh;
+  line-height: 2.1vh;
 }
 
 .meter-bar {
@@ -111,27 +149,27 @@
   display: inline-block;
   padding: 0 8px;
   text-shadow: 0px 0px 10px #F89029;
-  margin: 8px 0;
+  margin: 1.2vh 0;
+  font-size: 1.8vh;
+  line-height: 2.1vh;
 }
 
 .meter-container {
-  height: 23px;
+  height: 2.08vh;
   display: inline-block;
   width: 70%;
   position: relative;
-  -moz-border-radius: 12px;
-  -webkit-border-radius: 12px;
-  border-radius: 12px;
-  padding: 3px;
+  border-radius: 1.6vh;
+  padding: 0.37vh;
   box-shadow: inset 0 -1px 1px rgba(255,255,255,0.3);
   background: transparent linear-gradient(180deg, #FFD393 0%, #A57635 55%, #C19A65 55%, #834E06 100%) 0% 0% no-repeat padding-box;
   box-shadow: 0px 0px 12px #FFFFFF5F;
 }
 
 .meter {
-  height: 22px;
+  height: 2.08vh;
   background: #2A1102 0% 0% no-repeat padding-box;
-  border-radius: 12px;
+  border-radius: 1.6vh;
 }
 
 .meter > span {
@@ -151,20 +189,30 @@
 
 .submit-text {
   text-align: center;
-  font-size: 16px;
+  font-size: 2.2vh;
+  line-height: 3.4vh;
+  margin: 1.4vh 0 0;
 }
 
 .submit-text p {
-  margin: 1%;
+  margin: 0;
+}
+
+.submit-text #cta-arrow {
+  animation: moveUpDown 1.5s ease-in-out infinite;
+  width: 4vh;
 }
 
 .bottom-section {
   position: relative;
+  margin-top: 1vh;
+  text-align: right;
+  padding-right: 2.5vh;
 }
 
 .bottom-section #start-game-button {
-  width: 70px;
-  height: 70px;
+  width: 9vh;
+  height: 9vh;
   border-radius: 50%;
   box-shadow: 0px 3px 14px #FFFFFF3B;
   border: none;
@@ -178,9 +226,18 @@
 }
 
 .bottom-section #start-game-button img {
-  width: 112px;
-  height: 112px;
+  width: 15vh;
+  height: 15vh;
   position: absolute;
-  top: -18px;
-  left: -21px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.bottom-section #reshoot-button {
+  background: transparent;
+  color: white;
+  outline: none;
+  box-shadow: none;
+  border: none;
 }
