@@ -24,12 +24,13 @@
 
 .top-section .brand-logo {
   width: 21.2vh;
+  margin-bottom: 2.3vh;
 }
 
 .highlight-box {
   position: relative;
   color: white;
-  margin-top: 2.3vh;
+  margin-bottom: 1.3vh;
   width: 100%;
   text-align: center;
 }
@@ -64,6 +65,7 @@
   position: relative;
   display: flex;
   justify-content: center;
+  z-index: 0;
 }
 
 .preview-container .container-bg {
@@ -79,7 +81,7 @@
 
 #result-circle {
   width: 100%;
-  margin: 3vh 3.8vh 0;
+  margin: 1vh 3.8vh 0;
   max-height: calc(46.182266009vh - 3.8vh - 3.8vh);
   -webkit-animation:spin 24s linear infinite;
   animation:spin 24s linear infinite;
@@ -93,11 +95,12 @@
 }
 
 #selfie-winkles {
-  height: 90%;
+  height: 70%;
   object-fit: cover;
-  width: 90%;
+  width: 70%;
   position: absolute;
   left: 50%;
+  top: 20%;
   transform: translate(-50%);
 }
 
@@ -106,13 +109,26 @@
   box-sizing: border-box;
   border: 5.6vh solid transparent;
   border-radius: 50%;
-  margin: 3vh 0 0;
+  margin: 1vh 0 0;
   position: absolute;
-  height: calc(100% - 3vh);
+  height: calc(100% - 1vh);
   top: 0;
   left: 50%;
   transform: translate(-50%);
   overflow: hidden;
+  box-shadow: 0px 0px 8px #26130060;
+  opacity: 1;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+}
+
+#selfie-filter .selfie-bg {
+  background: white;
+  width: 95%;
+  height: 95%;
+  overflow: hidden;
+  border-radius: 50%;
 }
 
 .preview-info .text-info {

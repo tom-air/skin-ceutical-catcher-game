@@ -1,13 +1,9 @@
 #screen-loading {
-  /* background-image: url('../../assets/Landing_bg.png'); */
-  /* background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  position: relative; */
+  position: relative;
 }
 
 #screen-loading .top-container {
-  padding-top: 4.5%;
+  padding-top: 4.6vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -15,11 +11,11 @@
 }
 
 #screen-loading .brand-logo {
-  width: 56%;
+  width: 25.7vh;
 }
 
 .title-group {
-  padding-top: 10%;
+  padding-top: 4.6vh
 }
 
 .title-group .title {
@@ -100,11 +96,17 @@
 }
 
 .disclaimer {
-  font-size: 1.7vh;
+  font-size: 1.2vh;
   color: white;
-  line-height: 1.8vh;
-  width: 17vh;
+  line-height: 1.5vh;
   position: absolute;
   bottom: 4%;
   left: 6vh;
+}
+
+#landing-mark {
+  width: 17vh;
+  position: absolute;
+  left: 2vh;
+  top: 55vh;
 }

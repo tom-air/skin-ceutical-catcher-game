@@ -42,6 +42,7 @@
   position: absolute;
   top: 0;
   left: 0;
+  z-index: 12;
 }
 
 #main-canvas p {
@@ -55,7 +56,7 @@
   transition: 0.8s;
   opacity: 0.1;
   position: absolute;
-  top: 9vh;
+  top: 7vh;
   max-width: 240px;
 }
 
@@ -63,13 +64,13 @@
   position: absolute;
   left: 0;
   z-index: -1;
-  width: 46.182266009vh;
-  top: 0;
+  /* width: 46.182266009vh; */
+  top: 1;
   transform: scaleX(-1);
 }
 
 #circle-frame {
-  margin-top: 7vh;
+  margin-top: 5vh;
   width: 92.5%;
   height: 43.182vh;
   max-width: 480px;
@@ -82,7 +83,7 @@
 }
 
 .lowbar {
-  background: url('../../assets//Selfie_low\ bar.png');
+  background: url('../../assets/Selfie_low\ bar.png');
   width: 100%;
   padding: 4vh 0;
   display: flex;
@@ -104,6 +105,7 @@
   position: relative;
   filter: grayscale();
   z-index: 99;
+  background-image: url('../../assets/selfieBtn.svg')
 }
 
 .lowbar #selfie-button:focus {

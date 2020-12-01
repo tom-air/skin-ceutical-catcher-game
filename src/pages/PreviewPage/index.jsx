@@ -6,6 +6,7 @@ import ReshootButton from '../../assets/selfie_result_reshoot_btn.png';
 import CatchCTAArrow from '../../assets/selfie_result_cta_arrow.png';
 import SelfieResultCircle from '../../assets/selfie_result_circle.png';
 import Background from '../../assets/Selfie_result_bg.png';
+import selfieResultGoldBg from '../../assets/selfie_result_gold_bg.png';
 import SelfieResultWinkles from '../../assets/selfie_result_wrinkle.png';
 import './preview.css';
 
@@ -13,19 +14,36 @@ const PreviewPage = () => {
   const history = useHistory();
   const meterRef = useRef(null);
   const pageRef = useRef(null)
+  let goldEleContainer;
+
+  const unmount = () => {
+    goldEleContainer.parentNode.removeChild(goldEleContainer);
+  }
 
   useEffect(() => {
     // if (!window.startApp) {
     //   history.replace('/');
+    // } else {
     // }
-
     const root = document.getElementById('root');
+    goldEleContainer = document.createElement('div');
+    goldEleContainer.style.backgroundImage = `url(${selfieResultGoldBg})`;
+    goldEleContainer.style.position = 'absolute';
+    goldEleContainer.style.top = 0;
+    goldEleContainer.style.left = 0;
+    goldEleContainer.style.bottom = 0;
+    goldEleContainer.style.right = 0;
+    goldEleContainer.style.backgroundRepeat = 'no-repeat';
+    goldEleContainer.style.backgroundSize = 'cover';
+    goldEleContainer.style.zIndex = -1;
+    root.append(goldEleContainer);
     root.style.backgroundImage = `url(${Background})`;
     
     if (!window.selfieURI) {
       window.selfieURI = 'https://www.w3schools.com/images/picture.jpg';
     }
-    console.log('(((+++', window.pageYOffset, window.selfieURI);
+
+    return unmount;
   }, []);
   
   useEffect(() => {
@@ -85,7 +103,7 @@ const PreviewPage = () => {
         </div>
       </div>
       <div className="bottom-section">
-        <button id="start-game-button" onClick={() => {}}>
+        <button id="start-game-button" onClick={() => { history.push('/game') }}>
           <img src={CatchButton} />
         </button>
         <button id="reshoot-button" onClick={onClickReshoot}>

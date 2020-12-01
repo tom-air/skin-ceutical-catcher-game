@@ -9,6 +9,7 @@ import LandingPage from './pages/LandingPage';
 import SelfiePage from './pages/SelfiePage';
 import PreviewPage from './pages/PreviewPage';
 import GamePage from './pages/GamePage';
+import SharePage from './pages/SharePage';
 
 const App = () => {
   const resize = () => {
@@ -28,6 +29,9 @@ const App = () => {
   return (
     <Router>
       <Switch>
+        <Route path="/share">
+          <SharePage />
+        </Route>
         <Route path="/game">
           <GamePage />
         </Route>
