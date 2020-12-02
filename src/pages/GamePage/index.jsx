@@ -61,7 +61,7 @@ const GamePage = () => {
   const history = useHistory();
 
   const [isGameStarted, setStartGame] = useState(false);
-  const [counter, setCounter] = useState(60);
+  const [counter, setCounter] = useState(5);
   let eleToCatchId = '';
   let eleCaught = 0;
 
@@ -69,8 +69,10 @@ const GamePage = () => {
 
   const timeUpAnimation = () => {
     window.cancelAnimationFrame(animateFrame);
-    catchBtn.removeEventListener('click', () => {})
-    
+    if (catchBtn) {
+      catchBtn.removeEventListener('click', () => {})
+    }
+    animate(true)
   }
 
   const removeEl = (id) => {
@@ -97,7 +99,7 @@ const GamePage = () => {
     }
   }
 
-  const trackCamera = () => {
+  const trackCamera = (gameEnded) => {
     const threshold = 0.2;
     const minThreshold = 0.4;
     const sceneEls = scene.children;
@@ -142,15 +144,33 @@ const GamePage = () => {
       catchCircle.style.display = 'block';
       activeCatchCircle.style.display = 'none';
     }
-    catchBtn = document.getElementById('start-game-button');
+    // catchBtn = document.getElementById('start-game-button');
     catchBtn.addEventListener('click', () => catchElement(eleToCatchId))
-    animateFrame = window.requestAnimationFrame(() => animate(eleToCatchId, eleCaught));
+    animateFrame = window.requestAnimationFrame(() => animate(gameEnded, eleToCatchId, eleCaught));
   }
 
-  const animate = (eleId, eleCatch) => {
-    controls.update();
-    trackCamera();
-    renderer.render( scene, camera );
+  const move = (mesh, speed) => {
+    const d = mesh.position.x - camera.position.x;
+    if (mesh.position.x > camera.position.x) {
+      mesh.position.x -= Math.min(speed, d);
+    }
+  }
+
+  const endAnimation = () => {
+    const sceneEls = scene.children;
+    for (let i = 0; i < sceneEls.length; i ++) {
+      const element = sceneEls[i];
+    }
+  }
+
+  const animate = (isGameEnd, eleId, eleCatch) => {
+    if (!isGameEnd) {
+      controls.update();
+      trackCamera();
+      renderer.render( scene, camera );
+    } else {
+      console.log('>>>>>endddddd>>', isGameEnd)
+    }
   }
 
   const onWindowResize = () => {
@@ -184,6 +204,7 @@ const GamePage = () => {
 
   const init3D = () => {
     video = document.getElementById('rear-video');
+    catchBtn = document.getElementById('start-game-button');
     activeCatchCircle = document.getElementById('active-catch-circle');
     catchCircle = document.getElementById('catch-circle');
     video.play();
@@ -247,18 +268,18 @@ const GamePage = () => {
 
   useEffect(() => {
     console.log('did mount')
-    if (!window.startApp) {
-      history.replace('/');
-    } else if (window.isAccessOrientationGranted) {
-      console.log('did mount 2')
-      init3D();
-      animate(eleToCatchId, eleCaught);
-    }
+    // if (!window.startApp) {
+    //   history.replace('/');
+    // } else if (window.isAccessOrientationGranted) {
+    // }
+    console.log('did mount 2')
+    init3D();
+    animate(false, eleToCatchId, eleCaught);
 
     // if (!window.selfieURI) {
     //   window.selfieURI = normalGirl;
     // }
-    // setStartGame(1);
+    setStartGame(1);
   }, [])
 
   useEffect(() => {

@@ -6,7 +6,7 @@
 .topbar {
   width: 100%;
   padding: 2.3vh 0 0;
-  background: url('../../assets/Selfie_topbar.png');
+  /* background: url('../../assets/Selfie_topbar.png'); */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -15,6 +15,15 @@
   background-repeat: no-repeat;
   background-position: center;
   z-index: 1;
+}
+
+#top-bar-bg {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  height: 13vh;
+  width: 100vw;
 }
 
 .topbar .brand-logo {
@@ -83,7 +92,7 @@
 }
 
 .lowbar {
-  background: url('../../assets/Selfie_low\ bar.png');
+  /* background: url('../../assets/Selfie_low\ bar.png'); */
   width: 100%;
   padding: 4vh 0;
   display: flex;
@@ -93,6 +102,16 @@
   background-position: center;
   bottom: 0;
   z-index: 99;
+}
+
+#low-bar-bg {
+  position: fixed;
+  z-index: -1;
+  bottom: 0;
+  height: 31.5vw;
+  /* height: 16.5vh; */
+  width: 100vw;
+  left: 0;
 }
 
 .lowbar #selfie-button {

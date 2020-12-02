@@ -61,8 +61,8 @@ const LandingPage = () => {
   }, []);
 
   const startGame = () => {
-    getCameraAccess();
-    // getDeviceOrientationAccess()
+    // getCameraAccess();
+    getDeviceOrientationAccess()
     // if (window.isCameraAccessAllowed) {
     //   window.startApp = true;
     //   history.push('/game');

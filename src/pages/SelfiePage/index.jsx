@@ -5,6 +5,8 @@ import { useHistory } from 'react-router-dom';
 import BrandLogo from '../../assets/Logo_white.png';
 import SelfieButton from '../../assets/selfieBtn.svg';
 import SelfieTarget from '../../assets/selfieTarget.svg';
+import TopBarBg from '../../assets/Selfie_topbar.png';
+import LowBarBg from '../../assets/Selfie_low\ bar.png';
 import './selfie.css';
 
 const SelfiePage = () => {
@@ -36,9 +38,9 @@ const SelfiePage = () => {
       const root = document.getElementById('root');
       root.style.backgroundImage = 'none';
       root.style.background = '#220B02';
+      // setUpFaceApi();
+      return unmountComponent;
     }
-    // setUpFaceApi();
-    return unmountComponent;
   }, []);
 
   const unmountComponent = () => {
@@ -62,8 +64,9 @@ const SelfiePage = () => {
     const constraints = {
       audio: false,
       video: {
-        height: { exact: screen.clientWidth },
-        // height: { min: 568, ideal: window.screen.height },
+        // height: { exact: screen.clientWidth },
+        height: { exact: screen.clientHeight },
+        height: { exact: window.screen.width },
         // aspectRatio: 752/375,
         facingMode: currentFacingMode,
       }
@@ -115,9 +118,9 @@ const SelfiePage = () => {
       const input = document.getElementById('video');
       const canvas = document.createElement('canvas');
       const selfieCanvas = document.getElementById('circle-frame');
-      const { width, height } = selfieCanvas.getBoundingClientRect();
-      const x = selfieCanvas.offsetLeft;
-      const y = selfieCanvas.offsetTop;
+      const { x, y, width, height } = selfieCanvas.getBoundingClientRect();
+      // const x = selfieCanvas.offsetLeft;
+      // const y = selfieCanvas.offsetTop;
       canvas.width = width;
       canvas.height = height;
       const ctx = canvas.getContext('2d');
@@ -134,12 +137,14 @@ const SelfiePage = () => {
   
   return (
     <>
+      <video playsInline autoPlay id="video"></video>
       <section id="screen-selfie">
         <div className="topbar">
           <img className="brand-logo" src={BrandLogo} />
           <p>抗老力测测看</p>
+          <img id="top-bar-bg" src={TopBarBg} />
         </div>
-        <video playsInline autoPlay id="video"></video>
+        {/* <video playsInline autoPlay id="video"></video> */}
         <div id="main-canvas">
           <div id="circle-frame"></div>
           <img id="selfie-target" src={SelfieTarget} />
@@ -149,6 +154,7 @@ const SelfiePage = () => {
           <button id="selfie-button" style={submitBtnStyle} onClick={onCapture}>
             <img src={SelfieButton} />
           </button>
+          <img id="low-bar-bg" src={LowBarBg} />
         </div>
       </section>
     </>
