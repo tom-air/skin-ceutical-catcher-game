@@ -23,15 +23,14 @@ const SharePage = () => {
   }
 
   useEffect(() => {
-    // if (!window.startApp) {
-    //   history.replace('/');
-    // } else {
-    // }
-    root = document.getElementById('root');
-    root.style.backgroundImage = `url(${Background})`;
-    root.style.overflowY = 'scroll';
-
-    return unmount;
+    if (!window.startApp) {
+      history.replace('/');
+    } else {
+      root = document.getElementById('root');
+      root.style.backgroundImage = `url(${Background})`;
+      root.style.overflowY = 'scroll';
+      return unmount;
+    }
   }, [])
 
   // window.selfieURI = normalGirl;

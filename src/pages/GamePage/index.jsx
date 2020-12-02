@@ -14,7 +14,7 @@ import normalGirl from '../../assets/girl_normal.png';
 import ArBenifitArrow from '../../assets/ar_benifit.png';
 import PlayInfoArea from '../../assets/player_info_area.png';
 import ArMeasureElement from '../../assets/ar_measure_element.png';
-import { createGoldElements } from './loaderUtils';
+import { createGlbElement } from './loaderUtils';
 import './game.css';
 
 const ele1 = new THREE.TextureLoader().load('/fluid/1.png');
@@ -62,7 +62,7 @@ const GamePage = () => {
   const history = useHistory();
 
   const [isGameStarted, setStartGame] = useState(false);
-  const [counter, setCounter] = useState(5);
+  const [counter, setCounter] = useState(60);
   let eleToCatchId = '';
   let eleCaught = 0;
 
@@ -100,6 +100,20 @@ const GamePage = () => {
     }
   }
 
+  const elementAnimation = (ele, i) => {
+    const timer = 0.0001 * Date.now();
+
+    if (ele.morphTargetInfluences && ele.morphTargetInfluences.length) {
+      for (let i = 0; i < 4; i += 1) {
+        const newMorph = Math.sin(timer + (i + 1) * 800000);
+        ele.morphTargetInfluences[i] = newMorph;
+      }
+    }
+
+    // ele.position.x = 10 * Math.cos(timer + i * 3);
+    // ele.position.y = 10 * Math.sin(timer + i * 2.1);
+  }
+
   const trackCamera = (gameEnded) => {
     const threshold = 0.2;
     const minThreshold = 0.4;
@@ -109,22 +123,22 @@ const GamePage = () => {
     let eleId = '';
     for (let i = 0; i < sceneEls.length; i ++) {
       const element = sceneEls[i];
-      // console.log('MEMEMEMEME', element.uuid)
-      element.lookAt(camera.position);
-      element.quaternion.copy(camera.quaternion);
-      const positionScreenSpace = element.position.clone().project(camera);
-      positionScreenSpace.setZ(0);
-      const positionLenToCenter = positionScreenSpace.length();
-      if (positionLenToCenter < threshold) {
-        isCloseToCenter = true;
-        eleId = element.name;
-        // eleId = element.uuid;
-      } else if (positionLenToCenter < minThreshold) {
-        isNearToTarget = true;
-        eleId = element.name;
-        // eleId = element.uuid;
+      if (element) {
+        elementAnimation(element, i);
+        const positionScreenSpace = element.position.clone().project(camera);
+        positionScreenSpace.setZ(0);
+        const positionLenToCenter = positionScreenSpace.length();
+        if (positionLenToCenter < threshold) {
+          isCloseToCenter = true;
+          eleId = element.name;
+          // eleId = element.uuid;
+        } else if (positionLenToCenter < minThreshold) {
+          isNearToTarget = true;
+          eleId = element.name;
+          // eleId = element.uuid;
+        }
+        
       }
-      
       // scene.children[i].quaternion.copy(camera.quaternion);
     }
     
@@ -170,7 +184,8 @@ const GamePage = () => {
       trackCamera();
       renderer.render( scene, camera );
     } else {
-      console.log('>>>>>endddddd>>', isGameEnd)
+      history.push('./share');
+      // console.log('>>>>>endddddd>>', isGameEnd)
     }
   }
 
@@ -180,43 +195,35 @@ const GamePage = () => {
     renderer.setSize( window.innerWidth, window.innerHeight )
   }
 
-  const loadCubeTexture = async () => {
-    return new Promise((resolve) => {
-      new THREE.CubeTextureLoader().load( urls, function ( cubeTexture ) {
-        resolve( cubeTexture );
-      } );
-    } );
-  }
+  // const loadCubeTexture = async () => {
+  //   return new Promise((resolve) => {
+  //     new THREE.CubeTextureLoader().load( urls, function ( cubeTexture ) {
+  //       resolve( cubeTexture );
+  //     } );
+  //   } );
+  // }
 
-  const loadCubeTextureWithMipmaps = async () => {
-    const pendings = [];
-  }
+  // const loadCubeTextureWithMipmaps = async () => {
+  //   const pendings = [];
+  // }
 
   const createGoldElements = async () => {
     const elementsPromise = []
     for (let i = 0; i < 7; i += 1) {
-      // const randX = Math.random() * 20 - 10;
-      // const randY = Math.random() * 10 - 5;
-      // const randZ = Math.random() * -5 - 2;
-
-      // const { element, id } = eleTexture[i];
-      // const imgWidth = 83 / 100;
-      // const imgHeight = 105 / 100;
-      
-      // const geometry = new THREE.PlaneGeometry( imgWidth, imgHeight );
-      // const material = new THREE.MeshStandardMaterial({ side: THREE.DoubleSide, map: element, alphaTest: 0.5 });
-      // material.magFilter = THREE.NearestFilter;
-      // material.minFilter = THREE.NearestFilter;
-      
-      // const goldEl = new THREE.Mesh( geometry, material );
-      // goldEl.position.set(randX, randY, randZ)
-      // goldEl.name = id;
-      const goldEl = await createGoldElements(id);
-      elementsPromise.push(goldEl);
+      const { element, id } = eleTexture[i];
+      try {
+        const goldEl = await createGlbElement(id);
+        elementsPromise.push(goldEl);
+      } catch (err) {
+        console.log('page error>', err)
+      }
       // goldEl.name = goldEl.uuid;
     }
     Promise.all(elementsPromise).then((goldEl) => {
-      scene.add(goldEl);
+      // console.log('>>>>> promise array>>', goldEl)
+      goldEl.forEach((el) => {
+        scene.add(el);
+      })
     })
   }
 
@@ -285,19 +292,15 @@ const GamePage = () => {
   }
 
   useEffect(() => {
-    console.log('did mount')
-    // if (!window.startApp) {
-    //   history.replace('/');
-    // } else if (window.isAccessOrientationGranted) {
-    // }
-    console.log('did mount 2')
-    init3D();
-    animate(false, eleToCatchId, eleCaught);
-
-    // if (!window.selfieURI) {
-    //   window.selfieURI = normalGirl;
-    // }
-    setStartGame(1);
+    // console.log('did mount')
+    if (!window.startApp) {
+      history.replace('/');
+    } else if (window.isAccessOrientationGranted) {
+      // console.log('did mount 2')
+      init3D();
+      animate(false, eleToCatchId, eleCaught);
+    }
+    // setStartGame(1);
   }, [])
 
   useEffect(() => {
@@ -305,7 +308,7 @@ const GamePage = () => {
     // if (counter > 0) {
       setTimeout(() => setCounter(counter - 1), 1000);
     } else if (counter <= 0) {
-      console.log(">>>>> display wipe up animation")
+      // console.log(">>>>> display wipe up animation")
       timeUpAnimation();
     }
   }, [counter, isGameStarted]);
@@ -348,7 +351,7 @@ const GamePage = () => {
   }
 
   return (
-    <div id="screen-game" ref={screenRef}>
+    <section id="screen-game" ref={screenRef}>
       <div className="top-section">
         <img className="brand-logo" src={BrandLogo} />
         <div className="highlight-box">
@@ -423,7 +426,7 @@ const GamePage = () => {
       </div>
       <video id="rear-video" autoPlay playsInline></video>
       <div id="overlay"></div>
-    </div>
+    </section>
   );
 }
 
