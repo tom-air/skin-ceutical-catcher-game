@@ -26,40 +26,21 @@ const PrizeCardCom = forwardRef((props, ref) => {
   const drawImage = (isMounted) => {
     const prizeCard = cardRef.current;
 
-    const rootElement = document.getElementById("screen-share")
-    const viewPortH = rootElement.getBoundingClientRect().height;
-    const viewPortW = rootElement.getBoundingClientRect().width;
-
     const element = document.getElementById("mock")
     const eleViewPortH = element.getBoundingClientRect().height;
     const eleViewPortW = element.getBoundingClientRect().width;
-    const windowH = window.innerHeight;
-    const browserUiBarsH = viewPortH - windowH;
-    console.log('>>>>>>>>>>>', window.screen.height - window.screen.height *  486/752)
     if (prizeCard) {
       html2canvas(prizeCard, {
-        // logging: true,
-        // letterRendering: 1,
         allowTaint: false,
         useCORS: true,
         width: eleViewPortW,
         height: eleViewPortH,
-        // width: prizeCard.clientWidth,
-        // height: prizeCard.clientHeight,
-        // windowWidth: 0.36 * window.screen.height || prizeCard.scrollWidth,
-        // windowHeight:  window.screen.height || prizeCard.scrollHeight,
-        // windowHeight: window.screen.availHeight * 0.93 || prizeCard.scrollHeight,
-        // x: 0.12 * document.body.clientHeight,
-        // y: 0,
-        // windowWidth: viewPortW,
         windowHeight: eleViewPortH *  752 / 466 ,
-        // windowWidth: viewPortW,
-        // windowHeight: viewPortH,
       }).then(canvas => {
         if (isMounted) {
           const container = document.getElementById('prize-card')
           canvas.toBlob(function(blob) {
-            var newImg = document.createElement('img'),
+            const newImg = document.createElement('img'),
                 url = URL.createObjectURL(blob);
           
             newImg.onload = function() {
@@ -68,6 +49,7 @@ const PrizeCardCom = forwardRef((props, ref) => {
           
             newImg.src = url;
             newImg.id = 'mockImg';
+            element.style.opacity = 0;
             container.appendChild(newImg);
             prizeCard.style.opacity = 0;
           });

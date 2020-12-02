@@ -195,18 +195,6 @@ const GamePage = () => {
     renderer.setSize( window.innerWidth, window.innerHeight )
   }
 
-  // const loadCubeTexture = async () => {
-  //   return new Promise((resolve) => {
-  //     new THREE.CubeTextureLoader().load( urls, function ( cubeTexture ) {
-  //       resolve( cubeTexture );
-  //     } );
-  //   } );
-  // }
-
-  // const loadCubeTextureWithMipmaps = async () => {
-  //   const pendings = [];
-  // }
-
   const createGoldElements = async () => {
     const elementsPromise = []
     for (let i = 0; i < 7; i += 1) {
@@ -330,7 +318,7 @@ const GamePage = () => {
       arBenifitArrow.style.opacity = 0;
       arBenifitArrow.style.top = '26vh';
       arBenifitArrow.style.animation = 'none';
-    }, 1000);
+    }, 1500);
   }
 
   const updateProgess = (updatedProgess) => {

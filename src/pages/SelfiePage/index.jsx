@@ -3,7 +3,7 @@ import { useAlert } from 'react-alert'
 import * as faceapi from 'face-api.js';
 import { useHistory } from 'react-router-dom';
 import BrandLogo from '../../assets/Logo_white.png';
-import SelfieButton from '../../assets/selfieBtn.svg';
+// import SelfieButton from '../../assets/selfieBtn.svg';
 import SelfieTarget from '../../assets/selfieTarget.svg';
 import TopBarBg from '../../assets/Selfie_topbar.png';
 import LowBarBg from '../../assets/Selfie_low\ bar.png';
@@ -152,7 +152,7 @@ const SelfiePage = () => {
         </div>
         <div className="lowbar">
           <button id="selfie-button" style={submitBtnStyle} onClick={onCapture}>
-            <img src={SelfieButton} />
+            {/* <img src={SelfieButton} /> */}
           </button>
           <img id="low-bar-bg" src={LowBarBg} />
         </div>

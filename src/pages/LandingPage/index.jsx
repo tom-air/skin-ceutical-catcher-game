@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import BrandLogo from '../../assets/Logo_white.png';
-// import Background from '../../assets/Landing_bg.png';
 import Background from '../../assets/landing_bg_mb.png';
 import Landmark from '../../assets/landing_mark.png';
 import './landing.css';
@@ -41,7 +40,6 @@ const LandingPage = () => {
       DeviceOrientationEvent.requestPermission()
       .then(permissionState => {
         if (permissionState === 'granted') {
-          console.log('granttedd')
           window.isAccessOrientationGranted = true;
           getCameraAccess();
         }
@@ -55,23 +53,15 @@ const LandingPage = () => {
   }
 
   useEffect(() => {
-    // getCameraAccess();
     const root = document.getElementById('root');
     root.style.backgroundImage = `url(${Background})`;
+    root.style.backgroundSize = 'cover';
+    root.style.backgroundRepeat = 'no-repeat';
+    root.style.backgroundPosition = 'center';
   }, []);
 
   const startGame = () => {
-    // getCameraAccess();
     getDeviceOrientationAccess()
-    // if (window.isCameraAccessAllowed) {
-    //   window.startApp = true;
-    //   history.push('/game');
-    //   // history.push('/selfie');
-    // } else {
-    //   alert(
-    //     'Mobile camera is not supported by browser, or there is no camera detected/connected',
-    //   );
-    // }
   }
 
   return (
