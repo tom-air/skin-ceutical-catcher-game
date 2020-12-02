@@ -14,6 +14,7 @@ import normalGirl from '../../assets/girl_normal.png';
 import ArBenifitArrow from '../../assets/ar_benifit.png';
 import PlayInfoArea from '../../assets/player_info_area.png';
 import ArMeasureElement from '../../assets/ar_measure_element.png';
+import { createGoldElements } from './loaderUtils';
 import './game.css';
 
 const ele1 = new THREE.TextureLoader().load('/fluid/1.png');
@@ -179,27 +180,44 @@ const GamePage = () => {
     renderer.setSize( window.innerWidth, window.innerHeight )
   }
 
-  const createGoldElements = () => {
-    for (let i = 0; i < 7; i += 1) {
-      const randX = Math.random() * 20 - 10;
-      const randY = Math.random() * 10 - 5;
-      const randZ = Math.random() * -5 - 2;
+  const loadCubeTexture = async () => {
+    return new Promise((resolve) => {
+      new THREE.CubeTextureLoader().load( urls, function ( cubeTexture ) {
+        resolve( cubeTexture );
+      } );
+    } );
+  }
 
-      const { element, id } = eleTexture[i];
-      const imgWidth = 83 / 100;
-      const imgHeight = 105 / 100;
+  const loadCubeTextureWithMipmaps = async () => {
+    const pendings = [];
+  }
+
+  const createGoldElements = async () => {
+    const elementsPromise = []
+    for (let i = 0; i < 7; i += 1) {
+      // const randX = Math.random() * 20 - 10;
+      // const randY = Math.random() * 10 - 5;
+      // const randZ = Math.random() * -5 - 2;
+
+      // const { element, id } = eleTexture[i];
+      // const imgWidth = 83 / 100;
+      // const imgHeight = 105 / 100;
       
-      const geometry = new THREE.PlaneGeometry( imgWidth, imgHeight );
-      const material = new THREE.MeshStandardMaterial({ side: THREE.DoubleSide, map: element, alphaTest: 0.5 });
-      material.magFilter = THREE.NearestFilter;
-      material.minFilter = THREE.NearestFilter;
+      // const geometry = new THREE.PlaneGeometry( imgWidth, imgHeight );
+      // const material = new THREE.MeshStandardMaterial({ side: THREE.DoubleSide, map: element, alphaTest: 0.5 });
+      // material.magFilter = THREE.NearestFilter;
+      // material.minFilter = THREE.NearestFilter;
       
-      const goldEl = new THREE.Mesh( geometry, material );
-      goldEl.position.set(randX, randY, randZ)
-      goldEl.name = id;
+      // const goldEl = new THREE.Mesh( geometry, material );
+      // goldEl.position.set(randX, randY, randZ)
+      // goldEl.name = id;
+      const goldEl = await createGoldElements(id);
+      elementsPromise.push(goldEl);
       // goldEl.name = goldEl.uuid;
-      scene.add( goldEl );
     }
+    Promise.all(elementsPromise).then((goldEl) => {
+      scene.add(goldEl);
+    })
   }
 
   const init3D = () => {
