@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import BrandLogo from '../../assets/Logo_white.png';
 import Background from '../../assets/landing_bg_mb.png';
+import BtnFilter from '../../assets/button_filter.png';
 import Landmark from '../../assets/landing_mark.png';
 import './landing.css';
 
@@ -71,24 +72,23 @@ const LandingPage = () => {
           <img className="brand-logo" src={BrandLogo} />
           <div className="title-group">
             <h3 className="title en">the antioxidant authority</h3>
-            <h3 className="title ch">修丽可抗氧魔镜</h3>
+            <h3 className="title ch">修丽可抗氧焕颜之旅</h3>
           </div>
           <div className="subtitle">
-            <p>收集皇牌逆龄因子 体验抗氧修护术</p>
+            <p>收集抗氧权威精华 体验肌肤逆龄焕颜</p>
             <div className="bg-container"></div>
           </div>
           <div className="start-btn" onClick={startGame}>
             <p>开始体验</p>
-            <div className="btn-bg"></div>
           </div>
         </div>
         <img id="landing-mark" src={Landmark} />
       </section>
       <div className="disclaimer">
-        *“CE经典抗氧瓶”为产品眤称，<br/>
-        产品全称为维生素CE复合精华液，<br/>
-        国妆特进药字J20090391，<br/>
-        专利号US,7179841。
+        “CE经典抗氧瓶”为产品呢称，<br/>
+        产品全称为修丽可维生素CE复合修护精华液；<br/>
+        国妆特进字J20090391，<br/>
+        专利号US,7179841
       </div>
     </>
   );

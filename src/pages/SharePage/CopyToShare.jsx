@@ -1,9 +1,20 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { useAlert } from 'react-alert'
 
 const CopyToShare = (props) => {
   const { msgToCopy, children } = props;
   const alert = useAlert();
+  const [showAlert, setAlert] = useState('');
+
+  useEffect(() => {
+    if (showAlert) {
+      alert.success(showAlert, {
+        onClose: () => {
+          setAlert('')
+        }
+      })
+    }
+  }, [showAlert])
 
   const isIOS = useCallback(() => {
     if (typeof navigator !== 'undefined' && !!navigator.userAgent) {
@@ -52,7 +63,7 @@ const CopyToShare = (props) => {
         // Copy text
         document.execCommand('copy');
         document.body.removeChild(textArea);
-        alert.success('複製成功')
+        setAlert('複製成功')
       } catch (err) {
         alert.error('未能複製，請稍候再嘗試。')
       }

@@ -21,29 +21,26 @@ const PreviewPage = () => {
   }
 
   useEffect(() => {
-    // if (!window.startApp) {
-    //   history.replace('/');
-    // } else {
-    // }
-    const root = document.getElementById('root');
-    goldEleContainer = document.createElement('div');
-    goldEleContainer.style.backgroundImage = `url(${selfieResultGoldBg})`;
-    goldEleContainer.style.position = 'absolute';
-    goldEleContainer.style.top = 0;
-    goldEleContainer.style.left = 0;
-    goldEleContainer.style.bottom = 0;
-    goldEleContainer.style.right = 0;
-    goldEleContainer.style.backgroundRepeat = 'no-repeat';
-    goldEleContainer.style.backgroundSize = 'cover';
-    goldEleContainer.style.zIndex = -1;
-    root.append(goldEleContainer);
-    root.style.backgroundImage = `url(${Background})`;
-    
-    if (!window.selfieURI) {
-      window.selfieURI = 'https://www.w3schools.com/images/picture.jpg';
+    if (!window.startApp) {
+      history.replace('/');
+    } else {
+      const root = document.getElementById('root');
+      goldEleContainer = document.createElement('div');
+      goldEleContainer.style.backgroundImage = `url(${selfieResultGoldBg})`;
+      goldEleContainer.style.position = 'absolute';
+      goldEleContainer.style.top = 0;
+      goldEleContainer.style.left = 0;
+      goldEleContainer.style.bottom = 0;
+      goldEleContainer.style.right = 0;
+      goldEleContainer.style.backgroundRepeat = 'no-repeat';
+      goldEleContainer.style.backgroundSize = 'cover';
+      goldEleContainer.style.zIndex = -1;
+      root.append(goldEleContainer);
+      root.style.backgroundImage = 'none';
+      root.style.backgroundImage = `url(${Background})`;
+  
+      return unmount;
     }
-
-    return unmount;
   }, []);
   
   useEffect(() => {
@@ -52,26 +49,16 @@ const PreviewPage = () => {
     }
   }, [meterRef.current]);
 
-  const drawImage = () => {
-    const canvas = document.getElementById('selfie-preview');
-    // const selfieCanvas = document.getElementById('preview-container');
-    // const input = document.getElementById('video');
-    // canvas.width = selfieCanvas.offsetWidth;
-    // canvas.height = selfieCanvas.offsetHeight;
-    canvas.getContext('2d').drawImage(window.selfieURI);
-  }
-
   const onClickReshoot = () => {
     history.goBack();
   }
 
-  console.log('>>>>img', window.selfieURI)
   return (
     <section id="screen-preview" ref={pageRef}>
       <div className="top-section">
         <img className="brand-logo" src={BrandLogo} />
         <div className="highlight-box">
-          <p>没有使用抗氧化产品的<br />你皮肤老，皱纹加深..</p>
+          <p>没有使用抗氧化产品的你<br />皮肤氧化，皱纹加深</p>
         </div>
       </div>
       <div className="preview-container">
@@ -98,7 +85,7 @@ const PreviewPage = () => {
           <p>高</p>
         </div>
         <div className="submit-text">
-          <p>立即提升抗老力</p>
+          <p>立即开始提升抗氧力</p>
           <img id="cta-arrow" src={CatchCTAArrow} />
         </div>
       </div>

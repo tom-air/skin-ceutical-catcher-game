@@ -10,53 +10,17 @@ import CatchButton from '../../assets/selfie_result_catch_btn.png';
 import ActiveCatchCircle from '../../assets/ar_active_catch_circle.png';
 import CatchCircleBg from '../../assets/ar_catch_circle_bg.png';
 import SelfieResultWinkles from '../../assets/selfie_result_wrinkle.png';
-import normalGirl from '../../assets/girl_normal.png';
 import ArBenifitArrow from '../../assets/ar_benifit.png';
 import PlayInfoArea from '../../assets/player_info_area.png';
 import ArMeasureElement from '../../assets/ar_measure_element.png';
-import { createGlbElement } from './loaderUtils';
+import { createGlbElement, createGoldPicElements } from './loaderUtils';
 import './game.css';
 
-const ele1 = new THREE.TextureLoader().load('/fluid/1.png');
-const ele2 = new THREE.TextureLoader().load('/fluid/2.png');
-const ele3 = new THREE.TextureLoader().load('/fluid/3.png');
-const ele4 = new THREE.TextureLoader().load('/fluid/4.png');
-const ele5 = new THREE.TextureLoader().load('/fluid/5.png');
-const ele6 = new THREE.TextureLoader().load('/fluid/6.png');
-const ele7 = new THREE.TextureLoader().load('/fluid/7.png');
-const eleTexture = [{
-  element: ele1,
-  title: '中和自由基',
-  id: 'gold-element-1',
- }, {
-  element: ele2,
-  title: '淡斑',
-  id: 'gold-element-2',
- }, {
-  element: ele3,
-  title: '緊緻',
-  id: 'gold-element-3',
- }, {
-  element: ele4,
-  title: '撫紋',
-  id: 'gold-element-4',
- }, {
-  element: ele5,
-  title: '中和自由基',
-  id: 'gold-element-5',
- }, {
-  element: ele6,
-  title: '淡斑',
-  id: 'gold-element-6',
- }, {
-  element: ele7,
-  title: '撫紋',
-  id: 'gold-element-7',
- }];
+ const elementBenefits = ['中和\n自由基', '減退\n細紋', '預防\n光老化', '抗氧\n保護']
 
 const GamePage = () => {
-  let camera, scene, renderer, controls, videoTexture, video, time, clmesh;
-  let activeCatchCircle, catchCircle, catchBtn;
+  let camera, scene, renderer, controls, video;
+  let activeCatchCircle, catchCircle, catchBtn, progresIndicator;
   let animateFrame;
 
   const history = useHistory();
@@ -69,10 +33,10 @@ const GamePage = () => {
   const screenRef = useRef(null);
 
   const timeUpAnimation = () => {
-    window.cancelAnimationFrame(animateFrame);
-    if (catchBtn) {
-      catchBtn.removeEventListener('click', () => {})
-    }
+    // window.cancelAnimationFrame(animateFrame);
+    // if (catchBtn) {
+    //   catchBtn.removeEventListener('click', () => {})
+    // }
     animate(true)
   }
 
@@ -87,7 +51,7 @@ const GamePage = () => {
       eleCaught = eleCaught + 1;
       removeEl(eleId);
       updateProgess(eleCaught);
-      renderBenefitArrow(eleId);
+      renderBenefitArrow(eleCaught);
       setStartGame(1);
       if (eleCaught >= 7) {
         setTimeout(() => {
@@ -110,8 +74,11 @@ const GamePage = () => {
       }
     }
 
-    // ele.position.x = 10 * Math.cos(timer + i * 3);
-    // ele.position.y = 10 * Math.sin(timer + i * 2.1);
+    if (eleCaught >= 1) {
+      // ele.position.x = 10 * Math.cos(timer + i * 3);
+      const vector = 5;
+      ele.position.y = vector * Math.sin(timer + 90);
+    }
   }
 
   const trackCamera = (gameEnded) => {
@@ -123,8 +90,10 @@ const GamePage = () => {
     let eleId = '';
     for (let i = 0; i < sceneEls.length; i ++) {
       const element = sceneEls[i];
+      element.lookAt(camera.position);
+      // element.quaternion.copy(camera.quaternion);
       if (element) {
-        elementAnimation(element, i);
+        // elementAnimation(element, i);
         const positionScreenSpace = element.position.clone().project(camera);
         positionScreenSpace.setZ(0);
         const positionLenToCenter = positionScreenSpace.length();
@@ -143,17 +112,12 @@ const GamePage = () => {
     }
     
     eleToCatchId = eleId;
-    if (isNearToTarget) {
+    if (isCloseToCenter) {
       catchCircle.style.display = 'none';
       activeCatchCircle.style.display = 'block';
       activeCatchCircle.style.animationDuration = '24s';
       activeCatchCircle.style["-webkit-animation-duration"] = '24s';
       // console.log('MEMEME111>>>', isNearToTarget , positionLenToCenter)
-    } else if (isCloseToCenter) {
-      activeCatchCircle.style.animationDuration = '12s';
-      activeCatchCircle.style["-webkit-animation-duration"] = '12s';
-      // console.log('MEMEME>>>', isCloseToCenter, positionLenToCenter)
-      // removeEl(element.uuid);
     } else {
       // console.log('nonon', positionLenToCenter)
       catchCircle.style.display = 'block';
@@ -172,19 +136,29 @@ const GamePage = () => {
   }
 
   const endAnimation = () => {
-    const sceneEls = scene.children;
-    for (let i = 0; i < sceneEls.length; i ++) {
-      const element = sceneEls[i];
-    }
+    // const sceneEls = scene.children;
+    // console.log('>>>1111', sceneEls)
+    // if (sceneEls && sceneEls.length) {
+    //   for (let i = 0; i < sceneEls.length; i ++) {
+    //     const element = sceneEls[i];
+    //     move(element, 10)
+    //   }
+    // }
+    // progresIndicator = document.getElementById('progress-indicator');
+    // progresIndicator.style.width = '100%';
+    setTimeout(() => {
+      history.push('/share');
+    }, 2000);
+    // animateFrame = window.requestAnimationFrame(() => animate(true));
   }
 
   const animate = (isGameEnd, eleId, eleCatch) => {
     if (!isGameEnd) {
-      controls.update();
       trackCamera();
-      renderer.render( scene, camera );
+      controls.update();
+      renderer.render(scene, camera);
     } else {
-      history.push('./share');
+      endAnimation()
       // console.log('>>>>>endddddd>>', isGameEnd)
     }
   }
@@ -197,22 +171,24 @@ const GamePage = () => {
 
   const createGoldElements = async () => {
     const elementsPromise = []
-    for (let i = 0; i < 7; i += 1) {
-      const { element, id } = eleTexture[i];
+    for (let i = 0; i < 20; i += 1) {
+      // const { element, id } = eleTexture[i];
+      const id = `gold-element-${i}`;
       try {
-        const goldEl = await createGlbElement(id);
-        elementsPromise.push(goldEl);
+        // const goldEl = await createGlbElement(id);
+        // elementsPromise.push(goldEl);
+        const goldEl = createGoldPicElements(id);
+        scene.add(goldEl);
       } catch (err) {
         console.log('page error>', err)
       }
       // goldEl.name = goldEl.uuid;
     }
-    Promise.all(elementsPromise).then((goldEl) => {
-      // console.log('>>>>> promise array>>', goldEl)
-      goldEl.forEach((el) => {
-        scene.add(el);
-      })
-    })
+    // Promise.all(elementsPromise).then((goldEl) => {
+    //   goldEl.forEach((el) => {
+    //     scene.add(el);
+    //   })
+    // })
   }
 
   const init3D = () => {
@@ -289,6 +265,8 @@ const GamePage = () => {
       animate(false, eleToCatchId, eleCaught);
     }
     // setStartGame(1);
+    // const arBenefitLetter = document.getElementById('ar-benefit-letter');
+    // arBenefitLetter.textContent = eleTexture[0].title;
   }, [])
 
   useEffect(() => {
@@ -307,13 +285,13 @@ const GamePage = () => {
     }
   }, [isGameStarted]);
 
-  const renderBenefitArrow = (caughtId) => {
+  const renderBenefitArrow = (catchNum) => {
     const arBenefitLetter = document.getElementById('ar-benefit-letter');
     const arBenifitArrow = document.getElementById('ar-benifit-container');
-    const selectedEle = eleTexture.find((ele) => ele.id === caughtId);
+    const benefitLabel = elementBenefits[catchNum % 4];
 
     arBenifitArrow.style.animation = 'arrow-animation 1.5s linear';
-    arBenefitLetter.textContent = selectedEle.title;
+    arBenefitLetter.textContent = benefitLabel;
     setTimeout(() => {
       arBenifitArrow.style.opacity = 0;
       arBenifitArrow.style.top = '26vh';
@@ -322,7 +300,7 @@ const GamePage = () => {
   }
 
   const updateProgess = (updatedProgess) => {
-    const progresIndicator = document.getElementById('progress-indicator');
+    progresIndicator = document.getElementById('progress-indicator');
     const progressNumber = document.getElementById('progress-indicator-number');
     const selfieWinkles = document.getElementById('selfie-winkles');
     
@@ -343,7 +321,7 @@ const GamePage = () => {
       <div className="top-section">
         <img className="brand-logo" src={BrandLogo} />
         <div className="highlight-box">
-          <p>抗老逆龄教学</p>
+          <p>逆龄焕颜教学</p>
         </div>
         <div className="counter">
           <CountdownCircleTimer
@@ -397,7 +375,7 @@ const GamePage = () => {
         <img id="catch-circle-bg" src={CatchCircleBg} />
         <div className="bottom-part">
           <div className="submit-text">
-            <p>搜寻逆龄因子并按键捕捉</p>
+            <p>左右移动捕捉抗氧精华</p>
             <img id="cta-arrow" src={CatchCTAArrow} />
           </div>
           <button id="start-game-button">

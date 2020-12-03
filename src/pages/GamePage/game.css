@@ -82,6 +82,7 @@
   opacity: 0;
   transform: translate(-50%);
   z-index: 1;
+  /* animation: arrow-animation 1.5s linear; */
   /* transition: 1s ease-in; */
 }
 
@@ -95,6 +96,7 @@
   text-align: center;
   width: 9.5vh;
   text-shadow: 1px 2px 2px #5F3610;
+  white-space: pre-line;
 }
 
 #screen-game #catch-circle, #active-catch-circle, #catch-circle-bg {

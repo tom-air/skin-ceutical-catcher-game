@@ -95,9 +95,9 @@
 }
 
 #selfie-winkles {
-  height: 70%;
+  height: 60%;
   object-fit: cover;
-  width: 70%;
+  width: 60%;
   position: absolute;
   left: 50%;
   top: 20%;

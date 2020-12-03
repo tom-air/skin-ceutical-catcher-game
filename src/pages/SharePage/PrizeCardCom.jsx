@@ -79,8 +79,8 @@ const PrizeCardCom = forwardRef((props, ref) => {
         <div id="img-group">
           <img id="skin-c-bottle" src={skinCBottle} />
           <div id="hash-text">
-            <p>#修丽可</p>
-            <p>#抗氧修护</p>
+            <p>#修丽可#</p>
+            <p>#三亚国际免税城#</p>
           </div>
           <img id="prize-card-qr-code" src={prizeCardQRcode} />
         </div>

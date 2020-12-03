@@ -3,10 +3,10 @@ import { useAlert } from 'react-alert'
 import * as faceapi from 'face-api.js';
 import { useHistory } from 'react-router-dom';
 import BrandLogo from '../../assets/Logo_white.png';
-// import SelfieButton from '../../assets/selfieBtn.svg';
 import SelfieTarget from '../../assets/selfieTarget.svg';
 import TopBarBg from '../../assets/Selfie_topbar.png';
 import LowBarBg from '../../assets/Selfie_low\ bar.png';
+import SelfieTopbarGoldLine from '../../assets/selfie_topbar_gold_line.png';
 import './selfie.css';
 
 const SelfiePage = () => {
@@ -38,7 +38,6 @@ const SelfiePage = () => {
       const root = document.getElementById('root');
       root.style.backgroundImage = 'none';
       root.style.background = '#220B02';
-      // setUpFaceApi();
       return unmountComponent;
     }
   }, []);
@@ -53,10 +52,6 @@ const SelfiePage = () => {
   const handleSuccess = (stream) => {
     window.stream = stream; // make stream available to browser console
     video.srcObject = stream;
-  
-    // const track = window.stream.getVideoTracks()[0];
-    // const settings = track.getSettings();
-    // const str = JSON.stringify(settings, null, 4);
   }
   
   const initCameraStream = () => {
@@ -141,8 +136,9 @@ const SelfiePage = () => {
       <section id="screen-selfie">
         <div className="topbar">
           <img className="brand-logo" src={BrandLogo} />
-          <p>抗老力测测看</p>
+          <p>测试你的抗氧力</p>
           <img id="top-bar-bg" src={TopBarBg} />
+          <img id="selfie-topbar-goldline" src={SelfieTopbarGoldLine} />
         </div>
         {/* <video playsInline autoPlay id="video"></video> */}
         <div id="main-canvas">

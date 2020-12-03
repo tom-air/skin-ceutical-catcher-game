@@ -16,6 +16,7 @@
   background-position: center;
   z-index: 1;
   height: calc(13vh - 2.3vh);
+  position: relative;
 }
 
 #top-bar-bg {
@@ -25,6 +26,13 @@
   bottom: 0;
   height: 13vh;
   width: 100vw;
+}
+
+#selfie-topbar-goldline {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
 }
 
 .topbar .brand-logo {
