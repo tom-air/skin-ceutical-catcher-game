@@ -40,44 +40,40 @@ const GamePage = () => {
     animate(true)
   }
 
-  const removeEl = (id) => {
-    let el = scene.getObjectByName(id)
-    scene.remove(el);
-    eleToCatchId = ''
-  }
-
   const catchElement = (eleId) => {
     if (eleId) {
-      eleCaught = eleCaught + 1;
-      removeEl(eleId);
-      updateProgess(eleCaught);
-      renderBenefitArrow(eleCaught);
-      setStartGame(1);
-      if (eleCaught >= 7) {
-        setTimeout(() => {
-          window.cancelAnimationFrame(animateFrame);
-          catchBtn.removeEventListener('click', () => {})
-          history.push('./share')
-        }, 2000);
-        // history.push('./share')
+      let el = scene.getObjectByName(eleId)
+      if (el) {
+        eleCaught = eleCaught + 1;
+        scene.remove(el);
+        eleToCatchId = ''
+        updateProgess(eleCaught);
+        renderBenefitArrow(eleCaught);
+        setStartGame(eleCaught);
+        if (eleCaught >= 7) {
+          setTimeout(() => {
+            window.cancelAnimationFrame(animateFrame);
+            catchBtn.removeEventListener('click', () => {})
+            history.push('./share')
+          }, 2000);
+          // history.push('./share')
+        }
       }
     }
   }
 
   const elementAnimation = (ele, i) => {
-    const timer = 0.0001 * Date.now();
+    const timer = 0.001 * Date.now();
 
-    if (ele.morphTargetInfluences && ele.morphTargetInfluences.length) {
-      for (let i = 0; i < 4; i += 1) {
-        const newMorph = Math.sin(timer + (i + 1) * 800000);
-        ele.morphTargetInfluences[i] = newMorph;
-      }
-    }
+    // if (ele.morphTargetInfluences && ele.morphTargetInfluences.length) {
+    //   for (let i = 0; i < 4; i += 1) {
+    //     const newMorph = Math.sin(timer + (i + 1) * 800000);
+    //     ele.morphTargetInfluences[i] = newMorph;
+    //   }
+    // }
 
     if (eleCaught >= 1) {
-      // ele.position.x = 10 * Math.cos(timer + i * 3);
-      const vector = 5;
-      ele.position.y = vector * Math.sin(timer + 90);
+      ele.position.y = ele.position.y + 0.03 * Math.sin(timer + i * 3);
     }
   }
 
@@ -93,18 +89,17 @@ const GamePage = () => {
       element.lookAt(camera.position);
       // element.quaternion.copy(camera.quaternion);
       if (element) {
-        // elementAnimation(element, i);
+        // console.log('***', element.vector)
+        elementAnimation(element, i);
         const positionScreenSpace = element.position.clone().project(camera);
         positionScreenSpace.setZ(0);
         const positionLenToCenter = positionScreenSpace.length();
         if (positionLenToCenter < threshold) {
           isCloseToCenter = true;
           eleId = element.name;
-          // eleId = element.uuid;
         } else if (positionLenToCenter < minThreshold) {
           isNearToTarget = true;
           eleId = element.name;
-          // eleId = element.uuid;
         }
         
       }
@@ -256,25 +251,19 @@ const GamePage = () => {
   }
 
   useEffect(() => {
-    // console.log('did mount')
     if (!window.startApp) {
       history.replace('/');
     } else if (window.isAccessOrientationGranted) {
-      // console.log('did mount 2')
       init3D();
       animate(false, eleToCatchId, eleCaught);
     }
     // setStartGame(1);
-    // const arBenefitLetter = document.getElementById('ar-benefit-letter');
-    // arBenefitLetter.textContent = eleTexture[0].title;
   }, [])
 
   useEffect(() => {
     if (counter > 0 && isGameStarted) {
-    // if (counter > 0) {
       setTimeout(() => setCounter(counter - 1), 1000);
     } else if (counter <= 0) {
-      // console.log(">>>>> display wipe up animation")
       timeUpAnimation();
     }
   }, [counter, isGameStarted]);
@@ -310,7 +299,6 @@ const GamePage = () => {
     }
     const newProgress = progressPercent + 25
     const percent = `${newProgress}%`
-    // setProgressLetter(newProgress);
     progressNumber.textContent = newProgress;
     progresIndicator.style.width = percent;
     selfieWinkles.style.opacity = (1 - (1/7) * updatedProgess);
