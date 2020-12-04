@@ -14,6 +14,7 @@ import ArBenifitArrow from '../../assets/ar_benifit.png';
 import PlayInfoArea from '../../assets/player_info_area.png';
 import ArMeasureElement from '../../assets/ar_measure_element.png';
 import { createGlbElement, createGoldPicElements } from './loaderUtils';
+import { trackEvent } from '../../UtilHelpers';
 import './game.css';
 
  const elementBenefits = ['中和\n自由基', '減退\n細紋', '預防\n光老化', '抗氧\n保護']
@@ -46,6 +47,8 @@ const GamePage = () => {
       if (el) {
         eleCaught = eleCaught + 1;
         scene.remove(el);
+        el.geometry.dispose();
+        el.material.dispose();
         eleToCatchId = ''
         updateProgess(eleCaught);
         renderBenefitArrow(eleCaught);

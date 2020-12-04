@@ -4,17 +4,20 @@ import { useAlert } from 'react-alert'
 const CopyToShare = (props) => {
   const { msgToCopy, children } = props;
   const alert = useAlert();
+  const [child, setChild] = useState(children);
   const [showAlert, setAlert] = useState('');
+
+  const Success = <div id="copy-hashtag">复制成功</div>;
 
   useEffect(() => {
     if (showAlert) {
-      alert.success(showAlert, {
-        onClose: () => {
-          setAlert('')
-        }
-      })
+      setChild(Success);
+      setTimeout(() => {
+        setChild(children);
+        setAlert('');
+      }, 5000);
     }
-  }, [showAlert])
+  }, [showAlert, children])
 
   const isIOS = useCallback(() => {
     if (typeof navigator !== 'undefined' && !!navigator.userAgent) {
@@ -74,7 +77,7 @@ const CopyToShare = (props) => {
     children && msgToCopy && typeof document !== 'undefined'
       && !!document.queryCommandSupported && document.queryCommandSupported('copy') && (
         <div onClick={copyToClipBoard}>
-          {children}
+          {child}
         </div>
     )
   );

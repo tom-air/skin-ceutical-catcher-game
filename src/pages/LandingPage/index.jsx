@@ -1,12 +1,17 @@
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import BrandLogo from '../../assets/Logo_white.png';
-import Background from '../../assets/landing_bg_mb.png';
-import BtnFilter from '../../assets/button_filter.png';
+// import Background from '../../assets/landing_bg_mb.png';
+import Background from '../../assets/landing_bg_md.png';
+// import BackgroundX from '../../assets/landing_bg_x.png';
+// import BackgroundMd from '../../assets/landing_bg_md.png';
 import Landmark from '../../assets/landing_mark.png';
+import DefaultBg from '../../assets/Selfie_result_bg.png';
+import BtnAni from '../../assets/btn_animate.gif';
 import './landing.css';
 
 const LandingPage = () => {
+  let root;
   const history = useHistory();
 
   const getCameraAccess = () => {
@@ -37,33 +42,41 @@ const LandingPage = () => {
   }
 
   const getDeviceOrientationAccess = () => {
-    if (DeviceOrientationEvent.requestPermission) {
-      DeviceOrientationEvent.requestPermission()
-      .then(permissionState => {
-        if (permissionState === 'granted') {
-          window.isAccessOrientationGranted = true;
-          getCameraAccess();
-        }
-      })
-      .catch(console.error);
+    const userAgent = navigator.userAgent.toLowerCase(); 
+    const isAndroid = userAgent.indexOf("android") > -1; 
+
+    if (isAndroid) {
+      window.isAccessOrientationGranted = true;
+      getCameraAccess();
     } else {
-      alert(
-        'Device is not supported for orientation, please try with mobile device',
-      );
+      if (DeviceOrientationEvent.requestPermission) {
+        DeviceOrientationEvent.requestPermission()
+        .then(permissionState => {
+          if (permissionState === 'granted') {
+            window.isAccessOrientationGranted = true;
+            getCameraAccess();
+          }
+        })
+        .catch(console.error);
+      } else {
+        alert(
+          'Device is not supported for orientation, please try with mobile device',
+        );
+      }
     }
   }
 
-  useEffect(() => {
-    const root = document.getElementById('root');
-    root.style.backgroundImage = `url(${Background})`;
-    root.style.backgroundSize = 'cover';
-    root.style.backgroundRepeat = 'no-repeat';
-    root.style.backgroundPosition = 'center';
-  }, []);
-
-  const startGame = () => {
-    getDeviceOrientationAccess()
+  const unmount = () => {
+    root.style.backgroundImage = `url(${DefaultBg})`;
   }
+
+  useEffect(() => {
+    root = document.getElementById('root');
+    // const bgImg = Background;
+    // if (window.innerWidth )
+    root.style.backgroundImage = `url(${Background})`;
+    return unmount;
+  }, []);
 
   return (
     <>
@@ -78,7 +91,8 @@ const LandingPage = () => {
             <p>收集抗氧权威精华 体验肌肤逆龄焕颜</p>
             <div className="bg-container"></div>
           </div>
-          <div className="start-btn" onClick={startGame}>
+          <div className="start-btn" onClick={getDeviceOrientationAccess}>
+            <img className="start-btn-img" src={BtnAni} />
             <p>开始体验</p>
           </div>
         </div>

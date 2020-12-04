@@ -1,14 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect, Suspense } from "react";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
 } from "react-router-dom";
-import LandingPage from './pages/LandingPage';
-import SelfiePage from './pages/SelfiePage';
-import PreviewPage from './pages/PreviewPage';
-import GamePage from './pages/GamePage';
-import SharePage from './pages/SharePage';
+
+import LoadingPage from './pages/LoadingPage';
+const LandingPage = React.lazy(() => import('./pages/LandingPage'));
+const SelfiePage = React.lazy(() => import('./pages/SelfiePage'));
+const PreviewPage = React.lazy(() => import('./pages/PreviewPage'));
+const GamePage = React.lazy(() => import('./pages/GamePage'));
+const SharePage = React.lazy(() => import('./pages/SharePage'));
 
 const App = () => {
   const resize = () => {
@@ -20,6 +22,7 @@ const App = () => {
   }
 
   const getBaidu = () => {
+    if (process.env.NODE_ENV !== 'production') return null;
     var _hmt = _hmt || [];
     (function() {
       const hm = document.createElement("script");
@@ -45,21 +48,23 @@ const App = () => {
   return (
     <Router>
       <Switch>
-        <Route path="/share">
-          <SharePage />
-        </Route>
-        <Route path="/game">
-          <GamePage />
-        </Route>
-        <Route path="/preview">
-          <PreviewPage />
-        </Route>
-        <Route path="/selfie">
-          <SelfiePage />
-        </Route>
-        <Route path="/">
-          <LandingPage />
-        </Route>
+        <Suspense fallback={<LoadingPage />}>
+          <Route path="/share" exact>
+            <SharePage />
+          </Route>
+          <Route path="/game" exact>
+            <GamePage />
+          </Route>
+          <Route path="/preview" exact>
+            <PreviewPage />
+          </Route>
+          <Route path="/selfie" exact>
+            <SelfiePage />
+          </Route>
+          <Route path="/" exact>
+            <LandingPage />
+          </Route>
+        </Suspense>
       </Switch>
     </Router>
   );

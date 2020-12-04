@@ -1,3 +1,22 @@
+@keyframes alert-animation {
+  0% {
+    top: 5vh;
+    opacity: 0;
+  }
+  40% {
+    top: 15vh;
+    opacity: 1;
+  }
+  90% {
+    top: 15vh;
+    opacity: 1;
+  }
+  100% {
+    top: 13vh;
+    opacity: 0;
+  }
+}
+
 #screen-selfie {                     
   color: white;
   position: relative;
@@ -70,11 +89,12 @@
 }
 
 #selfie-target {
-  width: 30vh;
+  width: 23vh;
   transition: 0.8s;
   opacity: 0.1;
   position: absolute;
-  top: 7vh;
+  top: 48%;
+  transform: translateY(-50%);
   max-width: 240px;
 }
 
@@ -101,20 +121,19 @@
 }
 
 .lowbar {
-  position: relative;
   display: flex;
   justify-content: center;
   height: 31.5vw;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  left: 0;
 }
 
 #low-bar-bg {
-  position: fixed;
-  z-index: -1;
   bottom: 0;
-  height: 31.5vw;
-  /* height: 16.5vh; */
+  height: 100%;
   width: 100vw;
-  left: 0;
 }
 
 .lowbar #selfie-button {
@@ -125,7 +144,7 @@
   box-shadow: 0px 3px 14px #FFFFFF3B;
   border: none;
   position: absolute;
-  filter: grayscale();
+  opacity: 50%;
   z-index: 99;
   background-position: center;
   background-size: auto;
@@ -147,4 +166,25 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+#alert-box {
+  background-image: url('../../assets/selfie_warning.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 31.2vh;
+  position: absolute;
+  top: 5vh;
+  left: 50%;
+  transform: translate(-50%);
+  z-index: 245643536;
+  opacity: 0;
+  animation: alert-animation ease-out;
+}
+
+#alert-box p {
+  margin: 5.8vh 0 3vh;
+  font-size: 2.2vh;
+  line-height: 2.9vh;
+  white-space: pre-line;
 }

@@ -6,7 +6,8 @@ import ReshootButton from '../../assets/selfie_result_reshoot_btn.png';
 import CatchCTAArrow from '../../assets/selfie_result_cta_arrow.png';
 import SelfieResultCircle from '../../assets/selfie_result_circle.png';
 import Background from '../../assets/Selfie_result_bg.png';
-import selfieResultGoldBg from '../../assets/selfie_result_gold_bg.png';
+import selfieResultGoldBg from '../../assets/gold_element_ani.gif';
+// import selfieResultGoldBg from '../../assets/selfie_result_gold_bg.png';
 import SelfieResultWinkles from '../../assets/selfie_result_wrinkle.png';
 import './preview.css';
 

@@ -46,7 +46,7 @@ const SharePage = () => {
         <p>长按储存图片，并分享至<br/>
         <img id="weibo" src={weibo} />微博或
         <img id="wechat" src={wechat} />微信朋友圈，带上话题</p>
-        <CopyToShare msgToCopy="#修丽可">
+        <CopyToShare msgToCopy="#修丽可##三亚国际免税城#">
           <div id="copy-hashtag">
             #修丽可##三亚国际免税城#
             <img src={copy} />

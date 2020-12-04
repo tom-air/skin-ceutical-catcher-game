@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useAlert } from 'react-alert'
 import * as faceapi from 'face-api.js';
 import { useHistory } from 'react-router-dom';
 import BrandLogo from '../../assets/Logo_white.png';
-import SelfieTarget from '../../assets/selfieTarget.svg';
+import SelfieTarget from '../../assets/selfie_target.svg';
 import TopBarBg from '../../assets/Selfie_topbar.png';
 import LowBarBg from '../../assets/Selfie_low\ bar.png';
 import SelfieTopbarGoldLine from '../../assets/selfie_topbar_gold_line.png';
@@ -16,7 +15,6 @@ const SelfiePage = () => {
   const [isAllow, setAllow] = useState(false);
   const [showAlert, setAlert] = useState('');
   const history = useHistory();
-  const alert = useAlert();
 
   const setUpFaceApi = async () => {
     await faceapi.loadTinyFaceDetectorModel('/models')
@@ -26,7 +24,8 @@ const SelfiePage = () => {
 
   useEffect(() => {
     if (showAlert) {
-      alert.info(showAlert)
+      const alertBox = document.getElementById('alert-box');
+      alertBox.style.animationDuration = '8s';
     }
   }, [showAlert])
 
@@ -98,7 +97,7 @@ const SelfiePage = () => {
       } else {
         selfieTarget.style.opacity = 0.1;
         setAllow(false);
-        setAlert('配戴口罩可能影響人面辨識功能。')
+        setAlert('配戴口罩可能影响\n人面识别功能');
       }
     }, 500)
   }
@@ -128,7 +127,7 @@ const SelfiePage = () => {
     }
   }
 
-  const submitBtnStyle = { filter: isAllow ? 'unset' : 'grayscale(100%)' };
+  const submitBtnStyle = { opacity: isAllow ? '100%' : '50%' };
   
   return (
     <>
@@ -139,6 +138,9 @@ const SelfiePage = () => {
           <p>测试你的抗氧力</p>
           <img id="top-bar-bg" src={TopBarBg} />
           <img id="selfie-topbar-goldline" src={SelfieTopbarGoldLine} />
+        </div>
+        <div id="alert-box">
+          <p>{showAlert}</p>
         </div>
         {/* <video playsInline autoPlay id="video"></video> */}
         <div id="main-canvas">

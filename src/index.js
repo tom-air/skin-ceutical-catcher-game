@@ -8,7 +8,7 @@ import App from './App';
 
 const options = {
   position: 'top center',
-  timeout: 2000,
+  timeout: 200000,
   offset: '30px',
   transition: 'scale'
 }
@@ -17,10 +17,11 @@ ReactDOM.render(
   <React.StrictMode>
     <AlertProvider template={AlertTemplate} {...options}>
       <App />
-      {/* <div id="app-disclaimer">
-        <p className="copy-right">Copyright © 2020.深圳市伊特利网络科技</p>
-        <a href="https://beian.miit.gov.cn/" target="_blank">粤ICP备2020118183号-2</a>
-      </div> */}
+      <div id="app-disclaimer">
+        <p className="copy-right">
+          Copyright © 2020.深圳市伊特利网络科技 | <a href="https://beian.miit.gov.cn/" target="_blank">粤ICP备2020118183号-2</a>
+        </p>
+      </div>
     </AlertProvider>
   </React.StrictMode>,
   document.getElementById('root')
