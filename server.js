@@ -4,7 +4,9 @@ const path = require('path');
 const app = express();
 const helmet = require('helmet');
 
-app.use(helmet());
+app.use(helmet({
+  contentSecurityPolicy: false,
+}));
 app.use(express.static(path.join(__dirname, 'build')));
 // app.use(express.static(path.join(__dirname, 'public')));
 
