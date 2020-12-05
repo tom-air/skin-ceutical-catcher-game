@@ -9,6 +9,8 @@ import Background from '../../assets/Selfie_result_bg.png';
 import selfieResultGoldBg from '../../assets/gold_element_ani.gif';
 // import selfieResultGoldBg from '../../assets/selfie_result_gold_bg.png';
 import SelfieResultWinkles from '../../assets/selfie_result_wrinkle.png';
+// import StartBtn from '../../assets/landing_start btn.png';
+import { trackEvent } from '../../UtilHelpers';
 import './preview.css';
 
 const PreviewPage = () => {
@@ -51,7 +53,13 @@ const PreviewPage = () => {
   }, [meterRef.current]);
 
   const onClickReshoot = () => {
+    trackEvent('button', 'click', 'retake-selfie');
     history.goBack();
+  }
+
+  const onClick = () => {
+    trackEvent('button', 'click', 'start-game');
+    history.push('/game');
   }
 
   return (
@@ -91,9 +99,12 @@ const PreviewPage = () => {
         </div>
       </div>
       <div className="bottom-section">
-        <button id="start-game-button" onClick={() => { history.push('/game') }}>
+        {/* <button id="start-game-button" onClick={() => { history.push('/game') }}>
           <img src={CatchButton} />
-        </button>
+        </button> */}
+        <div className="start-game-btn" onClick={onClick}>
+          <p>开始游戏</p>
+        </div>
         <button id="reshoot-button" onClick={onClickReshoot}>
           <img src={ReshootButton} />
           <p>重拍</p>

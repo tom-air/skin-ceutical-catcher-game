@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import BrandLogo from '../../assets/Logo_white.png';
-// import Background from '../../assets/landing_bg_mb.png';
 import Background from '../../assets/landing_bg_md.png';
 // import BackgroundX from '../../assets/landing_bg_x.png';
 // import BackgroundMd from '../../assets/landing_bg_md.png';
 import Landmark from '../../assets/landing_mark.png';
 import DefaultBg from '../../assets/Selfie_result_bg.png';
 import BtnAni from '../../assets/btn_animate.gif';
+import { trackEvent } from '../../UtilHelpers';
 import './landing.css';
 
 const LandingPage = () => {
@@ -29,6 +29,7 @@ const LandingPage = () => {
         .then(() => {
           window.isCameraAccessAllowed = true;
           window.startApp = true;
+          trackEvent('button', 'click', 'start-experience');
           history.push('/selfie');
         })
         .catch((error) => {
@@ -83,14 +84,15 @@ const LandingPage = () => {
       <section id="screen-loading">
         <div className="top-container">
           <img className="brand-logo" src={BrandLogo} />
-          <div className="title-group">
+          {/* <div className="title-group">
             <h3 className="title en">the antioxidant authority</h3>
             <h3 className="title ch">修丽可抗氧焕颜之旅</h3>
           </div>
           <div className="subtitle">
             <p>收集抗氧权威精华 体验肌肤逆龄焕颜</p>
             <div className="bg-container"></div>
-          </div>
+          </div> */}
+          <div id="land-title" />
           <div className="start-btn" onClick={getDeviceOrientationAccess}>
             <img className="start-btn-img" src={BtnAni} />
             <p>开始体验</p>

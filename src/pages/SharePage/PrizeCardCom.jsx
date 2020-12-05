@@ -69,7 +69,7 @@ const PrizeCardCom = forwardRef((props, ref) => {
           className="brand-logo"
           src={BrandLogo}
         />
-        <div className="main-text">修丽可抗氧魔镜</div>
+        <div className="main-text">修丽可抗氧焕颜之旅</div>
         <img id="prize-card-bg" src={prizeCard} />
         <img id="prize-card-gold-element-bg" src={goldElementBg} />
         <div id="selfie-filter">

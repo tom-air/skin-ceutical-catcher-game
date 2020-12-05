@@ -221,7 +221,7 @@
 
 .bottom-section {
   position: relative;
-  margin-top: 1vh;
+  /* margin-top: 1vh; */
   text-align: right;
   padding-right: 2.5vh;
 }
@@ -248,6 +248,20 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.bottom-section .start-game-btn {
+  position: absolute;
+  display: inline-block;
+  background-image: url('../../assets/landing_start_btn.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: bottom;
+  height: 9vh;
+  width: 24vh;
+  text-align: center;
+  left: 50%;
+  transform: translate(-50%);
 }
 
 .bottom-section #reshoot-button {

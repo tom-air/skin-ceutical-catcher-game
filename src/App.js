@@ -21,26 +21,7 @@ const App = () => {
     root.style.height = window.innerHeight;
   }
 
-  const getBaidu = () => {
-    if (process.env.NODE_ENV !== 'production') return null;
-    var _hmt = _hmt || [];
-    (function() {
-      const hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?92b71b85382d7e04bbfbf93b4320beb6";
-      const s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-
-      // for SPA Tracking
-      _hmt.push(['_requirePlugin', 'UrlChangeTracker', {
-        shouldTrackUrlChange: function (newPath, oldPath) {
-        return newPath && oldPath;
-        }}
-      ]);
-    })();
-  };
-
   useEffect(() => {
-    getBaidu();
     resize();
     window.addEventListener('resize orientationchange', resize);
   }, []);

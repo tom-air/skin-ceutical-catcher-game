@@ -6,6 +6,7 @@ import SelfieTarget from '../../assets/selfie_target.svg';
 import TopBarBg from '../../assets/Selfie_topbar.png';
 import LowBarBg from '../../assets/Selfie_low\ bar.png';
 import SelfieTopbarGoldLine from '../../assets/selfie_topbar_gold_line.png';
+import { trackEvent } from '../../UtilHelpers';
 import './selfie.css';
 
 const SelfiePage = () => {
@@ -97,7 +98,7 @@ const SelfiePage = () => {
       } else {
         selfieTarget.style.opacity = 0.1;
         setAllow(false);
-        setAlert('配戴口罩可能影响\n人面识别功能');
+        setAlert('面向镜头\n确保脸庞清晰可见');
       }
     }, 500)
   }
@@ -123,6 +124,7 @@ const SelfiePage = () => {
       ctx.drawImage(input, x, y, width, height, 0, 0, width, height);
       const dataURI = canvas.toDataURL('image/png');
       window.selfieURI = dataURI;
+      trackEvent('button', 'click', 'take-selfie');
       history.push('/preview');
     }
   }
@@ -130,7 +132,7 @@ const SelfiePage = () => {
   const submitBtnStyle = { opacity: isAllow ? '100%' : '50%' };
   
   return (
-    <>
+    <section>
       <video playsInline autoPlay id="video"></video>
       <section id="screen-selfie">
         <div className="topbar">
@@ -155,7 +157,7 @@ const SelfiePage = () => {
           <img id="low-bar-bg" src={LowBarBg} />
         </div>
       </section>
-    </>
+    </section>
   );
 }
 

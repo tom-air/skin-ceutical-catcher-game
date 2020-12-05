@@ -14,6 +14,17 @@
   width: 25.7vh;
 }
 
+#land-title {
+  background-image: url('../../assets/landing_title.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  width: 100%;
+  height: 15vh;
+  margin-top: 3.8vh;
+}
+  
+
 .title-group {
   padding-top: 4.6vh
 }

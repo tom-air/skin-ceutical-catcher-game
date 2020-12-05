@@ -54,6 +54,7 @@ const GamePage = () => {
         renderBenefitArrow(eleCaught);
         setStartGame(eleCaught);
         if (eleCaught >= 7) {
+          trackEvent('button', 'click', 'catch-all-7-elements');
           setTimeout(() => {
             window.cancelAnimationFrame(animateFrame);
             catchBtn.removeEventListener('click', () => {})
@@ -254,13 +255,13 @@ const GamePage = () => {
   }
 
   useEffect(() => {
-    if (!window.startApp) {
-      history.replace('/');
-    } else if (window.isAccessOrientationGranted) {
-      init3D();
-      animate(false, eleToCatchId, eleCaught);
-    }
-    // setStartGame(1);
+    // if (!window.startApp) {
+    //   history.replace('/');
+    // } else if (window.isAccessOrientationGranted) {
+    // }
+    init3D();
+    animate(false, eleToCatchId, eleCaught);
+    setStartGame(1);
   }, [])
 
   useEffect(() => {
@@ -273,6 +274,7 @@ const GamePage = () => {
 
   useEffect(() => {
     if (isGameStarted) {
+      trackEvent('button', 'click', 'catch-1st-element');
       hideTutorial();
     }
   }, [isGameStarted]);
