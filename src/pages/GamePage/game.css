@@ -1,22 +1,24 @@
 @keyframes pulse-animation {
   0% {
-    width: 9vh;
-    height: 9vh;
-  }
-  100% {
     width: 12vh;
     height: 12vh;
+  }
+  100% {
+    width: 15vh;
+    height: 15vh;
   }
 }
 
 @keyframes pulse-animation2 {
   0% {
-    width: 8vh;
-    height: 8vh;
+    width: 12vh;
+    height: 12vh;
+    box-shadow: 0px 0px 0px 2px #FFFFFF6C;
   }
   100% {
-    width: 10vh;
-    height: 10vh;
+    width: 15vh;
+    height: 15vh;
+    box-shadow: 0px 0px 14px 22px #FFFFFF6C;
   }
 }
 
@@ -26,6 +28,15 @@
   }
   to {
     transform: translate(-50%, -50%) rotate(359deg);
+  }
+}
+
+@keyframes moveUpDownAndRotate {
+  0%, 100% {
+    transform: translateY(10px) rotate(180deg);
+  }
+  50% {
+    transform: translateY(0px) rotate(180deg);
   }
 }
 
@@ -82,8 +93,13 @@
   opacity: 0;
   transform: translate(-50%);
   z-index: 1;
-  /* animation: arrow-animation 1.5s linear; */
-  /* transition: 1s ease-in; */
+  /* a0nimation: arrow-animation 1.5s linear infinite; */
+  /* animation: 'none'; */
+  /* transition: 1.5s ease-in-out; */
+}
+
+.anime {
+  animation: arrow-animation 1.5s linear infinite;
 }
 
 #screen-game #ar-benifit-container p {
@@ -119,9 +135,9 @@
   width: 75vh;
 }
 
-#screen-game /* .active {
+.block {
   display: block;
-} */
+}
 
 .hide {
   display: none !important;
@@ -142,7 +158,7 @@
 
 #screen-game .top-section .highlight-box p {
   font-size: 2.7vh;
-  line-height: 3.7vh;
+  line-height: 4vh;
 }
 
 #screen-game #overlay {
@@ -166,8 +182,9 @@
   z-index: 2;
   position: absolute;
   left: 50%;
-  transform: translate(-50%);
-  bottom: 8vh;
+  transform: translate(-50%, -50%);
+  top: 70%;
+  /* bottom: 8vh; */
   text-align: center;
   width: 100%;
 }
@@ -193,10 +210,17 @@
   height: 13.2vh;
 }
 
+#screen-game #pulse-circle {
+  width: 95%;
+  height: 95%;
+  position: absolute;
+  /* display: none; */
+}
+
 #screen-game .circle {
   background: transparent;
-  width: 9vh;
-  height: 9vh;
+  width: 13vh;
+  height: 13vh;
   border-radius: 50%;
   border: 1px solid #ffffff;
   position: absolute;
@@ -208,25 +232,25 @@
 }
 
 #screen-game .pulse {
-  animation: pulse-animation 2s infinite;
+  animation: pulse-animation 1.5s infinite;
 }
 
-#screen-game .circle2 {
+#screen-game #circle2 {
   background: transparent;
-  width: 9vh;
-  height: 9vh;
+  width: 13vh;
+  height: 13vh;
   border-radius: 50%;
-  border: 3px solid #ffffff;
+  /* border: 3px solid #ffffff; */
   position: absolute;
-  top: 48%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   box-shadow: 0px 0px 6px #FFFFFF6C;
   opacity: 0.31;
 }
 
-#screen-game .circle2.pulse {
-  animation: pulse-animation2 2s infinite;
+#screen-game #circle2.pulse {
+  animation: pulse-animation2 1.5s ease-out;
 }
 
 #screen-game .preview-container #selfie-filter {
@@ -242,6 +266,7 @@
   transform: unset;
   top: unset;
   z-index: 2;
+  overflow: initial;
   background: transparent linear-gradient(180deg, #834E06 0%, #F7CC92 48%, #834E06 100%) 0% 0% no-repeat padding-box;
 }
 
@@ -282,7 +307,7 @@
 
 #screen-game .meter-container .meter > span {
   width: 25%;
-  transition: 0.2s ease;
+  transition: 1.5s ease-out;
 }
 
 #screen-game .meter-bar {
@@ -347,4 +372,53 @@
 
 #countdown-number small {
   font-size: 1.6vh;
+}
+
+#screen-game #cta-arrow {
+  animation: moveUpDownAndRotate 1.5s ease-in-out infinite;
+  width: 4vh;
+  transform: rotate(180deg);
+}
+
+#screen-game .target-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 28vh;
+  height: 28vh;
+  z-index: 2;
+}
+
+#screen-game #arrow-top {
+  position: absolute;
+  top: 8%;
+  left: 50%;
+  z-index: 1;
+  transform: translate(-50%, -50%) rotate(-90deg);
+  width: 1.6vh;
+}
+#screen-game #arrow-bottom {
+  position: absolute;
+  bottom: 2%;
+  left: 50%;
+  z-index: 1;
+  transform: translate(-50%, -50%) rotate(90deg);
+  width: 1.6vh;
+}
+#screen-game #arrow-left {
+  position: absolute;
+  top: 50%;
+  left: 8%;
+  z-index: 1;
+  transform: translate(-50%, -50%) rotate(180deg);
+  width: 1.6vh;
+}
+#screen-game #arrow-right {
+  position: absolute;
+  top: 50%;
+  right: 2%;
+  z-index: 1;
+  transform: translate(-50%, -50%);
+  width: 1.6vh;
 }

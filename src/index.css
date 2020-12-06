@@ -24,7 +24,7 @@ html, body {
   user-select: none;
 }
 
-img {
+img, canvas, video {
   pointer-events: none;
 }
 

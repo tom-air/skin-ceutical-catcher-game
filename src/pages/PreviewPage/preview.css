@@ -10,6 +10,30 @@
 @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
 @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
 
+@keyframes float {
+	0% {
+		transform: translatey(0px);
+	}
+	50% {
+		transform: translatey(-20px);
+	}
+	100% {
+		transform: translatey(0px);
+	}
+}
+
+@keyframes float2 {
+	0% {
+		transform: translatey(0px);
+	}
+	50% {
+		transform: translatey(20px);
+	}
+	100% {
+		transform: translatey(0px);
+	}
+}
+
 #screen-preview {
   color: white;
 }
@@ -38,7 +62,7 @@
 .highlight-box p {
   margin: 0.3vh 0;
   font-size: 2.5vh;
-  line-height: 3.3vh;
+  line-height: 4.2vh;
 }
 
 .highlight-box::before,
@@ -257,11 +281,15 @@
   background-repeat: no-repeat;
   background-size: contain;
   background-position: bottom;
-  height: 9vh;
+  height: 8vh;
   width: 24vh;
   text-align: center;
   left: 50%;
   transform: translate(-50%);
+}
+
+.bottom-section .start-game-btn p {
+  font-size: 2.3vh;
 }
 
 .bottom-section #reshoot-button {
@@ -270,4 +298,89 @@
   outline: none;
   box-shadow: none;
   border: none;
+}
+
+.gold-element-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: -1;
+}
+
+.gold-element-bg img {
+  transform: translatey(0px);
+	animation: float 6s ease-in-out infinite;
+}
+
+.gold-element-bg img:nth-child(2n + 1) {
+  transform: translatey(0px);
+	animation: float2 6s ease-in-out infinite;
+}
+
+.gold-element-bg #gld-1 {
+  position: absolute;
+  left: -3vh;
+  top: 43vh;
+}
+
+.gold-element-bg #gld-2 {
+  position: absolute;
+  left: 3vh;
+  top: 8vh;
+}
+
+.gold-element-bg #gld-3 {
+  position: absolute;
+  left: -2vh;
+  top: 15vh;
+}
+
+.gold-element-bg #gld-4 {
+  position: absolute;
+  right: -2vh;
+  top: 33vh;
+}
+
+.gold-element-bg #gld-5 {
+  position: absolute;
+  left: 10vh;
+  bottom: -4vh;
+}
+
+.gold-element-bg #gld-6 {
+  position: absolute;
+  right: 8vh;
+  bottom: 26vh;
+}
+
+.gold-element-bg #gld-7 {
+  position: absolute;
+  left: 6vh;
+  bottom: 43vh;
+}
+
+.gold-element-bg #gld-8 {
+  position: absolute;
+  left: -10vh;
+  bottom: 12vh;
+}
+
+.gold-element-bg #gld-9 {
+  position: absolute;
+  right: -3vh;
+  bottom: 30vh;
+}
+
+.gold-element-bg #gld-10 {
+  position: absolute;
+  right: -12vh;
+  top: 2vh;
+}
+
+.gold-element-bg #gld-11 {
+  position: absolute;
+  right: -2vh;
+  bottom: 42vh;
 }

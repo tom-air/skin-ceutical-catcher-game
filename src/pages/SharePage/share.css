@@ -1,5 +1,6 @@
 #screen-share {
   color: white;
+  z-index: -1;
 }
 
 #screen-share .brand-logo {
@@ -15,7 +16,7 @@
 
 #screen-share .highlight-box p {
   margin: 0.3vh 0;
-  font-size: 2.6vh;
+  font-size: 2.8vh;
   line-height: 4.81vh;
 }
 
@@ -23,26 +24,27 @@
   z-index: -1;
   position: relative;
   margin: 2.6vh auto 0;
-  width: 35.5vh;
+  transform: translateX(-0.5vh);
+  width: 38vh;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 #mockImg {
-  width: 35.5vh;
+  width: 38vh;
   position: absolute;
   top: 0;
-  left: 50%;
+  left: 49%;
   transform: translate(-50%);
-  pointer-events: all;
+  pointer-events: all !important;
 }
 
 #screen-share #card-outline {
   position: absolute;
-  top: 1.2vh;
-  left: 6.3vh;
-  width: 35.5vh;
+  top: 1.5vh;
+  left: 5vh;
+  width: 38vh;
 }
 
 #screen-share .prize-card {
@@ -55,7 +57,7 @@
 }
 
 #screen-share .prize-card .brand-logo {
-  width: 21.8vh;
+  width: 23.8vh;
   position: absolute;
   left: 50%;
   transform: translate(-50%);
@@ -67,8 +69,9 @@
   top: 8vh;
   left: 50%;
   transform: translate(-50%);
-  font-size: 2.4vh;
+  font-size: 2.6vh;
   line-height: 2.7vh;
+  word-break: keep-all;
 }
 
 #screen-share #prize-card-bg {
@@ -106,8 +109,8 @@
   top: 48%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 31.8vh;
-  height: 31.7vh;
+  width: 34.9vh;
+  height: 34.9vh;
   margin: 0;
   border: 0;
   transition: none;
@@ -120,6 +123,8 @@
   width: 97%;
   border-radius: 50%;
   mix-blend-mode: unset;
+  /* -webkit-filter: brightness(1.4) saturate(1.2);
+  filter: brightness(1.4) saturate(1.2); */
 }
 
 #screen-share #selfie-filter .selfie-filter-bg {
@@ -143,15 +148,19 @@
 
 #screen-share #hash-text p {
   margin: 0;
-  font-size: 1.7vh;
+  font-size: 1.85vh;
   line-height: 2.5vh;
 }
 
+#screen-share .box-group {
+  padding: 1vh 0;
+}
+
 #screen-share .share-section {
-  font-size: 1.75vh;
-  line-height: 2.5vh;
-  margin: 2vh auto;
-  width: 29.6vh;
+  font-size: 2vh;
+  line-height: 3vh;
+  margin: 4vh auto 3vh;
+  width: 35.6vh;
 }
 
 #screen-share .share-section img {
@@ -188,14 +197,14 @@
 }
 
 #screen-share .share-bottom-section .highlight-box p {
-  font-size: 2.3vh;
-  line-height: 3.4vh;
+  font-size: 2.7vh;
+  line-height: 3.7vh;
   display: inline;
 }
 
 #screen-share .share-bottom-section .highlight-box h3 {
   display: inline;
-  font-size: 3vh;
+  font-size: 3.5vh;
   line-height: 4vh;
 }
 
@@ -217,7 +226,7 @@
 
 #screen-share .share-bottom-section .ref-pictures img {
   display: inline-block;
-  width: 26vh;
+  width: 30.4vh;
 }
 
 #screen-share .share-bottom-section .ref-pictures img + img {
@@ -229,7 +238,7 @@
   opacity: 0.6;
   font-size: 1vh;
   line-height: 1.3vh;
-  width: 26vh;
+  width: 31vh;
   text-align: left;
   margin-top: 2.4vh;
 }
@@ -253,4 +262,46 @@
   margin: 0;
   font-size: 2.4vh;
   line-height: 3.5vh;
+}
+
+#fix-loading {
+  z-index: 3;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: url('../../assets/Selfie_result_bg.png');
+}
+
+:root{
+  --pink: #F7CAC9;
+  --blue: #92A8D1;
+  --transition: all 0.5s ease-in-out;
+}
+
+.beautly:before, .beautly:after {
+  content: '';
+  display: block;
+  height: inherit;
+  width: inherit;
+  top: 0;
+  left: 0;
+  position: absolute;
+  -webkit-transition: var(--transition);
+  transition: var(--transition);
+}
+
+.beautly::after {
+  background: -webkit-radial-gradient(circle, rgba(var(--pink), 0.8), rgba(var(--blue), 0.6));
+  background: radial-gradient(circle, rgba(var(--pink), 0.8), rgba(var(--blue), 0.6));
+  mix-blend-mode: overlay;
+}
+
+.beautly {
+  -webkit-filter: saturate(1) contrast(1) brightness (1);
+  filter: saturate(1) contrast(1) brightness (1);
 }

@@ -59,9 +59,11 @@ const SelfiePage = () => {
     const constraints = {
       audio: false,
       video: {
-        // height: { exact: screen.clientWidth },
-        height: { exact: screen.clientHeight },
-        height: { exact: window.screen.width },
+        width: { exact: window.innerHeight },
+        // width: { exact: window.screen.height },
+        // height: { exact: screen.clientHeight },
+        // height: { exact: window.screen.width },
+        height: { exact: window.innerWidth },
         // aspectRatio: 752/375,
         facingMode: currentFacingMode,
       }
@@ -112,18 +114,28 @@ const SelfiePage = () => {
     if (isAllow) {
       const input = document.getElementById('video');
       const canvas = document.createElement('canvas');
+      const ehancedCanvas = document.createElement('canvas');
       const selfieCanvas = document.getElementById('circle-frame');
       const { x, y, width, height } = selfieCanvas.getBoundingClientRect();
       // const x = selfieCanvas.offsetLeft;
       // const y = selfieCanvas.offsetTop;
       canvas.width = width;
       canvas.height = height;
+      ehancedCanvas.width = width;
+      ehancedCanvas.height = height;
       const ctx = canvas.getContext('2d');
+      const enhancedCtx = ehancedCanvas.getContext('2d');
       ctx.translate(canvas.width, 0);
       ctx.scale(-1,1);
       ctx.drawImage(input, x, y, width, height, 0, 0, width, height);
+      enhancedCtx.translate(canvas.width, 0);
+      enhancedCtx.scale(-1,1);
+      enhancedCtx.drawImage(input, x, y, width, height, 0, 0, width, height);
+      enhancedCtx.filter = 'brightness(140%) saturate(120%)';
       const dataURI = canvas.toDataURL('image/png');
+      const enhancedDataURI = ehancedCanvas.toDataURL('image/png');
       window.selfieURI = dataURI;
+      window.enhancedSelfieURI = enhancedDataURI;
       trackEvent('button', 'click', 'take-selfie');
       history.push('/preview');
     }

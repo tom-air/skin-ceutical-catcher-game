@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, forwardRef, useState } from 'react';
 import html2canvas from 'html2canvas';
-
+import { trackEvent } from '../../UtilHelpers';
 import BrandLogo from '../../assets/Logo_white.png';
 import './share.css';
 import prizeCard from '../../assets/prize_card.png';
@@ -8,10 +8,12 @@ import prizeCardQRcode from '../../assets/prize_card_qr_code.png';
 import skinCBottle from '../../assets/skin_c_bottle.png';
 import goldElementBg from '../../assets/prize_gold_element_bg.png';
 import prizeCardOutline from '../../assets/prize_card_outline.png';
+import GirlNormal from '../../assets/girl_normal.png';
 
 const PrizeCardCom = forwardRef((props, ref) => {
   const cardRef = useRef();
   const [mount, setMount] = useState(false);
+  const { onPageLoad } = props;
 
   useEffect(() => {
     drawImage();
@@ -35,7 +37,7 @@ const PrizeCardCom = forwardRef((props, ref) => {
         useCORS: true,
         width: eleViewPortW,
         height: eleViewPortH,
-        windowHeight: eleViewPortH *  752 / 466 ,
+        windowHeight: eleViewPortH *  752 / 499,
       }).then(canvas => {
         if (isMounted) {
           const container = document.getElementById('prize-card')
@@ -53,6 +55,7 @@ const PrizeCardCom = forwardRef((props, ref) => {
             container.appendChild(newImg);
             prizeCard.style.opacity = 0;
           });
+          onPageLoad();
         }
         setMount(true);
       });
@@ -74,7 +77,8 @@ const PrizeCardCom = forwardRef((props, ref) => {
         <img id="prize-card-gold-element-bg" src={goldElementBg} />
         <div id="selfie-filter">
           <div className="selfie-filter-bg"></div>
-          <img id="selfie-preview" src={window.selfieURI} />
+          <img id="selfie-preview" src={window.enhancedSelfieURI} />
+          {/* <img id="selfie-preview" src={window.selfieURI} /> */}
         </div>
         <div id="img-group">
           <img id="skin-c-bottle" src={skinCBottle} />

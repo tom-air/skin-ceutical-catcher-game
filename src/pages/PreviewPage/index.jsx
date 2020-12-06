@@ -1,48 +1,41 @@
 import React, { useEffect, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import BrandLogo from '../../assets/Logo_white.png';
-import CatchButton from '../../assets/selfie_result_catch_btn.png';
+// import CatchButton from '../../assets/selfie_result_catch_btn.png';
 import ReshootButton from '../../assets/selfie_result_reshoot_btn.png';
 import CatchCTAArrow from '../../assets/selfie_result_cta_arrow.png';
 import SelfieResultCircle from '../../assets/selfie_result_circle.png';
 import Background from '../../assets/Selfie_result_bg.png';
-import selfieResultGoldBg from '../../assets/gold_element_ani.gif';
+// import selfieResultGoldBg from '../../assets/gold_element_ani.gif';
 // import selfieResultGoldBg from '../../assets/selfie_result_gold_bg.png';
 import SelfieResultWinkles from '../../assets/selfie_result_wrinkle.png';
 // import StartBtn from '../../assets/landing_start btn.png';
 import { trackEvent } from '../../UtilHelpers';
 import './preview.css';
+import gold1 from '../../assets/gold_elements/1.png';
+import gold2 from '../../assets/gold_elements/2.png';
+import gold3 from '../../assets/gold_elements/3.png';
+import gold4 from '../../assets/gold_elements/4.png';
+import gold5 from '../../assets/gold_elements/5.png';
+import gold6 from '../../assets/gold_elements/6.png';
+import gold7 from '../../assets/gold_elements/7.png';
+import gold8 from '../../assets/gold_elements/8.png';
+import gold9 from '../../assets/gold_elements/9.png';
+import gold10 from '../../assets/gold_elements/10.png';
+import gold11 from '../../assets/gold_elements/11.png';
 
 const PreviewPage = () => {
   const history = useHistory();
   const meterRef = useRef(null);
   const pageRef = useRef(null)
-  let goldEleContainer;
-
-  const unmount = () => {
-    goldEleContainer.parentNode.removeChild(goldEleContainer);
-  }
 
   useEffect(() => {
     if (!window.startApp) {
       history.replace('/');
     } else {
       const root = document.getElementById('root');
-      goldEleContainer = document.createElement('div');
-      goldEleContainer.style.backgroundImage = `url(${selfieResultGoldBg})`;
-      goldEleContainer.style.position = 'absolute';
-      goldEleContainer.style.top = 0;
-      goldEleContainer.style.left = 0;
-      goldEleContainer.style.bottom = 0;
-      goldEleContainer.style.right = 0;
-      goldEleContainer.style.backgroundRepeat = 'no-repeat';
-      goldEleContainer.style.backgroundSize = 'cover';
-      goldEleContainer.style.zIndex = -1;
-      root.append(goldEleContainer);
       root.style.backgroundImage = 'none';
       root.style.backgroundImage = `url(${Background})`;
-  
-      return unmount;
     }
   }, []);
   
@@ -109,6 +102,19 @@ const PreviewPage = () => {
           <img src={ReshootButton} />
           <p>重拍</p>
         </button>
+      </div>
+      <div className="gold-element-bg">
+        <img src={gold1} id="gld-1" />
+        <img src={gold2} id="gld-2" />
+        <img src={gold3} id="gld-3" />
+        <img src={gold4} id="gld-4" />
+        <img src={gold5} id="gld-5" />
+        <img src={gold6} id="gld-6" />
+        <img src={gold7} id="gld-7" />
+        <img src={gold8} id="gld-8" />
+        <img src={gold9} id="gld-9" />
+        <img src={gold10} id="gld-10" />
+        <img src={gold11} id="gld-11" />
       </div>
     </section>
   );

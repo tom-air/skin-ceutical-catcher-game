@@ -1,5 +1,6 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { useAlert } from 'react-alert'
+import { trackEvent } from '../../UtilHelpers';
 
 const CopyToShare = (props) => {
   const { msgToCopy, children } = props;
@@ -66,6 +67,7 @@ const CopyToShare = (props) => {
         // Copy text
         document.execCommand('copy');
         document.body.removeChild(textArea);
+        trackEvent('button', 'click', 'copy-hashtag');
         setAlert('複製成功')
       } catch (err) {
         alert.error('未能複製，請稍候再嘗試。')
