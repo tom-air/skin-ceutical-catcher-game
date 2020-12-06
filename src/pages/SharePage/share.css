@@ -50,6 +50,7 @@
 #screen-share .prize-card {
   position: relative;
   margin: 2.6vh auto 0;
+  left: -100vw;
   /* width: 35.5vh;
   display: flex;
   justify-content: center;

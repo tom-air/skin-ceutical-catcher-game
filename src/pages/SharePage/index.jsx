@@ -15,12 +15,20 @@ import { trackEvent } from '../../UtilHelpers';
 import '../PreviewPage/preview.css';
 import LoadingPage from '../LoadingPage';
 import LoadingLogo from '../../assets/loading.png';
-const PrizeCardCom = React.lazy(() => import('./PrizeCardCom'));
+import prizeCard from '../../assets/prize_card.png';
+import prizeCardQRcode from '../../assets/prize_card_qr_code.png';
+import skinCBottle from '../../assets/skin_c_bottle.png';
+import goldElementBg from '../../assets/prize_gold_element_bg.png';
+import prizeCardOutline from '../../assets/prize_card_outline.png';
+import PrizeCardCom from './PrizeCardCom';
+// const PrizeCardCom = React.lazy(() => import('./PrizeCardCom'));
 
 const SharePage = () => {
   let root, disclaimer, screen;
   const history = useHistory();
-  const [pageLoaded, setLoaded] = useState(false);
+  const [imgLoad, setLoaded] = useState(0);
+  const [pageLoaded, setPageLoaded] = useState(false);
+  const totalImg = 5;
 
   const unmount = () => {
     root.style.backgroundImage = 'none';
@@ -30,26 +38,40 @@ const SharePage = () => {
   }
 
   useEffect(() => {
-    // if (!window.startApp) {
-    //   history.replace('/');
-    // } else {
-    // }
-    root = document.getElementById('root');
-    root.style.backgroundImage = `url(${Background})`;
-    root.style.overflowY = 'scroll';
-    disclaimer = document.getElementById('app-disclaimer');
-    screen = document.getElementById('screen-share');
-    disclaimer.style.position = 'relative';
-    screen.appendChild(disclaimer);
-    return unmount;
+    if (!window.startApp) {
+      history.replace('/');
+    } else {
+      root = document.getElementById('root');
+      root.style.backgroundImage = `url(${Background})`;
+      root.style.overflowY = 'scroll';
+      disclaimer = document.getElementById('app-disclaimer');
+      screen = document.getElementById('screen-share');
+      disclaimer.style.position = 'relative';
+      screen.appendChild(disclaimer);
+      return unmount;
+    }
   }, [])
 
-  // useEffect(() => {
-  //   if (pageLoaded) {
-  //     const loadingScreen = document.getElementById('fix-loading');
-  //     loadingScreen.style.display = 'none'
-  //   }
-  // }, [pageLoaded])
+  useEffect(() => {
+    if (imgLoad === totalImg) {
+      PrizeCardCom(() => setPageLoaded(true));
+    }
+  }, [imgLoad])
+
+  useEffect(() => {
+    if (pageLoaded) {
+      const card = document.getElementById('prize-card');
+      card.style.left = '0px';
+      document.getElementById('screen-loading').style.display = 'none';
+      // const loadingScreen = document.getElementById('fix-loading');
+      // loadingScreen.style.display = 'none'
+    }
+  }, [pageLoaded])
+
+  const onImageLoad = () => {
+    const num = imgLoad + 1;
+    setLoaded(num);
+  }
 
   const onClick = () => {
     trackEvent('button', 'click', 'return-home');
@@ -58,6 +80,7 @@ const SharePage = () => {
 
   return (
     <Suspense fallback={<LoadingPage />}>
+      {<LoadingPage />}
       <section id="screen-share">
         <div className="top-section">
           <img className="brand-logo" src={BrandLogo} />
@@ -66,7 +89,36 @@ const SharePage = () => {
             <p>提升满满抗老力 获享抗氧修护礼</p>
           </div>
         </div>
-        <PrizeCardCom onPageLoad={() => setLoaded(true)}/>
+        <div
+          className="prize-card"
+          id='prize-card'
+        >
+          <div id="mock">
+            <img
+              className="brand-logo"
+              onLoad={onImageLoad}
+              src={BrandLogo}
+            />
+            <div className="main-text">修丽可抗氧焕颜之旅</div>
+            <img id="prize-card-bg" onLoad={onImageLoad} src={prizeCard} />
+            <img id="prize-card-gold-element-bg" onLoad={onImageLoad} src={goldElementBg} />
+            <div id="selfie-filter">
+              <div className="selfie-filter-bg"></div>
+              <img id="selfie-preview" onLoad={onImageLoad} src={window.enhancedSelfieURI} />
+              {/* <img id="selfie-preview" src={window.selfieURI} /> */}
+            </div>
+            <div id="img-group">
+              <img id="skin-c-bottle" onLoad={onImageLoad} src={skinCBottle} />
+              <div id="hash-text">
+                <p>#修丽可#</p>
+                <p>#三亚国际免税城#</p>
+              </div>
+              <img id="prize-card-qr-code" onLoad={onImageLoad} src={prizeCardQRcode} />
+            </div>
+          </div>
+          <img src={prizeCardOutline} id="card-outline" />
+        </div>
+        {/* <PrizeCardCom /> */}
         <div className="share-section">
           <p>长按储存图片，并分享至<br/>
           <img id="weibo" src={weibo} />微博或
