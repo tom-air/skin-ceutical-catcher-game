@@ -131,7 +131,7 @@ const SelfiePage = () => {
       enhancedCtx.translate(canvas.width, 0);
       enhancedCtx.scale(-1,1);
       enhancedCtx.drawImage(input, x, y, width, height, 0, 0, width, height);
-      enhancedCtx.filter = 'brightness(140%) saturate(120%)';
+      enhancedCtx.filter = 'brightness(280%) saturate(130%)';
       const dataURI = canvas.toDataURL('image/png');
       const enhancedDataURI = ehancedCanvas.toDataURL('image/png');
       window.selfieURI = dataURI;

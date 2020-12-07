@@ -4,7 +4,7 @@ import BrandLogo from '../../assets/Logo_white.png';
 import Background from '../../assets/landing_bg_md.png';
 // import BackgroundX from '../../assets/landing_bg_x.png';
 // import BackgroundMd from '../../assets/landing_bg_md.png';
-import Landmark from '../../assets/landing_mark.png';
+// import Landmark from '../../assets/landing_mark.png';
 import DefaultBg from '../../assets/Selfie_result_bg.png';
 import BtnAni from '../../assets/btn_animate.gif';
 import { trackEvent } from '../../UtilHelpers';
@@ -98,7 +98,7 @@ const LandingPage = () => {
             <p>开始体验</p>
           </div>
         </div>
-        <img id="landing-mark" src={Landmark} />
+        {/* <img id="landing-mark" src={Landmark} /> */}
       </section>
       <div className="disclaimer">
         “CE经典抗氧瓶”为产品呢称，<br/>
