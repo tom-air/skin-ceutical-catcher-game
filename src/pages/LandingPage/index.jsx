@@ -1,30 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-const { detect } = require('detect-browser');
 import BrandLogo from '../../assets/Logo_white.png';
 import Background from '../../assets/landing_bg_md.png';
+import InApp from 'detect-inapp';
 // import BackgroundX from '../../assets/landing_bg_x.png';
 // import BackgroundMd from '../../assets/landing_bg_md.png';
 // import Landmark from '../../assets/landing_mark.png';
 import PageModal from './PageModal';
 import DefaultBg from '../../assets/Selfie_result_bg.png';
 import BtnAni from '../../assets/btn_animate.gif';
-import { trackEvent, isIOS, isWithinWeChat } from '../../UtilHelpers';
+import { trackEvent, getDeviceOS } from '../../UtilHelpers';
 import './landing.css';
 
 const LandingPage = () => {
   let root;
   const history = useHistory();
   const [pageIssue, setIssue] = useState('');
-  const browser = detect();
-  const isViewInSafari = browser && browser.name === 'safari';
+  const inapp = new InApp(navigator.userAgent || navigator.vendor || window.opera);
+  const OS = getDeviceOS(navigator.userAgent || navigator.vendor || window.opera);
+  const browser = inapp.browser;
 
   const getCameraAccess = () => {
     const constraints = {
       audio: false,
       video: true,
     };
-
     if (
       navigator.mediaDevices &&
       navigator.mediaDevices.getUserMedia
@@ -53,9 +53,11 @@ const LandingPage = () => {
   }
 
   const handleIOSPhone = () => {
+    const isViewInSafari = browser === 'safari';
     if (!isViewInSafari) {
       setIssue('must-safari');
-    } else if (DeviceOrientationEvent.requestPermission) {
+    } else if (DeviceOrientationEvent &&
+      typeof DeviceOrientationEvent.requestPermission === 'function') {
       DeviceOrientationEvent.requestPermission()
       .then(permissionState => {
         if (permissionState === 'granted') {
@@ -64,8 +66,10 @@ const LandingPage = () => {
         }
       })
       .catch(console.error);
+    } else if (DeviceOrientationEvent) {
+      window.isAccessOrientationGranted = true;
+      getCameraAccess();
     } else {
-      // root.append()
       alert(
         'Device is not supported for orientation, please try with mobile device',
       );
@@ -73,13 +77,11 @@ const LandingPage = () => {
   }
 
   const getDeviceOrientationAccess = () => {
-    const isAndroid = !isIOS(); 
+    const isIOS = OS === 'ios'; 
 
-    // if (isWithinWeChat) {
-    //   setIssue('wechat');
-    // } else
-    console.log('>>>>>>>', isAndroid)
-    if (!isAndroid) {
+    if (browser === 'wechat') {
+      setIssue('wechat');
+    } else if (isIOS) {
       handleIOSPhone();
     } else {
       handleAndroidPhone();
@@ -92,8 +94,6 @@ const LandingPage = () => {
 
   useEffect(() => {
     root = document.getElementById('root');
-    // const bgImg = Background;
-    // if (window.innerWidth )
     root.style.backgroundImage = `url(${Background})`;
     return unmount;
   }, []);

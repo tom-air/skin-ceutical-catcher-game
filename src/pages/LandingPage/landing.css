@@ -151,16 +151,18 @@ section#page-issue {
 
 #page-issue .info {
   display: flex;
-  gap: 1.5vh;
+  /* gap: 1.5vh; */
 }
 
 #page-issue img#safari-info {
   width: 7.5vh;
+  margin-right: 1.5vh;
 }
 
 #page-issue img#android-info {
   width: 10vh;
   margin: 0 -1vh;
+  margin-right: 0vh;
 }
 
 #page-issue .info p {
