@@ -247,6 +247,7 @@ class GamePage extends React.Component {
             counter: counter - 1
           })
         }
+        trackEvent('button', 'click', 'game-time-up');
         this.stopGame();
       })
     }, 1000)
