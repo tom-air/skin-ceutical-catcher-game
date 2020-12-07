@@ -54,26 +54,31 @@ const LandingPage = () => {
 
   const handleIOSPhone = () => {
     const isViewInSafari = browser === 'safari';
+
     if (!isViewInSafari) {
       setIssue('must-safari');
-    } else if (DeviceOrientationEvent &&
-      typeof DeviceOrientationEvent.requestPermission === 'function') {
-      DeviceOrientationEvent.requestPermission()
-      .then(permissionState => {
-        if (permissionState === 'granted') {
-          window.isAccessOrientationGranted = true;
-          getCameraAccess();
-        }
-      })
-      .catch(console.error);
-    } else if (DeviceOrientationEvent) {
-      window.isAccessOrientationGranted = true;
-      getCameraAccess();
-    } else {
+      return true;
+    }
+    if (typeof DeviceOrientationEvent !== 'function') {
       alert(
         'Device is not supported for orientation, please try with mobile device',
       );
+      return true;
     }
+    if (typeof DeviceOrientationEvent.requestPermission !== 'function') {
+      window.isAccessOrientationGranted = true;
+      getCameraAccess();
+      return true;
+    }
+    DeviceOrientationEvent.requestPermission()
+    .then(permissionState => {
+      if (permissionState === 'granted') {
+        window.isAccessOrientationGranted = true;
+        getCameraAccess();
+        return true;
+      }
+    })
+    .catch(console.error);
   }
 
   const getDeviceOrientationAccess = () => {

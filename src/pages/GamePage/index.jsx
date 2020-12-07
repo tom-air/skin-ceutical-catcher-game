@@ -297,6 +297,9 @@ class GamePage extends React.Component {
         // set opacity to 50%
         el.material.opacity -= timer;
       } else {
+        scene.remove(el);
+        el.geometry.dispose();
+        el.material.dispose();
         this.elementOnCatch = null;
         this.removingElement = false;
       }
