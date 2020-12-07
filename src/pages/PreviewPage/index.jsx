@@ -36,6 +36,9 @@ const PreviewPage = () => {
       const root = document.getElementById('root');
       root.style.backgroundImage = 'none';
       root.style.backgroundImage = `url(${Background})`;
+      root.style.backgroundRepeat = 'no-repeat';
+      root.style.backgroundSize = 'cover';
+      root.style.backgroundPosition = 'center';
     }
   }, []);
   
