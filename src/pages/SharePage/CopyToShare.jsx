@@ -3,20 +3,33 @@ import { useAlert } from 'react-alert'
 import { trackEvent } from '../../UtilHelpers';
 
 const CopyToShare = (props) => {
-  const { msgToCopy, children } = props;
+  const { msgToCopy, children, target } = props;
   const alert = useAlert();
   const [child, setChild] = useState(children);
   const [showAlert, setAlert] = useState('');
 
   const Success = <div id="copy-hashtag">复制成功</div>;
 
-  useEffect(() => {
-    if (showAlert) {
+  const showSuccess = () => {
+    if (target) {
+      const targetToModify = document.getElementById(target);
+      targetToModify.innerHTML = '复制成功';
+      setTimeout(() => {
+        targetToModify.innerHTML = 'https://skinceuticalstrasia.cn/';
+        setAlert('');
+      }, 5000);
+    } else {
       setChild(Success);
       setTimeout(() => {
         setChild(children);
         setAlert('');
       }, 5000);
+    }
+  }
+
+  useEffect(() => {
+    if (showAlert) {
+      showSuccess();
     }
   }, [showAlert, children])
 
