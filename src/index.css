@@ -1,0 +1,78 @@
+/* @font-face {
+  font-family:"Futura";
+  src: url("./assets/fonts/Futura.ttf") format("truetype");
+} */
+
+/* @font-face {
+  font-family:"Noto Sans SC";
+  src: url("./assets/fonts/NotoSansSC-Regular.otf") format("truetype");
+  font-weight: normal;
+} */
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  font-weight: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: black;
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: none;
+}
+
+img, canvas, video {
+  pointer-events: none;
+}
+
+button {
+  outline: none;
+}
+
+#root {
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 100%;
+  background: black;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: url('./assets/Selfie_result_bg.png');
+}
+
+#root >section {
+  text-align: center;
+  margin: 0 auto;
+  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
+  width: 46.182266009vh;
+}
+
+#app-disclaimer {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%);
+  width: 100%;
+  font-size: 0.9vh;
+  line-height: 1.5vh;
+  margin-bottom: 0.5vh;
+  opacity: 0.8;
+}
+
+#app-disclaimer p {
+  margin:0;
+  text-align: center;
+  color: #E3D6C3;
+}
+
+#app-disclaimer a {
+  display: inline;
+  margin: 0 auto;
+  color: #E3D6C3;
+}

@@ -1,0 +1,33 @@
+@keyframes rotation {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(359deg);
+  }
+}
+
+section#loading-screen {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: black;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 4;
+  background-image: url('../../assets/Selfie_result_bg.png');
+  width: 100vw !Important;
+}
+
+#loading-logo {
+  position: fixed;
+  display: none;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-animation:rotation 1.5s linear infinite;
+  animation:rotation 1.5s linear infinite;
+}
