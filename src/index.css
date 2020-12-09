@@ -1,7 +1,7 @@
-@font-face {
+/* @font-face {
   font-family:"Futura";
   src: url("./assets/fonts/Futura.ttf") format("truetype");
-}
+} */
 
 /* @font-face {
   font-family:"Noto Sans SC";
@@ -22,10 +22,15 @@ html, body {
   background: black;
   -webkit-user-select: none;
   user-select: none;
+  touch-action: none;
 }
 
 img, canvas, video {
   pointer-events: none;
+}
+
+button {
+  outline: none;
 }
 
 #root {

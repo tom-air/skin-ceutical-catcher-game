@@ -62,7 +62,7 @@ const SharePage = () => {
     if (pageLoaded) {
       const card = document.getElementById('prize-card');
       card.style.left = '0px';
-      document.getElementById('screen-loading').style.display = 'none';
+      document.getElementById('loading-screen').style.display = 'none';
       // const loadingScreen = document.getElementById('fix-loading');
       // loadingScreen.style.display = 'none'
     }

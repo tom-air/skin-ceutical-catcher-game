@@ -116,6 +116,11 @@
   object-fit: cover;
   width: 100%;
   mix-blend-mode: multiply;
+  filter: saturate(80%) brightness(90%);
+}
+
+.img2#selfie-preview {
+  filter: none;
 }
 
 #selfie-winkles {
@@ -145,6 +150,11 @@
   display: flex !important;
   justify-content: center;
   align-items: center;
+}
+
+#selfie-filter.img2 {
+  box-shadow: none;
+  left: 76vw;
 }
 
 #selfie-filter .selfie-bg {
@@ -250,37 +260,9 @@
   padding-right: 2.5vh;
 }
 
-.bottom-section #start-game-button {
-  width: 9vh;
-  height: 9vh;
-  border-radius: 50%;
-  box-shadow: 0px 3px 14px #FFFFFF3B;
-  border: none;
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%);
-}
-
-.bottom-section #start-game-button:focus {
-  outline:0;
-}
-
-.bottom-section #start-game-button img {
-  width: 15vh;
-  height: 15vh;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
 .bottom-section .start-game-btn {
   position: absolute;
   display: inline-block;
-  background-image: url('../../assets/landing_start_btn.png');
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: bottom;
   height: 8vh;
   width: 24vh;
   text-align: center;
@@ -290,6 +272,10 @@
 
 .bottom-section .start-game-btn p {
   font-size: 2.3vh;
+  position: absolute;
+  top: -5%;
+  left: 50%;
+  transform: translate(-50%);
 }
 
 .bottom-section #reshoot-button {

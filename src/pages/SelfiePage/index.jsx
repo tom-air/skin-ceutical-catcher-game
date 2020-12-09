@@ -1,24 +1,31 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import * as faceapi from 'face-api.js';
 import { useHistory } from 'react-router-dom';
 import BrandLogo from '../../assets/Logo_white.png';
 import SelfieTarget from '../../assets/selfie_target.svg';
-import TopBarBg from '../../assets/Selfie_topbar.png';
-import LowBarBg from '../../assets/Selfie_low\ bar.png';
+import TopBarBg from '../../assets/selfie_topbar.png';
+import LowBarBg from '../../assets/selfie_low_bar.png';
 import SelfieTopbarGoldLine from '../../assets/selfie_topbar_gold_line.png';
 import { trackEvent } from '../../UtilHelpers';
 import './selfie.css';
+import LoadingPage from '../LoadingPage';
+import Video from './Video';
+
+faceapi.loadTinyFaceDetectorModel('/models');
 
 const SelfiePage = () => {
   let video;
   let currentFacingMode = 'user';
   let faceDetection;
+  const videoRef = useRef(null);
   const [isAllow, setAllow] = useState(false);
+  const [isLoading, setLoading] = useState(true);
   const [showAlert, setAlert] = useState('');
   const history = useHistory();
 
   const setUpFaceApi = async () => {
-    await faceapi.loadTinyFaceDetectorModel('/models')
+    // await faceapi.loadTinyFaceDetectorModel('/models')
+    // setLoading(false);
     initCameraUI();
     initCameraStream();
   }
@@ -35,9 +42,6 @@ const SelfiePage = () => {
       history.push('/');
     } else {
       setUpFaceApi();
-      const root = document.getElementById('root');
-      root.style.backgroundImage = 'none';
-      root.style.background = '#220B02';
       return unmountComponent;
     }
   }, []);
@@ -55,14 +59,10 @@ const SelfiePage = () => {
   }
   
   const initCameraStream = () => {
-    const screen = document.getElementById('main-canvas');
     const constraints = {
       audio: false,
       video: {
         width: { exact: window.innerHeight },
-        // width: { exact: window.screen.height },
-        // height: { exact: screen.clientHeight },
-        // height: { exact: window.screen.width },
         height: { exact: window.innerWidth },
         // aspectRatio: 752/375,
         facingMode: currentFacingMode,
@@ -77,13 +77,14 @@ const SelfiePage = () => {
       });
   }
 
-  const faceTracking = () => {
+  const faceTracking = async () => {
     const screen = document.getElementById('screen-selfie');
     const canvas = faceapi.createCanvasFromMedia(video);
     const selfieTarget = document.getElementById('selfie-target');
     screen.append(canvas);
     const displaySize = { width: video.offsetWidth, height: video.offsetHeight }
     faceapi.matchDimensions(canvas, displaySize)
+    // await faceapi.loadTinyFaceDetectorModel('/models');
     faceDetection = setInterval(async () => {
       const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions());
       // canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
@@ -107,7 +108,35 @@ const SelfiePage = () => {
   
   const initCameraUI = () => {
     video = document.getElementById('video');
-    video.addEventListener('play', faceTracking);
+    if (video) {
+      video.addEventListener('play', faceTracking);
+    }
+  }
+
+  const applyBrightness = (data, brightness) => {
+    for (var i = 0; i < data.length; i+= 4) {
+      data[i] += 255 * (brightness / 100);
+      data[i+1] += 255 * (brightness / 100);
+      data[i+2] += 255 * (brightness / 100);
+    }
+  }
+
+  const truncateColor = (value) => {
+    if (value < 0) {
+      value = 0;
+    } else if (value > 255) {
+      value = 255;
+    }
+    return value;
+  }
+
+  const applyContrast = (data, contrast) => {
+    const factor = (259.0 * (contrast + 255.0)) / (255.0 * (259.0 - contrast));
+    for (var i = 0; i < data.length; i+= 4) {
+      data[i] = truncateColor(factor * (data[i] - 128.0) + 128.0);
+      data[i+1] = truncateColor(factor * (data[i+1] - 128.0) + 128.0);
+      data[i+2] = truncateColor(factor * (data[i+2] - 128.0) + 128.0);
+    }
   }
 
   const onCapture = async () => {
@@ -131,7 +160,10 @@ const SelfiePage = () => {
       enhancedCtx.translate(canvas.width, 0);
       enhancedCtx.scale(-1,1);
       enhancedCtx.drawImage(input, x, y, width, height, 0, 0, width, height);
-      enhancedCtx.filter = 'brightness(280%) saturate(130%)';
+      const imageData = enhancedCtx.getImageData(0, 0, canvas.width, canvas.height);
+      applyBrightness(imageData.data, 8);
+      // applyContrast(imageData.data, 10);
+      enhancedCtx.putImageData(imageData, 0, 0);
       const dataURI = canvas.toDataURL('image/png');
       const enhancedDataURI = ehancedCanvas.toDataURL('image/png');
       window.selfieURI = dataURI;
@@ -143,9 +175,11 @@ const SelfiePage = () => {
 
   const submitBtnStyle = { opacity: isAllow ? '100%' : '50%' };
   
+  // if (isLoading) return <LoadingPage />;
   return (
     <section>
-      <video playsInline autoPlay id="video"></video>
+      <video playsInline autoPlay id="video" ref={videoRef}></video>
+      {videoRef.current && <Video video={videoRef.current} />}
       <section id="screen-selfie">
         <div className="topbar">
           <img className="brand-logo" src={BrandLogo} />

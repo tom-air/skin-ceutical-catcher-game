@@ -106,7 +106,7 @@
   font-weight: 500;
   z-index: 1;
   position: absolute;
-  top: 45%;
+  top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 100%;
@@ -212,4 +212,32 @@ section#page-issue {
 #page-issue .must-in-safari .start-btn p {
   font-size: 2.2vh;
   line-height: 3vh;
+}
+
+#landing-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100%;
+  z-index: -1;
+  object-fit: cover;
+}
+
+.switch-on-orientation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: black;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: url('../../assets/Selfie_result_bg.png');
+}
+
+.switch-on-orientation #orientation-guide {
+  width: 100%;
+  transform: translateY(-25vh);
 }

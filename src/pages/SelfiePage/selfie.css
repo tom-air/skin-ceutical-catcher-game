@@ -104,6 +104,17 @@
   z-index: -1;
   /* width: 46.182266009vh; */
   top: 1;
+  opacity: 0.01;
+  /* transform: scaleX(-1); */
+}
+
+.video-canvas {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.video-canvas canvas {
   transform: scaleX(-1);
 }
 

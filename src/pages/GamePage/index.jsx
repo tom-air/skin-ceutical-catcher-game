@@ -1,6 +1,7 @@
 import React from 'react';
 import * as THREE from 'three';
 import { withRouter } from 'react-router-dom';
+import $ from "jquery";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import { DeviceOrientationControls } from 'three/examples/jsm/controls/DeviceOrientationControls.js';
 import BrandLogo from '../../assets/Logo_white.png';
@@ -15,14 +16,17 @@ import TargetArrow from '../../assets/target_arrow.svg';
 import ArMeasureElement from '../../assets/ar_measure_element.png';
 import { createGoldPicElements } from './loaderUtils';
 import { trackEvent } from '../../UtilHelpers';
+import VideoCanvas from '../SelfiePage/Video';
+import goldEle from '../../assets/gold_elements_7.png';
 import './game.css';
 import '../PreviewPage/preview.css';
+import '../SelfiePage/selfie.css';
 
 const elementBenefits = ['中和\n自由基', '減退\n細紋', '預防\n光老化', '抗氧\n保護']
 
 let video, camera, scene, controls, screen, track, renderer, animateFrame, raycaster;
 let activeCatchCircle, catchCircle, arrowAni, arBenefitLetter, arBenifitArrow,
-progresIndicator , progressNumber, selfieWinkles, pulseCicle;
+progresIndicator , progressNumber, selfieWinkles, pulseCicle, endGameAni, progressCount, selfiePreview;
 
 class GamePage extends React.Component {
   isGameStarted = false;
@@ -31,9 +35,11 @@ class GamePage extends React.Component {
   targetEleId = '';
   intersects = [];
   showBenifitArrow = false;
+  // videoRef = React.createRef();
 
   state = {
     counter: 60,
+    videoRef: null,
   }
 
   componentDidMount() {
@@ -60,9 +66,15 @@ class GamePage extends React.Component {
     progresIndicator = document.getElementById('progress-indicator');
     progressNumber = document.getElementById('progress-indicator-number');
     selfieWinkles = document.getElementById('selfie-winkles');
+    selfiePreview = $('#selfie-preview');
     pulseCicle = document.getElementById('circle2');
-  
-    video.play();
+    endGameAni = document.getElementById('end-game-gold-element');
+    progressCount = $('#progress-indicator-number');
+
+    // video.play();
+    if (!this.state.videoRef) {
+      this.setState({ videoRef: video });
+    }
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1100);
     scene = new THREE.Scene();
     controls = new DeviceOrientationControls(camera);
@@ -77,6 +89,7 @@ class GamePage extends React.Component {
     renderer.setPixelRatio( window.devicePixelRatio );
     renderer.setSize( window.innerWidth, window.innerHeight );
     screen = document.getElementById('screen-game');
+    renderer.domElement.id = 'three-js-world';
     screen.appendChild(renderer.domElement);
 
     window.addEventListener('resize', this.onWindowResize, false);
@@ -85,8 +98,8 @@ class GamePage extends React.Component {
   }
 
   animate = (timeStamp) => {
-    animateFrame = window.requestAnimationFrame(this.animate);
     this.trackCamera();
+    animateFrame = window.requestAnimationFrame(this.animate);
     this.removeEleAnimation()
     controls.update();
     renderer.render(scene, camera);
@@ -119,16 +132,27 @@ class GamePage extends React.Component {
     // this.detectTargetInAim(sceneEls)
     for (let i = 0; i < sceneEls.length; i ++) {
       const element = sceneEls[i];
-      element.lookAt(camera.position);
-      this.elementAnimation(element, i);
-      const positionScreenSpace = element.position.clone().project(camera);
-      positionScreenSpace.setZ(0);
-      const positionLenToCenter = positionScreenSpace.length();
-      if (positionLenToCenter < threshold) {
-        elesToCatch.push({
-          eleId: element.name,
-          distance: positionLenToCenter,
-        });
+      if (this.isGameEnded) {
+        element.position.set(0, 0, 0)
+        if (!this.end) {
+          endGameAni.classList.add('animate')
+          const newProgress = 100;
+          this.updateProgess(newProgress);
+        }
+        this.end = true;
+      } else {
+        element.lookAt(camera.position);
+        element.quaternion.copy(camera.quaternion);
+        this.elementAnimation(element, i);
+        const positionScreenSpace = element.position.clone().project(camera);
+        positionScreenSpace.setZ(0);
+        const positionLenToCenter = positionScreenSpace.length();
+        if (positionLenToCenter < threshold) {
+          elesToCatch.push({
+            eleId: element.name,
+            distance: positionLenToCenter,
+          });
+        }
       }
     }
     if (elesToCatch.length) {
@@ -149,24 +173,11 @@ class GamePage extends React.Component {
 
   elementAnimation = (ele, i) => {
     const timer = 0.001 * Date.now();
-
-    if (this.isGameEnded) {
-      // const factor = 0.0000000001 * timer;
-      // // ele.position.x += factor;
-      // const d = ele.position.x - camera.position.x;
-      // if (ele.position.x > camera.position.x) {
-      //   ele.position.x -= factor;
-      //   // ele.position.x -= Math.min(1000, d);
-      // }
-      // if (ele.position.y > camera.position.y) {
-      //   ele.position.y -= factor;
-      //   // ele.position.x -= Math.min(1000, d);
-      // }
-      // ele.position.y += factor;
-      // ele.position.z -= factor;
-    } else if (this.numOfElementCaught >= 1) {
-      ele.position.y += 0.005 * Math.sin(timer + i * 300);
-      ele.position.x += 0.005 * Math.sin(timer + -i * 3000);
+    if (this.numOfElementCaught >= 1) {
+      ele.position.y += 0.02 * Math.sin(timer * i * 0.3);
+      ele.position.x += 0.05 * Math.sin(timer * -i * 0.51);
+      // ele.position.y += 0.015 * Math.sin(timer + i * 320000000);
+      // ele.position.x += 0.015 * Math.sin(timer + -i * 640000000);
     }
   }
 
@@ -226,7 +237,7 @@ class GamePage extends React.Component {
     clearInterval(this.gameCounter);
     setTimeout(() => {
       this.props.history.push('/share');
-    }, 1500);
+    }, 3800);
   }
 
   // endAnimation = () => {
@@ -269,10 +280,15 @@ class GamePage extends React.Component {
   onCatchElement = () => {
     if (!this.targetEleId) return null;
     if (!this.showBenifitArrow) {
-      this.numOfElementCaught += 1;
       this.removeElement();
       this.renderBenefitArrow();
-      this.updateProgess();
+      this.numOfElementCaught += 1;
+      let progressPercent = Math.floor((100 - 25) / 7 * this.numOfElementCaught);
+      if (progressPercent > 75) {
+        progressPercent = 75;
+      }
+      const newProgress = progressPercent + 25;
+      this.updateProgess(newProgress);
       this.elementOnCatch = scene.getObjectByName(this.targetEleId);
       if (this.numOfElementCaught === 1) {
         this.startGame();
@@ -290,12 +306,12 @@ class GamePage extends React.Component {
       const el = this.elementOnCatch;
       const timer = 0.00000000000001 * Date.now();
   
-      const scale = 1 + timer * 10;
-      if (el.material.opacity > 0) {
-        el.scale.set(scale, scale, scale)
+      if (el.material.opacity >= 0) {
+        el.scale.x += timer * 3.5;
+        el.scale.y += timer * 3.5;
         el.material.transparent = true;
         // set opacity to 50%
-        el.material.opacity -= timer;
+        el.material.opacity -= timer * 2.2;
       } else {
         scene.remove(el);
         el.geometry.dispose();
@@ -339,23 +355,51 @@ class GamePage extends React.Component {
     arrowAni = setTimeout(this.resetCSSUpdates, 1500);
   }
 
-  updateProgess = () => {
-    let progressPercent = Math.floor((100 - 25) / 7 * this.numOfElementCaught);
-    if (progressPercent > 75) {
-      progressPercent = 75;
-    }
-    const newProgress = progressPercent + 25
-    const percent = `${newProgress}%`
-    progressNumber.textContent = newProgress;
-    progresIndicator.style.width = percent;
-    progresIndicator.style.boxShadow = '0px 0px 12px 6px #F7CC92';
+  updateProgess = (newProgress) => {
+    const percent = `${newProgress}%`;
+    // progressNumber.textContent = newProgress;
+    progressCount.prop('Counter', $(progressCount).text()).delay(800).animate({
+      Counter: newProgress,
+    }, {
+      duration: 1000,
+      // easing: 'swing',
+      step: function () {
+        $(progressCount).text(Math.ceil(this.Counter))
+      }
+    })
+    const filters = selfiePreview.css('filter').split(" ");
+    const [saturate, brightness] = filters;
+    const curSaturate = Number(saturate.match(/[\d\.?]+/g)[0]);
+    const curBrightness = Number(brightness.match(/[\d\.?]+/g)[0]);
+    $({
+      saturate: curSaturate,
+      brightness: curBrightness,
+    }).animate({
+      saturate: curSaturate + 0.05,
+      brightness: curBrightness + 0.05,
+    }, {
+      duration: 500,
+      easing: 'swing',
+      step: function() {
+          selfiePreview.css({
+              "-webkit-filter": 'saturate(' + this.saturate + ') brightness(' + this.brightness + ')',
+              "filter": 'saturate(' + this.saturate + ') brightness(' + this.brightness + ')'
+          });
+      }
+    });
     selfieWinkles.style.opacity = (1 - (1/7) * this.numOfElementCaught);
     pulseCicle.style.display = 'block';
+    if (newProgress === 100) {
+      pulseCicle.classList.remove('pulse');
+      pulseCicle.classList.add('pulse2');
+      progresIndicator.style.transitionDelay = '0.8s';
+    }
+    progresIndicator.style.width = percent;
+    progresIndicator.style.boxShadow = '0px 0px 12px 6px #F7CC92';
   }
 
   render() {
-    const { counter } = this.state;
-
+    const { counter, videoRef } = this.state;
     return (
       <section id="screen-game">
         <div className="top-section">
@@ -437,9 +481,23 @@ class GamePage extends React.Component {
             </button> */}
           </div>
         </div>
+        <div id="end-game-gold-element">
+          <img src={goldEle} className="gld-img" id="gld-1" />
+          <img src={goldEle} className="gld-img" id="gld-2" />
+          <img src={goldEle} className="gld-img" id="gld-3" />
+          <img src={goldEle} className="gld-img" id="gld-4" />
+          <img src={goldEle} className="gld-img" id="gld-5" />
+          <img src={goldEle} className="gld-img" id="gld-6" />
+          <img src={goldEle} className="gld-img" id="gld-7" />
+          <img src={goldEle} className="gld-img" id="gld-8" />
+          <img src={goldEle} className="gld-img" id="gld-9" />
+          <img src={goldEle} className="gld-img" id="gld-10" />
+          <img src={goldEle} className="gld-img" id="gld-11" />
+        </div>
         <div id="ar-measure-bg">
           <img src={ArMeasureElement} />
         </div>
+        {videoRef && <VideoCanvas video={videoRef} />}
         <video id="rear-video" autoPlay playsInline></video>
         <div id="overlay"></div>
       </section>

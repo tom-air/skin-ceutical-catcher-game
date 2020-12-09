@@ -4,6 +4,7 @@ import Safari from '../../assets/safari.svg';
 import Android from '../../assets/android.svg';
 import BtnAni from '../../assets/btn_animate.gif';
 import CopyToShare from '../SharePage/CopyToShare';
+import ErrorMotionSensor from '../../assets/error_motion_sensor.png';
 
 const PageModal = (props) => {
   const { page } = props;
@@ -46,6 +47,13 @@ const PageModal = (props) => {
               <p>复制链接</p>
             </div>
           </CopyToShare>
+        </div>
+      );
+      break;
+    case 'set-orientation':
+      pageContent = (
+        <div className="switch-on-orientation">
+          <img id="orientation-guide" src={ErrorMotionSensor} />
         </div>
       );
       break;

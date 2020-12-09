@@ -1,32 +1,32 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import Spritesheet from 'react-responsive-spritesheet';
+import StartBtnAni from '../../assets/start_btn_ani.png';
 import BrandLogo from '../../assets/Logo_white.png';
-// import CatchButton from '../../assets/selfie_result_catch_btn.png';
 import ReshootButton from '../../assets/selfie_result_reshoot_btn.png';
 import CatchCTAArrow from '../../assets/selfie_result_cta_arrow.png';
 import SelfieResultCircle from '../../assets/selfie_result_circle.png';
 import Background from '../../assets/Selfie_result_bg.png';
-// import selfieResultGoldBg from '../../assets/gold_element_ani.gif';
-// import selfieResultGoldBg from '../../assets/selfie_result_gold_bg.png';
 import SelfieResultWinkles from '../../assets/selfie_result_wrinkle.png';
-// import StartBtn from '../../assets/landing_start btn.png';
 import { trackEvent } from '../../UtilHelpers';
 import './preview.css';
-import gold1 from '../../assets/gold_elements/1.png';
-import gold2 from '../../assets/gold_elements/2.png';
-import gold3 from '../../assets/gold_elements/3.png';
-import gold4 from '../../assets/gold_elements/4.png';
-import gold5 from '../../assets/gold_elements/5.png';
-import gold6 from '../../assets/gold_elements/6.png';
-import gold7 from '../../assets/gold_elements/7.png';
-import gold8 from '../../assets/gold_elements/8.png';
-import gold9 from '../../assets/gold_elements/9.png';
-import gold10 from '../../assets/gold_elements/10.png';
-import gold11 from '../../assets/gold_elements/11.png';
+import gold1 from '../../assets/gold_elements_1.png';
+import gold2 from '../../assets/gold_elements_2.png';
+import gold3 from '../../assets/gold_elements_3.png';
+import gold4 from '../../assets/gold_elements_4.png';
+import gold5 from '../../assets/gold_elements_5.png';
+import gold6 from '../../assets/gold_elements_6.png';
+import gold7 from '../../assets/gold_elements_7.png';
+import gold8 from '../../assets/gold_elements_8.png';
+import gold9 from '../../assets/gold_elements_9.png';
+import gold10 from '../../assets/gold_elements_10.png';
+import gold11 from '../../assets/gold_elements_11.png';
+import LoadingPage from '../LoadingPage';
 
 const PreviewPage = () => {
   const history = useHistory();
   const meterRef = useRef(null);
+  const [pageLoad, setPageLoad] = useState(false);
   const pageRef = useRef(null)
 
   useEffect(() => {
@@ -58,68 +58,83 @@ const PreviewPage = () => {
     history.push('/game');
   }
 
+  const onImgLoad = () => {
+    setPageLoad(true);
+  }
+
   return (
-    <section id="screen-preview" ref={pageRef}>
-      <div className="top-section">
-        <img className="brand-logo" src={BrandLogo} />
-        <div className="highlight-box">
-          <p>没有使用抗氧化产品的你<br />皮肤氧化，皱纹加深</p>
+    <>
+      {!pageLoad && <LoadingPage />}
+      <section id="screen-preview" ref={pageRef}>
+        <div className="top-section">
+          <img className="brand-logo" src={BrandLogo} />
+          <div className="highlight-box">
+            <p>没有使用抗氧化产品的你<br />皮肤氧化，皱纹加深</p>
+          </div>
         </div>
-      </div>
-      <div className="preview-container">
-        <img id="result-circle" src={SelfieResultCircle} />
-        <div className="container-bg"></div>
-        <div id="selfie-filter">
-          <img id="selfie-winkles" src={SelfieResultWinkles} />
-          <img id="selfie-preview" src={window.selfieURI} />
+        <div className="preview-container">
+          <img id="result-circle" src={SelfieResultCircle} />
+          <div className="container-bg"></div>
+          <div id="selfie-filter">
+            <img id="selfie-winkles" src={SelfieResultWinkles} />
+            <img id="selfie-preview" src={window.selfieURI} />
+          </div>
         </div>
-      </div>
-      <div className="preview-info">
-        <div className="text-info">
-          <p>你的抗老力:</p>
-          <h3>25</h3>
-          <h4>%</h4>
-        </div>
-        <div className="meter-bar">
-          <p>低</p>
-            <div className="meter-container">
-              <div className="meter">
-                <span ref={meterRef}></span>
+        <div className="preview-info">
+          <div className="text-info">
+            <p>你的抗老力:</p>
+            <h3>25</h3>
+            <h4>%</h4>
+          </div>
+          <div className="meter-bar">
+            <p>低</p>
+              <div className="meter-container">
+                <div className="meter">
+                  <span ref={meterRef}></span>
+                </div>
               </div>
-            </div>
-          <p>高</p>
+            <p>高</p>
+          </div>
+          <div className="submit-text">
+            <p>立即开始提升抗氧力</p>
+            <img id="cta-arrow" src={CatchCTAArrow} />
+          </div>
         </div>
-        <div className="submit-text">
-          <p>立即开始提升抗氧力</p>
-          <img id="cta-arrow" src={CatchCTAArrow} />
+        <div className="bottom-section">
+          <div className="start-game-btn" onClick={onClick}>
+            <Spritesheet
+              image={StartBtnAni}
+              widthFrame={402}
+              heightFrame={122}
+              steps={60}
+              fps={45}
+              onPlay={onImgLoad}
+              autoplay
+              loop
+              isResponsive
+            />
+            <p>开始游戏</p>
+          </div>
+          <button id="reshoot-button" onClick={onClickReshoot}>
+            <img src={ReshootButton} />
+            <p>重拍</p>
+          </button>
         </div>
-      </div>
-      <div className="bottom-section">
-        {/* <button id="start-game-button" onClick={() => { history.push('/game') }}>
-          <img src={CatchButton} />
-        </button> */}
-        <div className="start-game-btn" onClick={onClick}>
-          <p>开始游戏</p>
+        <div className="gold-element-bg">
+          <img src={gold1} id="gld-1" />
+          <img src={gold2} id="gld-2" />
+          <img src={gold3} id="gld-3" />
+          <img src={gold4} id="gld-4" />
+          <img src={gold5} id="gld-5" />
+          <img src={gold6} id="gld-6" />
+          <img src={gold7} id="gld-7" />
+          <img src={gold8} id="gld-8" />
+          <img src={gold9} id="gld-9" />
+          <img src={gold10} id="gld-10" />
+          <img src={gold11} id="gld-11" />
         </div>
-        <button id="reshoot-button" onClick={onClickReshoot}>
-          <img src={ReshootButton} />
-          <p>重拍</p>
-        </button>
-      </div>
-      <div className="gold-element-bg">
-        <img src={gold1} id="gld-1" />
-        <img src={gold2} id="gld-2" />
-        <img src={gold3} id="gld-3" />
-        <img src={gold4} id="gld-4" />
-        <img src={gold5} id="gld-5" />
-        <img src={gold6} id="gld-6" />
-        <img src={gold7} id="gld-7" />
-        <img src={gold8} id="gld-8" />
-        <img src={gold9} id="gld-9" />
-        <img src={gold10} id="gld-10" />
-        <img src={gold11} id="gld-11" />
-      </div>
-    </section>
+      </section>
+    </>
   );
 };
 
