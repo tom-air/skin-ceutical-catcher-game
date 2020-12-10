@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import BrandLogo from '../../assets/Logo_white.png';
-import Background from '../../assets/landing_bg_md.png';
+import { config, trackEvent, getDeviceOS } from '../../UtilHelpers';
 import InApp from 'detect-inapp';
 import LoadingPage from '../LoadingPage';
-// import PageModal from './PageModal';
-import { trackEvent, getDeviceOS } from '../../UtilHelpers';
 import AnimateBtn from './AnimateBtn';
 import './landing.css';
+
+const BrandLogo = `${config.assetsUrl}/Logo_white.png`;
+const Background = `${config.assetsUrl}/landing_bg_md.png`;
+// import PageModal from './PageModal';
 
 const PageModal = React.lazy(() => import('./PageModal'));
 
@@ -138,7 +139,6 @@ const LandingPage = () => {
             <div className="bg-container"></div>
           </div> */}
           <div id="land-title" />
-          <p id="test"></p>
           <AnimateBtn
             title="开始体验"
             onClick={getDeviceOrientationAccess}

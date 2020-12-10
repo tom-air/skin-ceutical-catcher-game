@@ -25,7 +25,7 @@
 .topbar {
   width: 100%;
   padding: 2.3vh 0 0;
-  /* background: url('../../assets/Selfie_topbar.png'); */
+  /* background: url('https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/assets/Selfie_topbar.png'); */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -126,7 +126,7 @@
   max-height: 480px;
   border-radius: 50%;
   z-index: 4;
-  background: url('../../assets/selfieCircle.svg') no-repeat;
+  background: url('https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/assets/selfieCircle.svg') no-repeat;
   box-shadow: 0 0 999px #2A1102;
   background-size: contain;
 }
@@ -160,7 +160,7 @@
   background-position: center;
   background-size: auto;
   background-repeat: no-repeat;
-  background-image: url('../../assets/selfieBtn.svg');
+  background-image: url('https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/assets/selfieBtn.svg');
   z-index: 1;
   top: 50%;
   transform: translateY(-50%);
@@ -180,7 +180,7 @@
 }
 
 #alert-box {
-  background-image: url('../../assets/selfie_warning.png');
+  background-image: url('https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/assets/selfie_warning.png');
   background-repeat: no-repeat;
   background-size: cover;
   width: 31.2vh;

@@ -2,25 +2,32 @@ import React from 'react';
 import * as THREE from 'three';
 import { withRouter } from 'react-router-dom';
 import $ from "jquery";
+import Spritesheet from 'react-responsive-spritesheet';
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import { DeviceOrientationControls } from 'three/examples/jsm/controls/DeviceOrientationControls.js';
-import BrandLogo from '../../assets/Logo_white.png';
-import CatchCircle from '../../assets/ar_teach_catch_circle.png';
-import CatchCTAArrow from '../../assets/selfie_result_cta_arrow.png';
-import ActiveCatchCircle from '../../assets/ar_active_catch_circle.png';
-import CatchCircleBg from '../../assets/ar_catch_circle_bg.png';
-import SelfieResultWinkles from '../../assets/selfie_result_wrinkle.png';
-import ArBenifitArrow from '../../assets/ar_benifit.png';
-import PlayInfoArea from '../../assets/player_info_area.png';
-import TargetArrow from '../../assets/target_arrow.svg';
-import ArMeasureElement from '../../assets/ar_measure_element.png';
+import { trackEvent, config } from '../../UtilHelpers';
 import { createGoldPicElements } from './loaderUtils';
-import { trackEvent } from '../../UtilHelpers';
 import VideoCanvas from '../SelfiePage/Video';
-import goldEle from '../../assets/gold_elements_7.png';
 import './game.css';
 import '../PreviewPage/preview.css';
 import '../SelfiePage/selfie.css';
+// import mobileMoveAni from '../../assets/mobile_move_ani.png';
+
+const BrandLogo = `${config.assetsUrl}/Logo_white.png`;
+const CatchCircle = `${config.assetsUrl}/ar_teach_catch_circle.png`;
+const CatchCTAArrow = `${config.assetsUrl}/selfie_result_cta_arrow.png`;
+const ActiveCatchCircle = `${config.assetsUrl}/ar_active_catch_circle.png`;
+const CatchCircleBg = `${config.assetsUrl}/ar_catch_circle_bg.png`;
+const SelfieResultWinkles = `${config.assetsUrl}/selfie_result_wrinkle.png`;
+const ArBenifitArrow = `${config.assetsUrl}/ar_benifit.png`;
+const PlayInfoArea = `${config.assetsUrl}/player_info_area.png`;
+const TargetArrow = `${config.assetsUrl}/target_arrow.svg`;
+const ArMeasureElement = `${config.assetsUrl}/ar_measure_element.png`;
+const goldEle1 = 'https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/public/serum1.png';
+const goldEle2 = 'https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/public/serum2.png';
+const goldEle3 = 'https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/public/serum3.png';
+const goldEle4 = 'https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/public/serum4.png';
+const mobileMoveAni = `${config.assetsUrl}/mobile_move_ani.png`;
 
 const elementBenefits = ['中和\n自由基', '減退\n細紋', '預防\n光老化', '抗氧\n保護']
 
@@ -43,12 +50,12 @@ class GamePage extends React.Component {
   }
 
   componentDidMount() {
-    if (!window.startApp) {
-      this.props.history.replace('/');
-    } else if (window.isAccessOrientationGranted) {
-      this.init3D();
-      window.requestAnimationFrame(this.animate);
-    }
+    // if (!window.startApp) {
+    //   this.props.history.replace('/');
+    // } else if (window.isAccessOrientationGranted) {
+    // }
+    this.init3D();
+    window.requestAnimationFrame(this.animate);
   }
 
   componentWillUnmount() {
@@ -174,8 +181,8 @@ class GamePage extends React.Component {
   elementAnimation = (ele, i) => {
     const timer = 0.001 * Date.now();
     if (this.numOfElementCaught >= 1) {
-      ele.position.y += 0.02 * Math.sin(timer * i * 0.3);
-      ele.position.x += 0.05 * Math.sin(timer * -i * 0.51);
+      ele.position.y += 0.005 * Math.sin(timer * i * 0.4);
+      ele.position.x += 0.01 * Math.sin(timer * -i * 0.8);
       // ele.position.y += 0.015 * Math.sin(timer + i * 320000000);
       // ele.position.x += 0.015 * Math.sin(timer + -i * 640000000);
     }
@@ -185,7 +192,7 @@ class GamePage extends React.Component {
     for (let i = 0; i < 20; i += 1) {
       const id = `gold-element-${i}`;
       try {
-        const goldEl = createGoldPicElements(id);
+        const goldEl = createGoldPicElements(id, i);
         scene.add(goldEl);
       } catch (err) {
         console.log('page error>', err)
@@ -307,8 +314,8 @@ class GamePage extends React.Component {
       const timer = 0.00000000000001 * Date.now();
   
       if (el.material.opacity >= 0) {
-        el.scale.x += timer * 3.5;
-        el.scale.y += timer * 3.5;
+        el.scale.x += timer * 4.5;
+        el.scale.y += timer * 4.5;
         el.material.transparent = true;
         // set opacity to 50%
         el.material.opacity -= timer * 2.2;
@@ -327,7 +334,7 @@ class GamePage extends React.Component {
   }
 
   resetCSSUpdates = () => {
-    arBenifitArrow.classList.remove('anime');
+    // arBenifitArrow.classList.remove('anime');
     pulseCicle.classList.remove('pulse');
     progresIndicator.style.boxShadow = '0px 0px 4px #391000D8';
     this.showBenifitArrow = false;
@@ -340,15 +347,15 @@ class GamePage extends React.Component {
     this.showBenifitArrow = true;
     if (aniArrow.length) {
       clearTimeout(arrowAni);
-      const arrow = aniArrow[0];
-      arrow.style.animation = 'none';
-      arrow.getClientRects();
-      arrow.style.animation = null;
+      // const arrow = aniArrow[0];
+      // arrow.style.animation = 'none';
+      // arrow.getClientRects();
+      // arrow.style.animation = null;
       pulseCicle.style.animation = 'none';
       pulseCicle.getClientRects();
       pulseCicle.style.animation = null;
     } else {
-      arBenifitArrow.classList.add('anime');
+      // arBenifitArrow.classList.add('anime');
       pulseCicle.classList.add('pulse');
     }
     arBenefitLetter.textContent = benefitLabel;
@@ -466,10 +473,24 @@ class GamePage extends React.Component {
             <img id="arrow-bottom" src={TargetArrow} />
             <img id="arrow-left" src={TargetArrow} />
             <img id="arrow-right" src={TargetArrow} />
+            <p id="target-text">点击</p>
           </div>
           <div className="bottom-part">
             <div className="submit-text">
-              <img id="cta-arrow" src={CatchCTAArrow} />
+              {/* <img id="cta-arrow" src={CatchCTAArrow} /> */}
+              <div id="mobile-ani">
+                <Spritesheet
+                  image={mobileMoveAni}
+                  widthFrame={152}
+                  heightFrame={152}
+                  steps={89}
+                  fps={59}
+                  // onPlay={onImgLoad}
+                  autoplay
+                  loop
+                  isResponsive
+                />
+              </div>
               <p>左右移动捕捉抗氧精华</p>
             </div>
             {/* <button id="start-game-button">
@@ -482,17 +503,17 @@ class GamePage extends React.Component {
           </div>
         </div>
         <div id="end-game-gold-element">
-          <img src={goldEle} className="gld-img" id="gld-1" />
-          <img src={goldEle} className="gld-img" id="gld-2" />
-          <img src={goldEle} className="gld-img" id="gld-3" />
-          <img src={goldEle} className="gld-img" id="gld-4" />
-          <img src={goldEle} className="gld-img" id="gld-5" />
-          <img src={goldEle} className="gld-img" id="gld-6" />
-          <img src={goldEle} className="gld-img" id="gld-7" />
-          <img src={goldEle} className="gld-img" id="gld-8" />
-          <img src={goldEle} className="gld-img" id="gld-9" />
-          <img src={goldEle} className="gld-img" id="gld-10" />
-          <img src={goldEle} className="gld-img" id="gld-11" />
+          <img src={goldEle1} className="gld-img" id="gld-1" />
+          <img src={goldEle2} className="gld-img" id="gld-2" />
+          <img src={goldEle3} className="gld-img" id="gld-3" />
+          <img src={goldEle4} className="gld-img" id="gld-4" />
+          <img src={goldEle1} className="gld-img" id="gld-5" />
+          <img src={goldEle2} className="gld-img" id="gld-6" />
+          <img src={goldEle3} className="gld-img" id="gld-7" />
+          <img src={goldEle4} className="gld-img" id="gld-8" />
+          <img src={goldEle1} className="gld-img" id="gld-9" />
+          <img src={goldEle2} className="gld-img" id="gld-10" />
+          <img src={goldEle3} className="gld-img" id="gld-11" />
         </div>
         <div id="ar-measure-bg">
           <img src={ArMeasureElement} />

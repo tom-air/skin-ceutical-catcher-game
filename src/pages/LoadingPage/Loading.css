@@ -1,9 +1,9 @@
 @keyframes rotation {
   from {
-    transform: translate(-50%, -50%) rotate(0deg);
+    transform: rotate(0deg);
   }
   to {
-    transform: translate(-50%, -50%) rotate(359deg);
+    transform: rotate(359deg);
   }
 }
 
@@ -18,16 +18,18 @@ section#loading-screen {
   background-repeat: no-repeat;
   background-position: center;
   z-index: 4;
-  background-image: url('../../assets/Selfie_result_bg.png');
+  background-image: url('https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/assets/Selfie_result_bg.png');
   width: 100vw !Important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #loading-logo {
-  position: fixed;
-  display: none;
+  /* position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%); */
   -webkit-animation:rotation 1.5s linear infinite;
   animation:rotation 1.5s linear infinite;
 }

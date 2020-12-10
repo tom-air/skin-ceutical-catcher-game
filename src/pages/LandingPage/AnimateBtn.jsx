@@ -1,6 +1,8 @@
 import React from 'react';
 import Spritesheet from 'react-responsive-spritesheet';
-import StartBtnAni from '../../assets/start_btn_ani.png';
+import { config } from '../../UtilHelpers';
+
+const StartBtnAni = `${config.assetsUrl}/start_btn_ani.png`;
 
 const AnimateBtn = (props) => {
   const { className, title, onClick, onImgLoad } = props;

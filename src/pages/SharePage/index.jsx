@@ -1,37 +1,34 @@
 import React, { useEffect, useState, Suspense } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import BrandLogo from '../../assets/Logo_white.png';
-import './share.css';
-import Background from '../../assets/Selfie_result_bg.png';
-import faceBefore from '../../assets/prize_face_picture_before.png';
-import faceAfter from '../../assets/prize_face_picture_after.png';
-import wechat from '../../assets/wechat.svg';
-import weibo from '../../assets/weibo.svg';
-import copy from '../../assets/copy.svg';
-// import PrizeCardCom from './PrizeCardCom';
+import { config, trackEvent } from '../../UtilHelpers';
 import CopyToShare from './CopyToShare';
-import { trackEvent } from '../../UtilHelpers';
-import '../PreviewPage/preview.css';
 import LoadingPage from '../LoadingPage';
-import LoadingLogo from '../../assets/loading.png';
-import prizeCard from '../../assets/prize_card.png';
-import prizeCardQRcode from '../../assets/prize_card_qr_code.png';
-import skinCBottle from '../../assets/skin_c_bottle.png';
-import goldElementBg from '../../assets/prize_gold_element_bg.png';
-import prizeCardOutline from '../../assets/prize_card_outline.png';
 import PrizeCardCom from './PrizeCardCom';
+import './share.css';
+const BrandLogo = `${config.assetsUrl}/Logo_white.png`;
+const faceBefore = `${config.assetsUrl}/prize_face_picture_before.png`;
+const faceAfter = `${config.assetsUrl}/prize_face_picture_after.png`;
+const wechat = `${config.assetsUrl}/wechat.svg`;
+const weibo = `${config.assetsUrl}/weibo.svg`;
+const copy = `${config.assetsUrl}/copy.svg`;
+const prizeCard = `${config.assetsUrl}/prize_card.png`;
+const prizeCardQRcode = `${config.assetsUrl}/prize_card_qr_code.png`;
+const skinCBottle = `${config.assetsUrl}/skin_c_bottle.png`;
+const goldElementBg = `${config.assetsUrl}/prize_gold_element_bg.png`;
+const prizeCardOutline = `${config.assetsUrl}/prize_card_outline.png`;
 // const PrizeCardCom = React.lazy(() => import('./PrizeCardCom'));
+// import '../PreviewPage/preview.css';
 
 const SharePage = () => {
   let root, disclaimer, screen;
   const history = useHistory();
   const [imgLoad, setLoaded] = useState(0);
   const [pageLoaded, setPageLoaded] = useState(false);
-  const totalImg = 5;
+  const totalImg = 6;
 
   const unmount = () => {
-    root.style.backgroundImage = 'none';
+    // root.style.backgroundImage = 'none';
     root.style.overflowY = 'none';
     disclaimer.style.position = 'fixed';
     root.appendChild(disclaimer);
@@ -42,7 +39,7 @@ const SharePage = () => {
       history.replace('/');
     } else {
       root = document.getElementById('root');
-      root.style.backgroundImage = `url(${Background})`;
+      // root.style.backgroundImage = `url(${Background})`;
       root.style.overflowY = 'scroll';
       disclaimer = document.getElementById('app-disclaimer');
       screen = document.getElementById('screen-share');
@@ -54,6 +51,7 @@ const SharePage = () => {
 
   useEffect(() => {
     if (imgLoad === totalImg) {
+      console.log('>all image load', imgLoad, totalImg)
       PrizeCardCom(() => setPageLoaded(true));
     }
   }, [imgLoad])
@@ -63,13 +61,12 @@ const SharePage = () => {
       const card = document.getElementById('prize-card');
       card.style.left = '0px';
       document.getElementById('loading-screen').style.display = 'none';
-      // const loadingScreen = document.getElementById('fix-loading');
-      // loadingScreen.style.display = 'none'
     }
   }, [pageLoaded])
 
   const onImageLoad = () => {
     const num = imgLoad + 1;
+    console.log('image load>', num)
     setLoaded(num);
   }
 

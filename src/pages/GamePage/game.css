@@ -163,6 +163,17 @@
   z-index: 1;
 }
 
+#screen-game #target-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 18%;
+  color: white;
+  font-size: 3.8vh;
+  margin: 0;
+}
+
 #screen-game #active-catch-circle {
   display: none;
   width: 20vh;
@@ -423,6 +434,14 @@
   animation: moveUpDownAndRotate 1.5s ease-in-out infinite;
   width: 4vh;
   transform: rotate(180deg);
+}
+
+#screen-game #mobile-ani {
+  /* position: absolute; */
+  /* display: inline-block; */
+  height: 9vh;
+  width: 10.9vh;
+  margin: 0 auto 1.6vh;
 }
 
 #screen-game .target-container {

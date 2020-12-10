@@ -1,17 +1,15 @@
 import React, { useEffect, useState, useRef } from 'react';
 import * as faceapi from 'face-api.js';
 import { useHistory } from 'react-router-dom';
-import BrandLogo from '../../assets/Logo_white.png';
-import SelfieTarget from '../../assets/selfie_target.svg';
-import TopBarBg from '../../assets/selfie_topbar.png';
-import LowBarBg from '../../assets/selfie_low_bar.png';
-import SelfieTopbarGoldLine from '../../assets/selfie_topbar_gold_line.png';
-import { trackEvent } from '../../UtilHelpers';
+import { trackEvent, config } from '../../UtilHelpers';
 import './selfie.css';
-import LoadingPage from '../LoadingPage';
 import Video from './Video';
 
-faceapi.loadTinyFaceDetectorModel('/models');
+const BrandLogo = `${config.assetsUrl}/Logo_white.png`;
+const SelfieTarget = `${config.assetsUrl}/selfie_target.svg`;
+const TopBarBg = `${config.assetsUrl}/selfie_topbar.png`;
+const LowBarBg = `${config.assetsUrl}/selfie_low_bar.png`;
+const SelfieTopbarGoldLine = `${config.assetsUrl}/selfie_topbar_gold_line.png`;
 
 const SelfiePage = () => {
   let video;
@@ -24,7 +22,7 @@ const SelfiePage = () => {
   const history = useHistory();
 
   const setUpFaceApi = async () => {
-    // await faceapi.loadTinyFaceDetectorModel('/models')
+    await faceapi.loadTinyFaceDetectorModel('https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/public')
     // setLoading(false);
     initCameraUI();
     initCameraStream();

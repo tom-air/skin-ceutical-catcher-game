@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
-import Arrow from '../../assets/selfie_result_cta_arrow.png';
-import Safari from '../../assets/safari.svg';
-import Android from '../../assets/android.svg';
-import BtnAni from '../../assets/btn_animate.gif';
+import { config } from '../../UtilHelpers';
 import CopyToShare from '../SharePage/CopyToShare';
-import ErrorMotionSensor from '../../assets/error_motion_sensor.png';
+
+const ErrorMotionSensor = `${config.assetsUrl}/error_motion_sensor.png`;
+const Arrow = `${config.assetsUrl}/selfie_result_cta_arrow.png`;
+const Safari = `${config.assetsUrl}/safari.svg`;
+const Android = `${config.assetsUrl}/android.svg`;
+const BtnAni = `${config.assetsUrl}/btn_animate.gif`;
 
 const PageModal = (props) => {
   const { page } = props;

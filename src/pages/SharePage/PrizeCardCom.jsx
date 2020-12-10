@@ -22,7 +22,9 @@ const PrizeCardCom = (cb) => {
       element.style.opacity = 0;
       container.appendChild(newImg);
       element.style.opacity = 0;
-      cb();
+      newImg.onload = () => {
+        cb();
+      }
     });
   }
 };

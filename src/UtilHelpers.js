@@ -1,5 +1,9 @@
 const findKey = require('lodash/findKey');
 
+const config = {
+  assetsUrl: 'https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/assets',
+};
+
 const trackEvent = (category, action, opt_label, opt_value) => {
   const hmt = window._hmt;
   if (hmt) {
@@ -24,6 +28,7 @@ const getDeviceOS = (ua) => {
 }
 
 export {
+  config,
   trackEvent,
   getDeviceOS,
 }

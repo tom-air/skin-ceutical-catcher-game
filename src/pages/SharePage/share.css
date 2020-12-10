@@ -1,6 +1,7 @@
 #screen-share {
   color: white;
   z-index: -1;
+  touch-action: pan-y !important;
 }
 
 #screen-share .brand-logo {
@@ -38,6 +39,7 @@
   left: 49%;
   transform: translate(-50%);
   pointer-events: all !important;
+  touch-action: pan-y !important;
 }
 
 #screen-share #card-outline {
@@ -245,7 +247,7 @@
 }
 
 #screen-share .active-btn {
-  background-image: url('../../assets/active_btn.png');
+  background-image: url('https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/assets/active_btn.png');
   background-repeat: no-repeat;
   background-size: cover;
   background-position-y: 24%;
@@ -275,7 +277,7 @@
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  background-image: url('../../assets/Selfie_result_bg.png');
+  background-image: url('https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/assets/Selfie_result_bg.png');
 }
 
 :root{

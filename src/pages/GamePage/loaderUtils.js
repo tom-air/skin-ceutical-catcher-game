@@ -4,15 +4,10 @@ import * as THREE from 'three';
 // const gltfLoader = new GLTFLoader();
 // const cubeTextureLoader = new THREE.CubeTextureLoader();
 
-const ele1 = new THREE.TextureLoader().load('https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/public/1.png');
-const ele2 = new THREE.TextureLoader().load('https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/public/2.png');
-const ele3 = new THREE.TextureLoader().load('https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/public/8.png');
-const ele4 = new THREE.TextureLoader().load('https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/public/4.png');
-const ele5 = new THREE.TextureLoader().load('https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/public/5.png');
-const ele6 = new THREE.TextureLoader().load('https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/public/10.png');
-const ele7 = new THREE.TextureLoader().load('https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/public/7.png');
-const ele8 = new THREE.TextureLoader().load('https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/public/11.png');
-const ele9 = new THREE.TextureLoader().load('https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/public/12.png');
+const ele1 = new THREE.TextureLoader().load('https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/public/serum1.png');
+const ele2 = new THREE.TextureLoader().load('https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/public/serum2.png');
+const ele3 = new THREE.TextureLoader().load('https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/public/serum3.png');
+const ele4 = new THREE.TextureLoader().load('https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/public/serum4.png');
 
 // const createGlbElement = (id) => {
 //   const randX = Math.random() * 20 - 20;
@@ -48,16 +43,31 @@ const ele9 = new THREE.TextureLoader().load('https://skinc-cny.oss-cn-shenzhen.a
 //   });
 // }
 
-const elementsMap = [ele1, ele2, ele3, ele4, ele5, ele6, ele7, ele8, ele9];
-const createGoldPicElements = (id) => {
-  const randX = Math.random() * 16 - 8;
-  const randY = Math.random() * 12 - 6;
-  const randZ = Math.random() * 24 - 12;
-  const randNum = Math.floor(Math.random() * 8);
+const inc = Math.PI * (3 - Math.sqrt(5));
+const getRandomPositionEvenly = (k, radius, howMany) => {
+  const off = 2 / howMany;
+  const vec3 = new THREE.Vector3();
+  let y = k * off - 1 + off / 2;
+  let r = Math.sqrt(1 - y * y);
+  const phi = k * inc;
+  let x = Math.cos(phi) * r;
+  let z = (0, Math.sin(phi) * r);
+  x *= radius;
+  y *= radius;
+  z *= radius;
+  vec3.x = x;
+  vec3.y = y;
+  vec3.z = z;
+  return vec3;
+}
+
+const elementsMap = [ele1, ele2, ele3, ele4];
+const createGoldPicElements = (id, index) => {
+  const randNum = index % 4;
   const element = elementsMap[randNum];
 
-  const imgWidth = 105 / 100;
-  const imgHeight = 105 / 100;
+  const imgWidth = 155 / 100;
+  const imgHeight = 155 / 100;
   
   const geometry = new THREE.PlaneGeometry( imgWidth, imgHeight );
   const material = new THREE.MeshStandardMaterial({ side: THREE.DoubleSide, map: element, alphaTest: 0.5 });
@@ -65,9 +75,8 @@ const createGoldPicElements = (id) => {
   // material.minFilter = THREE.NearestFilter;
   
   const goldEl = new THREE.Mesh( geometry, material );
-  goldEl.position.set(randX, randY, randZ);
-  // goldEl.position.normalize();
-  // goldEl.position.multiplyScalar(10);
+  const posVec = getRandomPositionEvenly(index, 5, 20);
+  goldEl.position.set(posVec.x, posVec.y, posVec.z);
   goldEl.name = id;
   return goldEl;
 }

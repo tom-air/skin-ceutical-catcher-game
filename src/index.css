@@ -27,6 +27,7 @@ html, body {
 
 img, canvas, video {
   pointer-events: none;
+  touch-action: none;
 }
 
 button {
@@ -42,7 +43,7 @@ button {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  background-image: url('./assets/Selfie_result_bg.png');
+  background-image: url('https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/assets/Selfie_result_bg.png');
 }
 
 #root >section {
