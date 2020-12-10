@@ -61,7 +61,7 @@ const PageModal = (props) => {
                 loop
                 isResponsive
               />
-              <p>开始游戏</p>
+              <p>复制链接</p>
             </div>
           </CopyToShare>
         </div>
