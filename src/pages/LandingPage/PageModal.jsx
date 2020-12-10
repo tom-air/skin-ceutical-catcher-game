@@ -42,7 +42,7 @@ const PageModal = (props) => {
         <div className="must-in-safari">
           <img id="safari-info" src={Safari} />
           <p>在浏览器中<br />打开链接开始游戏</p>
-          <div id="site-link">https://skinceuticalstrasia.cn/aoxmobilegame2020</div>
+          <div id="site-link">https://skinceuticalstrasia.cn</div>
           <CopyToShare target="site-link" msgToCopy="https://skinceuticalstrasia.cn/aoxmobilegame2020/">
             <div className="start-btn">
               <img className="start-btn-img" src={BtnAni} />
