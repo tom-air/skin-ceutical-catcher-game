@@ -75,7 +75,7 @@ const createGoldPicElements = (id, index) => {
   // material.minFilter = THREE.NearestFilter;
   
   const goldEl = new THREE.Mesh( geometry, material );
-  const posVec = getRandomPositionEvenly(index, 5, 20);
+  const posVec = getRandomPositionEvenly(index, 7, 20);
   goldEl.position.set(posVec.x, posVec.y, posVec.z);
   goldEl.name = id;
   return goldEl;

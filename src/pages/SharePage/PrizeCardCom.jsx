@@ -1,5 +1,4 @@
 import html2canvas from 'html2canvas';
-import './share.css';
 
 const PrizeCardCom = (cb) => {
   const newImg = document.createElement('img');

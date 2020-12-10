@@ -22,7 +22,6 @@ const SelfiePage = () => {
   const history = useHistory();
 
   const setUpFaceApi = async () => {
-    await faceapi.loadTinyFaceDetectorModel('https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/public')
     // setLoading(false);
     initCameraUI();
     initCameraStream();
@@ -36,12 +35,12 @@ const SelfiePage = () => {
   }, [showAlert])
 
   useEffect(() => {
-    if (!window.startApp) {
-      history.push('/');
-    } else {
-      setUpFaceApi();
-      return unmountComponent;
-    }
+    // if (!window.startApp) {
+    //   history.push('/');
+    // } else {
+    // }
+    setUpFaceApi();
+    return unmountComponent;
   }, []);
 
   const unmountComponent = () => {
@@ -82,24 +81,29 @@ const SelfiePage = () => {
     screen.append(canvas);
     const displaySize = { width: video.offsetWidth, height: video.offsetHeight }
     faceapi.matchDimensions(canvas, displaySize)
-    // await faceapi.loadTinyFaceDetectorModel('/models');
+    await faceapi.loadTinyFaceDetectorModel('https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/public');
+    const faceDetector = new faceapi.TinyFaceDetectorOptions();
     faceDetection = setInterval(async () => {
-      const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions());
-      // canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
-      const resizedDetections = faceapi.resizeResults(detections, displaySize)
-      if (resizedDetections.length) {
-      const { _score } = resizedDetections[0];
-        if (_score >= 0.6) {
-          setAllow(true);
-          selfieTarget.style.opacity = 0.9;
+      try {
+        const detections = await faceapi.detectAllFaces(video, faceDetector);
+        // canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
+        const resizedDetections = faceapi.resizeResults(detections, displaySize)
+        if (resizedDetections.length) {
+        const { _score } = resizedDetections[0];
+          if (_score >= 0.6) {
+            setAllow(true);
+            selfieTarget.style.opacity = 0.9;
+          } else {
+            selfieTarget.style.opacity = 0.45;
+            setAllow(false);
+          }
         } else {
-          selfieTarget.style.opacity = 0.45;
+          selfieTarget.style.opacity = 0.1;
           setAllow(false);
+          setAlert('面向镜头\n确保脸庞清晰可见');
         }
-      } else {
-        selfieTarget.style.opacity = 0.1;
-        setAllow(false);
-        setAlert('面向镜头\n确保脸庞清晰可见');
+      } catch (e) {
+        console.log('>>>>not yet load model')
       }
     }, 500)
   }
@@ -126,15 +130,6 @@ const SelfiePage = () => {
       value = 255;
     }
     return value;
-  }
-
-  const applyContrast = (data, contrast) => {
-    const factor = (259.0 * (contrast + 255.0)) / (255.0 * (259.0 - contrast));
-    for (var i = 0; i < data.length; i+= 4) {
-      data[i] = truncateColor(factor * (data[i] - 128.0) + 128.0);
-      data[i+1] = truncateColor(factor * (data[i+1] - 128.0) + 128.0);
-      data[i+2] = truncateColor(factor * (data[i+2] - 128.0) + 128.0);
-    }
   }
 
   const onCapture = async () => {

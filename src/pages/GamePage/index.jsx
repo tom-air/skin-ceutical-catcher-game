@@ -9,13 +9,11 @@ import { trackEvent, config } from '../../UtilHelpers';
 import { createGoldPicElements } from './loaderUtils';
 import VideoCanvas from '../SelfiePage/Video';
 import './game.css';
-import '../PreviewPage/preview.css';
-import '../SelfiePage/selfie.css';
-// import mobileMoveAni from '../../assets/mobile_move_ani.png';
+// import '../PreviewPage/preview.css';
+// import '../SelfiePage/selfie.css';
 
 const BrandLogo = `${config.assetsUrl}/Logo_white.png`;
 const CatchCircle = `${config.assetsUrl}/ar_teach_catch_circle.png`;
-const CatchCTAArrow = `${config.assetsUrl}/selfie_result_cta_arrow.png`;
 const ActiveCatchCircle = `${config.assetsUrl}/ar_active_catch_circle.png`;
 const CatchCircleBg = `${config.assetsUrl}/ar_catch_circle_bg.png`;
 const SelfieResultWinkles = `${config.assetsUrl}/selfie_result_wrinkle.png`;
@@ -24,9 +22,9 @@ const PlayInfoArea = `${config.assetsUrl}/player_info_area.png`;
 const TargetArrow = `${config.assetsUrl}/target_arrow.svg`;
 const ArMeasureElement = `${config.assetsUrl}/ar_measure_element.png`;
 const goldEle1 = 'https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/public/serum1.png';
-const goldEle2 = 'https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/public/serum2.png';
-const goldEle3 = 'https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/public/serum3.png';
-const goldEle4 = 'https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/public/serum4.png';
+// const goldEle2 = 'https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/public/serum2.png';
+// const goldEle3 = 'https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/public/serum3.png';
+// const goldEle4 = 'https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/public/serum4.png';
 const mobileMoveAni = `${config.assetsUrl}/mobile_move_ani.png`;
 
 const elementBenefits = ['中和\n自由基', '減退\n細紋', '預防\n光老化', '抗氧\n保護']
@@ -246,16 +244,6 @@ class GamePage extends React.Component {
       this.props.history.push('/share');
     }, 3800);
   }
-
-  // endAnimation = () => {
-  //   const timer = 0.0000000000001 * Date.now();
-  //   if (this.isGameEnded) {
-  //     const sceneEls = scene.children;
-  //     for (let i = 0; i < sceneEls.length; i ++) {
-  //       const element = sceneEls[i];
-  //       element.position.set()
-  //   }
-  // }
 
   startCounter = () => {
     this.gameCounter = setInterval(() => {
@@ -477,7 +465,6 @@ class GamePage extends React.Component {
           </div>
           <div className="bottom-part">
             <div className="submit-text">
-              {/* <img id="cta-arrow" src={CatchCTAArrow} /> */}
               <div id="mobile-ani">
                 <Spritesheet
                   image={mobileMoveAni}
@@ -485,7 +472,6 @@ class GamePage extends React.Component {
                   heightFrame={152}
                   steps={89}
                   fps={59}
-                  // onPlay={onImgLoad}
                   autoplay
                   loop
                   isResponsive
@@ -504,16 +490,16 @@ class GamePage extends React.Component {
         </div>
         <div id="end-game-gold-element">
           <img src={goldEle1} className="gld-img" id="gld-1" />
-          <img src={goldEle2} className="gld-img" id="gld-2" />
-          <img src={goldEle3} className="gld-img" id="gld-3" />
-          <img src={goldEle4} className="gld-img" id="gld-4" />
+          <img src={goldEle1} className="gld-img" id="gld-2" />
+          <img src={goldEle1} className="gld-img" id="gld-3" />
+          <img src={goldEle1} className="gld-img" id="gld-4" />
           <img src={goldEle1} className="gld-img" id="gld-5" />
-          <img src={goldEle2} className="gld-img" id="gld-6" />
-          <img src={goldEle3} className="gld-img" id="gld-7" />
-          <img src={goldEle4} className="gld-img" id="gld-8" />
+          <img src={goldEle1} className="gld-img" id="gld-6" />
+          <img src={goldEle1} className="gld-img" id="gld-7" />
+          <img src={goldEle1} className="gld-img" id="gld-8" />
           <img src={goldEle1} className="gld-img" id="gld-9" />
-          <img src={goldEle2} className="gld-img" id="gld-10" />
-          <img src={goldEle3} className="gld-img" id="gld-11" />
+          <img src={goldEle1} className="gld-img" id="gld-10" />
+          <img src={goldEle1} className="gld-img" id="gld-11" />
         </div>
         <div id="ar-measure-bg">
           <img src={ArMeasureElement} />

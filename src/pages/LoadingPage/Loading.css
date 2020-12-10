@@ -7,6 +7,11 @@
   }
 }
 
+section#loading-screen #loading-logo {
+  -webkit-animation:rotation 1.5s linear infinite;
+  animation:rotation 1.5s linear infinite;
+}
+
 section#loading-screen {
   position: fixed !important;
   top: 0;
@@ -23,13 +28,4 @@ section#loading-screen {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-#loading-logo {
-  /* position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%); */
-  -webkit-animation:rotation 1.5s linear infinite;
-  animation:rotation 1.5s linear infinite;
 }
