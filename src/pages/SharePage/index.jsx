@@ -36,7 +36,7 @@ const SharePage = () => {
 
   useEffect(() => {
     if (!window.startApp) {
-      history.replace('/');
+      history.replace('/aoxmobilegame2020');
     } else {
       root = document.getElementById('root');
       // root.style.backgroundImage = `url(${Background})`;

@@ -48,12 +48,12 @@ class GamePage extends React.Component {
   }
 
   componentDidMount() {
-    // if (!window.startApp) {
-    //   this.props.history.replace('/');
-    // } else if (window.isAccessOrientationGranted) {
-    // }
-    this.init3D();
-    window.requestAnimationFrame(this.animate);
+    if (!window.startApp) {
+      this.props.history.replace('/aoxmobilegame2020');
+    } else if (window.isAccessOrientationGranted) {
+      this.init3D();
+      window.requestAnimationFrame(this.animate);
+    }
   }
 
   componentWillUnmount() {

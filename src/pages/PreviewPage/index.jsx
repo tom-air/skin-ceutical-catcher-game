@@ -31,7 +31,7 @@ const PreviewPage = () => {
 
   useEffect(() => {
     if (!window.startApp) {
-      history.replace('/');
+      history.replace('/aoxmobilegame2020');
     } else {
       const root = document.getElementById('root');
       root.style.backgroundImage = 'none';

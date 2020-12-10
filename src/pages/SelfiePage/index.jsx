@@ -35,12 +35,12 @@ const SelfiePage = () => {
   }, [showAlert])
 
   useEffect(() => {
-    // if (!window.startApp) {
-    //   history.push('/');
-    // } else {
-    // }
-    setUpFaceApi();
-    return unmountComponent;
+    if (!window.startApp) {
+      history.push('/aoxmobilegame2020');
+    } else {
+      setUpFaceApi();
+      return unmountComponent;
+    }
   }, []);
 
   const unmountComponent = () => {
