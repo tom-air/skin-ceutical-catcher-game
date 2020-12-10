@@ -265,9 +265,11 @@ class GamePage extends React.Component {
     const counter = document.getElementsByClassName('counter')[0];
     const previewContainer = document.getElementsByClassName('preview-container')[0];
     const highlightBox = document.getElementById('high-box');
+    const targetText = document.getElementById('target-text');
     overlay.classList.add('start-game');
     submitText.classList.add('hide');
     highlightBox.classList.add('hide');
+    targetText.classList.add('hide');
     counter.style.zIndex = 1;
     previewContainer.style.zIndex = 1;
   }

@@ -1,3 +1,12 @@
+@keyframes spin-rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
+
 #screen-share {
   color: white;
   z-index: -1;
@@ -307,4 +316,27 @@
 .beautly {
   -webkit-filter: saturate(1) contrast(1) brightness (1);
   filter: saturate(1) contrast(1) brightness (1);
+}
+
+#share-loading {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: black;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 4;
+  background-image: url('https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/assets/Selfie_result_bg.png');
+  width: 100vw !Important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#share-loading #loading-logo {
+  -webkit-animation: spin-rotation 1.5s linear infinite;
+  animation: spin-rotation 1.5s linear infinite;
 }

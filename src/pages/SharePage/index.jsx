@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 import { config, trackEvent } from '../../UtilHelpers';
 import CopyToShare from './CopyToShare';
-import LoadingPage from '../LoadingPage';
+// import LoadingPage from '../LoadingPage';
 import PrizeCardCom from './PrizeCardCom';
 import './share.css';
 const BrandLogo = `${config.assetsUrl}/Logo_white.png`;
@@ -17,8 +17,15 @@ const prizeCardQRcode = `${config.assetsUrl}/prize_card_qr_code.png`;
 const skinCBottle = `${config.assetsUrl}/skin_c_bottle.png`;
 const goldElementBg = `${config.assetsUrl}/prize_gold_element_bg.png`;
 const prizeCardOutline = `${config.assetsUrl}/prize_card_outline.png`;
+const LoadingLogo = `${config.assetsUrl}/loading.png`;
 // const PrizeCardCom = React.lazy(() => import('./PrizeCardCom'));
 // import '../PreviewPage/preview.css';
+
+const LoadingComp = () => ((
+  <section id="share-loading">
+    <img id="loading-logo" src={LoadingLogo} />
+  </section>
+));
 
 const SharePage = () => {
   let root, disclaimer, screen;
@@ -60,7 +67,7 @@ const SharePage = () => {
     if (pageLoaded) {
       const card = document.getElementById('prize-card');
       card.style.left = '0px';
-      document.getElementById('loading-screen').style.display = 'none';
+      // document.getElementById('loading-screen').style.display = 'none';
     }
   }, [pageLoaded])
 
@@ -76,8 +83,8 @@ const SharePage = () => {
   }
 
   return (
-    <Suspense fallback={<LoadingPage />}>
-      {<LoadingPage />}
+    <Suspense fallback={<LoadingComp />}>
+      {!pageLoaded && <LoadingComp />}
       <section id="screen-share">
         <div className="top-section">
           <img className="brand-logo" src={BrandLogo} />

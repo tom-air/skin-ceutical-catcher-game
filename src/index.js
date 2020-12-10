@@ -4,6 +4,7 @@ import { Provider as AlertProvider } from 'react-alert'
 import AlertTemplate from 'react-alert-template-basic'
 import './index.css';
 import App from './App';
+import OrientationPage from './pages/OrientationPage';
 // import reportWebVitals from './reportWebVitals';
 
 const options = {
@@ -16,6 +17,7 @@ const options = {
 ReactDOM.render(
   <React.StrictMode>
     <AlertProvider template={AlertTemplate} {...options}>
+      <OrientationPage />
       <App />
       <div id="app-disclaimer">
         <p className="copy-right">

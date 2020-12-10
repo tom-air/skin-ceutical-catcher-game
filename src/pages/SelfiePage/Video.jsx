@@ -68,7 +68,6 @@ class Video extends Component {
               width={width}
               height={height}
               image={video}
-              stroke="red"
               ref={node => {
                 this.image = node;
               }}
