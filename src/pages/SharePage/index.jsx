@@ -58,7 +58,7 @@ const SharePage = () => {
 
   useEffect(() => {
     if (imgLoad === totalImg) {
-      console.log('>all image load', imgLoad, totalImg)
+      // console.log('>all image load', imgLoad, totalImg)
       PrizeCardCom(() => setPageLoaded(true));
     }
   }, [imgLoad])
@@ -73,7 +73,7 @@ const SharePage = () => {
 
   const onImageLoad = () => {
     const num = imgLoad + 1;
-    console.log('image load>', num)
+    // console.log('image load>', num)
     setLoaded(num);
   }
 
