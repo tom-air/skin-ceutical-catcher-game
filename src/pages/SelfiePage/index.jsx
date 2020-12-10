@@ -162,7 +162,7 @@ const SelfiePage = () => {
       window.selfieURI = dataURI;
       window.enhancedSelfieURI = enhancedDataURI;
       trackEvent('button', 'click', 'take-selfie');
-      history.push('/preview');
+      history.push('/aoxmobilegame2020/preview');
     }
   }
 

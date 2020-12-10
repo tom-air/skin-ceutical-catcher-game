@@ -241,7 +241,7 @@ class GamePage extends React.Component {
     this.isGameEnded = true;
     clearInterval(this.gameCounter);
     setTimeout(() => {
-      this.props.history.push('/share');
+      this.props.history.push('/aoxmobilegame2020/share');
     }, 3800);
   }
 

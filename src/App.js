@@ -30,19 +30,19 @@ const App = () => {
     <Router>
       <Switch>
         <Suspense fallback={<LoadingPage />}>
-          <Route path="/share" exact>
+          <Route path="/aoxmobilegame2020/share" exact>
             <SharePage />
           </Route>
-          <Route path="/game" exact>
+          <Route path="/aoxmobilegame2020/game" exact>
             <GamePage />
           </Route>
-          <Route path="/preview" exact>
+          <Route path="/aoxmobilegame2020/preview" exact>
             <PreviewPage />
           </Route>
-          <Route path="/selfie" exact>
+          <Route path="/aoxmobilegame2020/selfie" exact>
             <SelfiePage />
           </Route>
-          <Route path="/" exact>
+          <Route path="/aoxmobilegame2020" exact>
             <LandingPage />
           </Route>
         </Suspense>

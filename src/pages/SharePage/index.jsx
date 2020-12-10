@@ -72,7 +72,7 @@ const SharePage = () => {
 
   const onClick = () => {
     trackEvent('button', 'click', 'return-home');
-    window.location.href = '/';
+    window.location.href = '/aoxmobilegame2020';
   }
 
   return (

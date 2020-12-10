@@ -38,7 +38,7 @@ const LandingPage = () => {
           window.isCameraAccessAllowed = true;
           window.startApp = true;
           trackEvent('button', 'click', 'start-experience');
-          history.push('/selfie');
+          history.push('/aoxmobilegame2020/selfie');
         })
         .catch((error) => {
           console.log('navigator.MediaDevices.getUserMedia error: ', error.message, error.name);

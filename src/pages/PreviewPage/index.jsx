@@ -55,7 +55,7 @@ const PreviewPage = () => {
 
   const onClick = () => {
     trackEvent('button', 'click', 'start-game');
-    history.push('/game');
+    history.push('/aoxmobilegame2020/game');
   }
 
   const onImgLoad = () => {
