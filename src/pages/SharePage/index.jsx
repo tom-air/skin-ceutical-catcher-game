@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Suspense } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { config, trackEvent } from '../../UtilHelpers';
@@ -46,7 +46,6 @@ const SharePage = () => {
       history.replace('/aoxmobilegame2020');
     } else {
       root = document.getElementById('root');
-      // root.style.backgroundImage = `url(${Background})`;
       root.style.overflowY = 'scroll';
       disclaimer = document.getElementById('app-disclaimer');
       screen = document.getElementById('screen-share');
@@ -83,7 +82,7 @@ const SharePage = () => {
   }
 
   return (
-    <Suspense fallback={<LoadingComp />}>
+    <>
       {!pageLoaded && <LoadingComp />}
       <section id="screen-share">
         <div className="top-section">
@@ -127,7 +126,7 @@ const SharePage = () => {
           <p>长按储存图片，并分享至<br/>
           <img id="weibo" src={weibo} />微博或
           <img id="wechat" src={wechat} />微信朋友圈，带上话题</p>
-          <CopyToShare msgToCopy="#修丽可##三亚国际免税城#">
+          <CopyToShare msgToCopy="#修丽可##三亚国际免税城#" target="copy-hashtag">
             <div id="copy-hashtag">
               #修丽可##三亚国际免税城#
               <img src={copy} />
@@ -166,7 +165,7 @@ const SharePage = () => {
           </div>
         </div>
       </section>
-    </Suspense>
+    </>
   );
 };
 
