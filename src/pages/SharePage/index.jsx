@@ -30,7 +30,7 @@ const LoadingComp = () => ((
 const SharePage = () => {
   let root, disclaimer, screen;
   const history = useHistory();
-  const [imgLoad, setLoaded] = useState(0);
+  const [imgLoad, setLoaded] = useState([]);
   const [pageLoaded, setPageLoaded] = useState(false);
   const totalImg = 6;
 
@@ -56,7 +56,7 @@ const SharePage = () => {
   }, [])
 
   useEffect(() => {
-    if (imgLoad === totalImg) {
+    if (imgLoad.length === totalImg) {
       // console.log('>all image load', imgLoad, totalImg)
       PrizeCardCom(() => setPageLoaded(true));
     }
@@ -70,10 +70,11 @@ const SharePage = () => {
     }
   }, [pageLoaded])
 
-  const onImageLoad = () => {
-    const num = imgLoad + 1;
+  const onImageLoad = (img) => {
+    if (imgLoad.indexOf(img) < 0) {
+      setLoaded([...imgLoad, img]);
+    }
     // console.log('image load>', num)
-    setLoaded(num);
   }
 
   const onClick = () => {
@@ -99,24 +100,24 @@ const SharePage = () => {
           <div id="mock">
             <img
               className="brand-logo"
-              onLoad={onImageLoad}
+              onLoad={() => onImageLoad('brand-logo')}
               src={BrandLogo}
             />
             <div className="main-text">修丽可抗氧焕颜之旅</div>
-            <img id="prize-card-bg" onLoad={onImageLoad} src={prizeCard} />
-            <img id="prize-card-gold-element-bg" onLoad={onImageLoad} src={goldElementBg} />
+            <img id="prize-card-bg" onLoad={() => onImageLoad('prize-card-bg')} src={prizeCard} />
+            <img id="prize-card-gold-element-bg" onLoad={() => onImageLoad('prize-card-gold-bg')} src={goldElementBg} />
             <div id="selfie-filter">
               <div className="selfie-filter-bg"></div>
-              <img id="selfie-preview" onLoad={onImageLoad} src={window.enhancedSelfieURI} />
+              <img id="selfie-preview" onLoad={() => onImageLoad('selfie-preview')} src={window.enhancedSelfieURI} />
               {/* <img id="selfie-preview" src={window.selfieURI} /> */}
             </div>
             <div id="img-group">
-              <img id="skin-c-bottle" onLoad={onImageLoad} src={skinCBottle} />
+              <img id="skin-c-bottle" onLoad={() => onImageLoad('skin-c-bottle')} src={skinCBottle} />
               <div id="hash-text">
                 <p>#修丽可#</p>
                 <p>#三亚国际免税城#</p>
               </div>
-              <img id="prize-card-qr-code" onLoad={onImageLoad} src={prizeCardQRcode} />
+              <img id="prize-card-qr-code" onLoad={() => onImageLoad('qr-code')} src={prizeCardQRcode} />
             </div>
           </div>
           <img src={prizeCardOutline} id="card-outline" />
