@@ -6,10 +6,14 @@ import LoadingPage from '../LoadingPage';
 import AnimateBtn from './AnimateBtn';
 import './landing.css';
 
-const BrandLogo = `${config.assetsUrl}/Logo_white.png`;
-const Background = `${config.assetsUrl}/landing_bg.png`;
-const BackgroundX1 = `${config.assetsUrl}/landing_bg_x1.png`;
-const BackgroundX2 = `${config.assetsUrl}/landing_bg_x2.png`;
+import BrandLogo from '../../assets/Logo_white.png';
+import Background from '../../assets/landing_bg.png';
+import BackgroundX1 from '../../assets/landing_bg_x1.png';
+import BackgroundX2 from '../../assets/landing_bg_x2.png';
+// const BrandLogo = `${config.assetsUrl}/Logo_white.png`;
+// const Background = `${config.assetsUrl}/landing_bg.png`;
+// const BackgroundX1 = `${config.assetsUrl}/landing_bg_x1.png`;
+// const BackgroundX2 = `${config.assetsUrl}/landing_bg_x2.png`;
 // import PageModal from './PageModal';
 
 const PageModal = React.lazy(() => import('./PageModal'));

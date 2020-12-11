@@ -2,8 +2,10 @@ import React from 'react';
 import InApp from 'detect-inapp';
 import { config } from '../../UtilHelpers';
 
-const Desktop = `${config.assetsUrl}/desktop.png`;
-const Landscape = `${config.assetsUrl}/landscape.png`;
+import Desktop from '../../assets/desktop.png';
+import Landscape from '../../assets/landscape.png';
+// const Desktop = `${config.assetsUrl}/desktop.png`;
+// const Landscape = `${config.assetsUrl}/landscape.png`;
 
 const OrientationPage = () => {
   const inapp = new InApp(navigator.userAgent || navigator.vendor || window.opera);

@@ -4,10 +4,10 @@ import * as THREE from 'three';
 // const gltfLoader = new GLTFLoader();
 // const cubeTextureLoader = new THREE.CubeTextureLoader();
 
-const ele1 = new THREE.TextureLoader().load('https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/public/serum1.png');
-const ele2 = new THREE.TextureLoader().load('https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/public/serum2.png');
-const ele3 = new THREE.TextureLoader().load('https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/public/serum3.png');
-const ele4 = new THREE.TextureLoader().load('https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/public/serum4.png');
+const ele1 = new THREE.TextureLoader().load('/fluid/serum1.png');
+const ele2 = new THREE.TextureLoader().load('/fluid/serum2.png');
+const ele3 = new THREE.TextureLoader().load('/fluid/serum3.png');
+const ele4 = new THREE.TextureLoader().load('/fluid/serum4.png');
 
 // const createGlbElement = (id) => {
 //   const randX = Math.random() * 20 - 20;

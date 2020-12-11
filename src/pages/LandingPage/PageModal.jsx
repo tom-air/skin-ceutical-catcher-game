@@ -2,13 +2,19 @@ import React, { useEffect } from 'react';
 import Spritesheet from 'react-responsive-spritesheet';
 import { config } from '../../UtilHelpers';
 import CopyToShare from '../SharePage/CopyToShare';
+import StartBtnAni from '../../assets/start_btn_ani.png';
+import ErrorMotionSensor from '../../assets/error_motion_sensor.png';
+import Arrow from '../../assets/selfie_result_cta_arrow.png';
+import Safari from '../../assets/safari.svg';
+import Android from '../../assets/android.svg';
+import BtnAni from '../../assets/btn_animate.gif';
 
-const StartBtnAni = `${config.assetsUrl}/start_btn_ani.png`;
-const ErrorMotionSensor = `${config.assetsUrl}/error_motion_sensor.png`;
-const Arrow = `${config.assetsUrl}/selfie_result_cta_arrow.png`;
-const Safari = `${config.assetsUrl}/safari.svg`;
-const Android = `${config.assetsUrl}/android.svg`;
-const BtnAni = `${config.assetsUrl}/btn_animate.gif`;
+// const StartBtnAni = `${config.assetsUrl}/start_btn_ani.png`;
+// const ErrorMotionSensor = `${config.assetsUrl}/error_motion_sensor.png`;
+// const Arrow = `${config.assetsUrl}/selfie_result_cta_arrow.png`;
+// const Safari = `${config.assetsUrl}/safari.svg`;
+// const Android = `${config.assetsUrl}/android.svg`;
+// const BtnAni = `${config.assetsUrl}/btn_animate.gif`;
 
 const PageModal = (props) => {
   const { page } = props;

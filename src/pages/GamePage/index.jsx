@@ -12,20 +12,31 @@ import './game.css';
 // import '../PreviewPage/preview.css';
 // import '../SelfiePage/selfie.css';
 
-const BrandLogo = `${config.assetsUrl}/Logo_white.png`;
-const CatchCircle = `${config.assetsUrl}/ar_teach_catch_circle.png`;
-const ActiveCatchCircle = `${config.assetsUrl}/ar_active_catch_circle.png`;
-const CatchCircleBg = `${config.assetsUrl}/ar_catch_circle_bg.png`;
-const SelfieResultWinkles = `${config.assetsUrl}/selfie_result_wrinkle.png`;
-const ArBenifitArrow = `${config.assetsUrl}/ar_benifit.png`;
-const PlayInfoArea = `${config.assetsUrl}/player_info_area.png`;
-const TargetArrow = `${config.assetsUrl}/target_arrow.svg`;
-const ArMeasureElement = `${config.assetsUrl}/ar_measure_element.png`;
-const goldEle1 = 'https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/public/serum1.png';
+import BrandLogo from '../../assets/Logo_white.png';
+import CatchCircle from '../../assets/ar_teach_catch_circle.png';
+import ActiveCatchCircle from '../../assets/ar_active_catch_circle.png';
+import CatchCircleBg from '../../assets/ar_catch_circle_bg.png';
+import SelfieResultWinkles from '../../assets/selfie_result_wrinkle.png';
+import ArBenifitArrow from '../../assets/ar_benifit.png';
+import PlayInfoArea from '../../assets/player_info_area.png';
+import TargetArrow from '../../assets/target_arrow.svg';
+import ArMeasureElement from '../../assets/ar_measure_element.png';
+import goldEle1 from '../../assets/serum1.png';
+import mobileMoveAni from '../../assets/mobile_move_ani.png';
+// const BrandLogo = `${config.assetsUrl}/Logo_white.png`;
+// const CatchCircle = `${config.assetsUrl}/ar_teach_catch_circle.png`;
+// const ActiveCatchCircle = `${config.assetsUrl}/ar_active_catch_circle.png`;
+// const CatchCircleBg = `${config.assetsUrl}/ar_catch_circle_bg.png`;
+// const SelfieResultWinkles = `${config.assetsUrl}/selfie_result_wrinkle.png`;
+// const ArBenifitArrow = `${config.assetsUrl}/ar_benifit.png`;
+// const PlayInfoArea = `${config.assetsUrl}/player_info_area.png`;
+// const TargetArrow = `${config.assetsUrl}/target_arrow.svg`;
+// const ArMeasureElement = `${config.assetsUrl}/ar_measure_element.png`;
+// const goldEle1 = 'https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/public/serum1.png';
+// const mobileMoveAni = `${config.assetsUrl}/mobile_move_ani.png`;
 // const goldEle2 = 'https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/public/serum2.png';
 // const goldEle3 = 'https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/public/serum3.png';
 // const goldEle4 = 'https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/public/serum4.png';
-const mobileMoveAni = `${config.assetsUrl}/mobile_move_ani.png`;
 
 const elementBenefits = ['中和\n自由基', '減退\n細紋', '預防\n光老化', '抗氧\n保護']
 

@@ -5,11 +5,16 @@ import { trackEvent, config } from '../../UtilHelpers';
 import './selfie.css';
 import Video from './Video';
 
-const BrandLogo = `${config.assetsUrl}/Logo_white.png`;
-const SelfieTarget = `${config.assetsUrl}/selfie_target.svg`;
-const TopBarBg = `${config.assetsUrl}/selfie_topbar.png`;
-const LowBarBg = `${config.assetsUrl}/selfie_low_bar.png`;
-const SelfieTopbarGoldLine = `${config.assetsUrl}/selfie_topbar_gold_line.png`;
+import BrandLogo from '../../assets/Logo_white.png';
+import SelfieTarget from '../../assets/selfie_target.svg';
+import TopBarBg from '../../assets/selfie_topbar.png';
+import LowBarBg from '../../assets/selfie_low_bar.png';
+import SelfieTopbarGoldLine from '../../assets/selfie_topbar_gold_line.png';
+// const BrandLogo = `${config.assetsUrl}/Logo_white.png`;
+// const SelfieTarget = `${config.assetsUrl}/selfie_target.svg`;
+// const TopBarBg = `${config.assetsUrl}/selfie_topbar.png`;
+// const LowBarBg = `${config.assetsUrl}/selfie_low_bar.png`;
+// const SelfieTopbarGoldLine = `${config.assetsUrl}/selfie_topbar_gold_line.png`;
 
 const SelfiePage = () => {
   let video;
@@ -81,7 +86,7 @@ const SelfiePage = () => {
     screen.append(canvas);
     const displaySize = { width: video.offsetWidth, height: video.offsetHeight }
     faceapi.matchDimensions(canvas, displaySize)
-    await faceapi.loadTinyFaceDetectorModel('https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/public');
+    await faceapi.loadTinyFaceDetectorModel('/model');
     const faceDetector = new faceapi.TinyFaceDetectorOptions();
     faceDetection = setInterval(async () => {
       try {

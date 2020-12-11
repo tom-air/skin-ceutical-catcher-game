@@ -1,7 +1,8 @@
 const findKey = require('lodash/findKey');
 
 const config = {
-  assetsUrl: 'https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/assets',
+  assetsUrl: '../../assets',
+  // assetsUrl: 'https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/assets',
 };
 
 const trackEvent = (category, action, opt_label, opt_value) => {
