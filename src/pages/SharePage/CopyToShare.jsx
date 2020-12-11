@@ -17,7 +17,7 @@ const CopyToShare = (props) => {
       const targetToModify = document.getElementById(target);
       targetToModify.innerHTML = '复制成功';
       setTimeout(() => {
-        targetToModify.innerHTML = 'https://skinceuticalstrasia.cn/';
+        targetToModify.innerHTML = msgToCopy;
       }, 5000);
     }
   }

@@ -7,7 +7,9 @@ import AnimateBtn from './AnimateBtn';
 import './landing.css';
 
 const BrandLogo = `${config.assetsUrl}/Logo_white.png`;
-const Background = `${config.assetsUrl}/landing_bg_md.png`;
+const Background = `${config.assetsUrl}/landing_bg.png`;
+const BackgroundX1 = `${config.assetsUrl}/landing_bg_x1.png`;
+const BackgroundX2 = `${config.assetsUrl}/landing_bg_x2.png`;
 // import PageModal from './PageModal';
 
 const PageModal = React.lazy(() => import('./PageModal'));
@@ -145,7 +147,12 @@ const LandingPage = () => {
             onImgLoad={onImgLoad}
           />
         </div>
-        <img id="landing-bg" src={Background} onLoad={onImgLoad} />
+        <picture>
+          <source media="(max-width: 375px) and (max-height: 568px) " srcSet={BackgroundX1} />
+          <source media="(max-width: 375px) and (min-height: 736px) and (max-height: 812px)" srcSet={Background} />
+          <img id="landing-bg" src={BackgroundX2} onLoad={onImgLoad} alt="Skin Ceutical | 修丽可抗氧焕颜之旅" />
+        </picture>
+        {/* <img id="landing-bg" src={Background} onLoad={onImgLoad} /> */}
       {/* <img id="landing-mark" src={Landmark} /> */}
       </section>
       <div className="disclaimer">
