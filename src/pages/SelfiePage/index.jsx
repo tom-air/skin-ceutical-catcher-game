@@ -86,7 +86,7 @@ const SelfiePage = () => {
     screen.append(canvas);
     const displaySize = { width: video.offsetWidth, height: video.offsetHeight }
     faceapi.matchDimensions(canvas, displaySize)
-    await faceapi.loadTinyFaceDetectorModel('/model');
+    await faceapi.loadTinyFaceDetectorModel('https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/public');
     const faceDetector = new faceapi.TinyFaceDetectorOptions();
     faceDetection = setInterval(async () => {
       try {
