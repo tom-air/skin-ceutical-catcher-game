@@ -15,7 +15,7 @@
 }
 
 #land-title {
-  background-image: url('https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/assets/landing_title.png');
+  background-image: url('../../assets/landing_title.png');
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -64,7 +64,7 @@
 }
 
 .subtitle .bg-container {
-  background: url('https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/assets/Landing_subtitle_bg.png');
+  background: url('../../assets/Landing_subtitle_bg.png');
   background-repeat: no-repeat;
   position: absolute;
   background-size: contain;
@@ -255,7 +255,7 @@ section#page-issue {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  background-image: url('https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/assets/Selfie_result_bg.png');
+  background-image: url('../../assets/Selfie_result_bg.png');
 }
 
 .switch-on-orientation #orientation-guide {

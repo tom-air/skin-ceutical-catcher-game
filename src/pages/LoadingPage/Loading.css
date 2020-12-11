@@ -23,7 +23,7 @@ section#loading-screen {
   background-repeat: no-repeat;
   background-position: center;
   z-index: 4;
-  background-image: url('https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/assets/Selfie_result_bg.png');
+  background-image: url('../../assets/Selfie_result_bg.png');
   width: 100vw !Important;
   display: flex;
   justify-content: center;
