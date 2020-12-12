@@ -62,6 +62,12 @@ class GamePage extends React.Component {
     if (!window.startApp) {
       this.props.history.replace('/aoxmobilegame2020');
     } else if (window.isAccessOrientationGranted) {
+      if (window.stream) {
+        window.stream.getTracks().forEach(function (track) {
+          console.log(track);
+          track.stop();
+        });
+      }
       this.init3D();
       window.requestAnimationFrame(this.animate);
     }
@@ -218,11 +224,18 @@ class GamePage extends React.Component {
   handleSuccess = (stream) => {
     window.stream = stream; // make stream available to browser console
     video.srcObject = stream;
-
+    video.play()
     track = stream.getTracks()[0];
   }
 
   initCameraStream = () => {
+    // if (window.stream) {
+    //   window.stream.getTracks().forEach(function (track) {
+    //     console.log(track);
+    //     track.stop();
+    //   });
+    // }
+  
     const constraints = {
       audio: false,
       video: {

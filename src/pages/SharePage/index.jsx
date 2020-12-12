@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 import { config, trackEvent } from '../../UtilHelpers';
 import CopyToShare from './CopyToShare';
-// import LoadingPage from '../LoadingPage';
+import LoadingPage from '../LoadingPage';
 import PrizeCardCom from './PrizeCardCom';
 import './share.css';
 import BrandLogo from '../../assets/Logo_white.png';
@@ -33,11 +33,11 @@ import LoadingLogo from '../../assets/loading.png';
 // const PrizeCardCom = React.lazy(() => import('./PrizeCardCom'));
 // import '../PreviewPage/preview.css';
 
-const LoadingComp = () => ((
-  <section id="share-loading">
-    <img id="loading-logo" src={LoadingLogo} />
-  </section>
-));
+// const LoadingComp = () => ((
+//   <section id="share-loading">
+//     <img id="loading-logo" src={LoadingLogo} />
+//   </section>
+// ));
 
 const SharePage = () => {
   let root, disclaimer, screen;
@@ -96,7 +96,7 @@ const SharePage = () => {
 
   return (
     <>
-      {!pageLoaded && <LoadingComp />}
+      {!pageLoaded && <LoadingPage />}
       <section id="screen-share">
         <div className="top-section">
           <img className="brand-logo" src={BrandLogo} />

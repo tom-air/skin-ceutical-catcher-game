@@ -1,9 +1,9 @@
-import React, { useEffect, useState, useRef } from 'react';
-import * as faceapi from 'face-api.js';
+import React, { useEffect, useState } from 'react';
+import * as pico from 'picojs/pico';
 import { useHistory } from 'react-router-dom';
 import { trackEvent, config } from '../../UtilHelpers';
 import './selfie.css';
-import Video from './Video';
+import camvas from './camvas';
 
 import BrandLogo from '../../assets/Logo_white.png';
 import SelfieTarget from '../../assets/selfie_target.svg';
@@ -17,20 +17,12 @@ import SelfieTopbarGoldLine from '../../assets/selfie_topbar_gold_line.png';
 // const SelfieTopbarGoldLine = `${config.assetsUrl}/selfie_topbar_gold_line.png`;
 
 const SelfiePage = () => {
-  let video;
+  let video, mycamvas;
   let currentFacingMode = 'user';
   let faceDetection;
-  const videoRef = useRef(null);
   const [isAllow, setAllow] = useState(false);
-  const [isLoading, setLoading] = useState(true);
   const [showAlert, setAlert] = useState('');
   const history = useHistory();
-
-  const setUpFaceApi = async () => {
-    // setLoading(false);
-    initCameraUI();
-    initCameraStream();
-  }
 
   useEffect(() => {
     if (showAlert) {
@@ -43,7 +35,8 @@ const SelfiePage = () => {
     if (!window.startApp) {
       history.push('/aoxmobilegame2020');
     } else {
-      setUpFaceApi();
+      initCameraUI();
+      initCameraStream();
       return unmountComponent;
     }
   }, []);
@@ -51,6 +44,7 @@ const SelfiePage = () => {
   const unmountComponent = () => {
     if (video) {
       video.removeEventListener('play', faceTracking);
+      mycamvas.end();
       clearInterval(faceDetection);
     }
   }
@@ -79,38 +73,71 @@ const SelfiePage = () => {
       });
   }
 
-  const faceTracking = async () => {
-    const screen = document.getElementById('screen-selfie');
-    const canvas = faceapi.createCanvasFromMedia(video);
-    const selfieTarget = document.getElementById('selfie-target');
-    screen.append(canvas);
+  const faceTracking = () => {
     const displaySize = { width: video.offsetWidth, height: video.offsetHeight }
-    faceapi.matchDimensions(canvas, displaySize)
-    await faceapi.loadTinyFaceDetectorModel('https://skinc-cny.oss-cn-shenzhen.aliyuncs.com/public');
-    const faceDetector = new faceapi.TinyFaceDetectorOptions();
-    faceDetection = setInterval(async () => {
-      try {
-        const detections = await faceapi.detectAllFaces(video, faceDetector);
-        // canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
-        const resizedDetections = faceapi.resizeResults(detections, displaySize)
-        if (resizedDetections.length) {
-        const { _score } = resizedDetections[0];
-          if (_score >= 0.6) {
-            setAllow(true);
-            selfieTarget.style.opacity = 0.9;
-          } else {
-            selfieTarget.style.opacity = 0.45;
-            setAllow(false);
-          }
-        } else {
-          selfieTarget.style.opacity = 0.1;
-          setAllow(false);
-          setAlert('面向镜头\n确保脸庞清晰可见');
-        }
-      } catch (e) {
-        console.log('>>>>not yet load model')
+    const update_memory = pico.instantiate_detection_memory(5); // we will use the detecions of the last 5 frames
+    let facefinder_classify_region = function(r, c, s, pixels, ldim) {return -1.0;};
+    const cascadeurl = 'https://raw.githubusercontent.com/nenadmarkus/pico/c2e81f9d23cc11d1a612fd21e4f9de0921a5d0d9/rnt/cascades/facefinder';
+    fetch(cascadeurl).then(function(response) {
+      response.arrayBuffer().then(function(buffer) {
+        const bytes = new Int8Array(buffer);
+        facefinder_classify_region = pico.unpack_cascade(bytes);
+      })
+    })
+    const selfieCanvas = document.getElementById('selfie-canvas');
+    selfieCanvas.setAttribute('width', video.videoWidth);
+    selfieCanvas.setAttribute('height', video.videoHeight);
+    const ctx = selfieCanvas.getContext('2d');
+    function rgba_to_grayscale(rgba, nrows, ncols) {
+      let gray = new Uint8Array(nrows*ncols);
+      for(let r=0; r<nrows; ++r)
+        for(let c=0; c<ncols; ++c)
+          // gray = 0.2*red + 0.7*green + 0.1*blue
+          gray[r*ncols + c] = (2*rgba[r*4*ncols+4*c+0]+7*rgba[r*4*ncols+4*c+1]+1*rgba[r*4*ncols+4*c+2])/10;
+      return gray;
+    }
+    const processfn = function(videoSrc, dt) {
+      const hRatio = (selfieCanvas.width / video.videoWidth) * video.videoHeight;
+      ctx.drawImage(videoSrc, 0, 0, selfieCanvas.width, hRatio);
+      const rgba = ctx.getImageData(0, 0, displaySize.width, displaySize.height).data;
+      // prepare input to `run_cascade`
+      const image = {
+        "pixels": rgba_to_grayscale(rgba, displaySize.height, displaySize.width),
+        "nrows": displaySize.height,
+        "ncols": displaySize.width,
+        "ldim": displaySize.width
       }
-    }, 500)
+      const params = {
+        "shiftfactor": 0.1, // move the detection window by 10% of its size
+        "minsize": 50,     // minimum size of a face
+        "maxsize": 1000,    // maximum size of a face
+        "scalefactor": 1.1  // for multiscale processing: resize the detection window by 10% when moving to the higher scale
+      }
+      // run the cascade over the frame and cluster the obtained detections
+      // dets is an array that contains (r, c, s, q) quadruplets
+      // (representing row, column, scale and detection score)
+      let dets = pico.run_cascade(image, facefinder_classify_region, params);
+      dets = update_memory(dets);
+      dets = pico.cluster_detections(dets, 0.2); // set IoU threshold to 0.2
+      // draw detections
+      let detected = false;
+      for(let i=0; i<dets.length; ++i) {
+        // check the detection score
+        // if it's above the threshold, draw it
+        // (the constant 50.0 is empirical: other cascades might require a different one)
+        if(dets[i][3]>50.0) {
+          detected = true;
+        }
+      }
+      if (detected) {
+        setAllow(true);
+      } else {
+        setAllow(false);
+        setAlert('面向镜头\n确保脸庞清晰可见');
+      }
+    }
+    mycamvas = new camvas(ctx, processfn);
+    mycamvas.update();
   }
   
   const initCameraUI = () => {
@@ -121,7 +148,7 @@ const SelfiePage = () => {
   }
 
   const applyBrightness = (data, brightness) => {
-    for (var i = 0; i < data.length; i+= 4) {
+    for (let i = 0; i < data.length; i+= 4) {
       data[i] += 255 * (brightness / 100);
       data[i+1] += 255 * (brightness / 100);
       data[i+2] += 255 * (brightness / 100);
@@ -171,13 +198,13 @@ const SelfiePage = () => {
     }
   }
 
+  const selfieTargetStyle = { opacity: isAllow ? '90%' : '10%' };
   const submitBtnStyle = { opacity: isAllow ? '100%' : '50%' };
   
-  // if (isLoading) return <LoadingPage />;
   return (
     <section>
-      <video playsInline autoPlay id="video" ref={videoRef}></video>
-      {videoRef.current && <Video video={videoRef.current} />}
+      <video playsInline autoPlay id="video"></video>
+      <canvas id="selfie-canvas"></canvas>
       <section id="screen-selfie">
         <div className="topbar">
           <img className="brand-logo" src={BrandLogo} />
@@ -191,7 +218,7 @@ const SelfiePage = () => {
         {/* <video playsInline autoPlay id="video"></video> */}
         <div id="main-canvas">
           <div id="circle-frame"></div>
-          <img id="selfie-target" src={SelfieTarget} />
+          <img id="selfie-target" style={selfieTargetStyle} src={SelfieTarget} />
           <p>对准脸庞拍照</p>
         </div>
         <div className="lowbar">

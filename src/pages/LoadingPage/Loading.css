@@ -1,4 +1,4 @@
-@keyframes rotation {
+@keyframes  loading-rotation {
   from {
     transform: rotate(0deg);
   }
@@ -8,8 +8,8 @@
 }
 
 section#loading-screen #loading-logo {
-  -webkit-animation:rotation 1.5s linear infinite;
-  animation:rotation 1.5s linear infinite;
+  -webkit-animation: loading-rotation 1.5s linear infinite;
+  animation: loading-rotation 1.5s linear infinite;
 }
 
 section#loading-screen {

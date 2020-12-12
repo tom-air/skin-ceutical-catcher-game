@@ -75,11 +75,12 @@
   /* height: 131.5vw; */
 }
 
-#screen-selfie canvas {
+#selfie-canvas {
   position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 12;
+  top: 50%;
+  left: 50%;
+  z-index: -2;
+  transform: translate(-50%, -50%) scaleX(-1);
 }
 
 #main-canvas p {
@@ -164,6 +165,7 @@
   z-index: 1;
   top: 50%;
   transform: translateY(-50%);
+  touch-action: none;
 }
 
 .lowbar #selfie-button:focus {
