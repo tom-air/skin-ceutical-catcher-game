@@ -8,9 +8,9 @@ import { DeviceOrientationControls } from 'three/examples/jsm/controls/DeviceOri
 import { trackEvent, config } from '../../UtilHelpers';
 import { createGoldPicElements } from './loaderUtils';
 import VideoCanvas from '../SelfiePage/Video';
+import '../SelfiePage/selfie.css';
+import '../PreviewPage/preview.css';
 import './game.css';
-// import '../PreviewPage/preview.css';
-// import '../SelfiePage/selfie.css';
 
 import BrandLogo from '../../assets/Logo_white.png';
 import CatchCircle from '../../assets/ar_teach_catch_circle.png';
@@ -19,6 +19,7 @@ import CatchCircleBg from '../../assets/ar_catch_circle_bg.png';
 import SelfieResultWinkles from '../../assets/selfie_result_wrinkle.png';
 import ArBenifitArrow from '../../assets/ar_benifit.png';
 import PlayInfoArea from '../../assets/player_info_area.png';
+import PlayInfoAreaNoCamera from '../../assets/player_info_area_no_camera.png';
 import TargetArrow from '../../assets/target_arrow.svg';
 import ArMeasureElement from '../../assets/ar_measure_element.png';
 import goldEle1 from '../../assets/serum1.png';
@@ -51,6 +52,8 @@ class GamePage extends React.Component {
   targetEleId = '';
   intersects = [];
   showBenifitArrow = false;
+  startCount = window.isCameraAccessAllowed ? 25 : 0;
+
   // videoRef = React.createRef();
 
   state = {
@@ -64,7 +67,7 @@ class GamePage extends React.Component {
     } else if (window.isAccessOrientationGranted) {
       if (window.stream) {
         window.stream.getTracks().forEach(function (track) {
-          console.log(track);
+          // console.log(track);
           track.stop();
         });
       }
@@ -93,6 +96,9 @@ class GamePage extends React.Component {
     endGameAni = document.getElementById('end-game-gold-element');
     progressCount = $('#progress-indicator-number');
 
+    if (!window.isCameraAccessAllowed) {
+      progresIndicator.style.width = 0;
+    }
     // video.play();
     if (!this.state.videoRef) {
       this.setState({ videoRef: video });
@@ -304,12 +310,13 @@ class GamePage extends React.Component {
       this.removeElement();
       this.renderBenefitArrow();
       this.numOfElementCaught += 1;
-      let progressPercent = Math.floor((100 - 25) / 7 * this.numOfElementCaught);
-      if (progressPercent > 75) {
-        progressPercent = 75;
+      let progressPercent = window.isCameraAccessAllowed
+        ? Math.floor((100 - 25) / 7 * this.numOfElementCaught)
+        : Math.floor((100 / 7) * this.numOfElementCaught );
+      if (window.isCameraAccessAllowed) {
+        progressPercent = progressPercent + 25;
       }
-      const newProgress = progressPercent + 25;
-      this.updateProgess(newProgress);
+      this.updateProgess(progressPercent);
       this.elementOnCatch = scene.getObjectByName(this.targetEleId);
       if (this.numOfElementCaught === 1) {
         this.startGame();
@@ -349,7 +356,7 @@ class GamePage extends React.Component {
 
   resetCSSUpdates = () => {
     // arBenifitArrow.classList.remove('anime');
-    pulseCicle.classList.remove('pulse');
+    if (pulseCicle) pulseCicle.classList.remove('pulse');
     progresIndicator.style.boxShadow = '0px 0px 4px #391000D8';
     this.showBenifitArrow = false;
   }
@@ -365,12 +372,16 @@ class GamePage extends React.Component {
       // arrow.style.animation = 'none';
       // arrow.getClientRects();
       // arrow.style.animation = null;
-      pulseCicle.style.animation = 'none';
-      pulseCicle.getClientRects();
-      pulseCicle.style.animation = null;
+      if (pulseCicle) {
+        pulseCicle.style.animation = 'none';
+        pulseCicle.getClientRects();
+        pulseCicle.style.animation = null;
+      }
     } else {
       // arBenifitArrow.classList.add('anime');
-      pulseCicle.classList.add('pulse');
+      if (pulseCicle) {
+        pulseCicle.classList.add('pulse');
+      }
     }
     arBenefitLetter.textContent = benefitLabel;
     arrowAni = setTimeout(this.resetCSSUpdates, 1500);
@@ -379,7 +390,8 @@ class GamePage extends React.Component {
   updateProgess = (newProgress) => {
     const percent = `${newProgress}%`;
     // progressNumber.textContent = newProgress;
-    progressCount.prop('Counter', $(progressCount).text()).delay(800).animate({
+    const delay = window.isCameraAccessAllowed ? 800 : 500;
+    progressCount.prop('Counter', $(progressCount).text()).delay(delay).animate({
       Counter: newProgress,
     }, {
       duration: 1000,
@@ -388,36 +400,93 @@ class GamePage extends React.Component {
         $(progressCount).text(Math.ceil(this.Counter))
       }
     })
-    const filters = selfiePreview.css('filter').split(" ");
-    const [saturate, brightness] = filters;
-    const curSaturate = Number(saturate.match(/[\d\.?]+/g)[0]);
-    const curBrightness = Number(brightness.match(/[\d\.?]+/g)[0]);
-    $({
-      saturate: curSaturate,
-      brightness: curBrightness,
-    }).animate({
-      saturate: curSaturate + 0.05,
-      brightness: curBrightness + 0.05,
-    }, {
-      duration: 500,
-      easing: 'swing',
-      step: function() {
-          selfiePreview.css({
-              "-webkit-filter": 'saturate(' + this.saturate + ') brightness(' + this.brightness + ')',
-              "filter": 'saturate(' + this.saturate + ') brightness(' + this.brightness + ')'
-          });
-      }
-    });
-    selfieWinkles.style.opacity = (1 - (1/7) * this.numOfElementCaught);
-    pulseCicle.style.display = 'block';
+    if (window.isCameraAccessAllowed) {
+      const filters = selfiePreview.css('filter').split(" ");
+      const [saturate, brightness] = filters;
+      const curSaturate = Number(saturate.match(/[\d\.?]+/g)[0]);
+      const curBrightness = Number(brightness.match(/[\d\.?]+/g)[0]);
+      $({
+        saturate: curSaturate,
+        brightness: curBrightness,
+      }).animate({
+        saturate: curSaturate + 0.05,
+        brightness: curBrightness + 0.05,
+      }, {
+        duration: 500,
+        easing: 'swing',
+        step: function() {
+            selfiePreview.css({
+                "-webkit-filter": 'saturate(' + this.saturate + ') brightness(' + this.brightness + ')',
+                "filter": 'saturate(' + this.saturate + ') brightness(' + this.brightness + ')'
+            });
+        }
+      });
+      selfieWinkles.style.opacity = (1 - (1/7) * this.numOfElementCaught);
+      pulseCicle.style.display = 'block';
+    }
     if (newProgress === 100) {
-      pulseCicle.classList.remove('pulse');
-      pulseCicle.classList.add('pulse2');
+      if (window.isCameraAccessAllowed) {
+        pulseCicle.classList.remove('pulse');
+        pulseCicle.classList.add('pulse2');
+      }
       progresIndicator.style.transitionDelay = '0.8s';
     }
     progresIndicator.style.width = percent;
     progresIndicator.style.boxShadow = '0px 0px 12px 6px #F7CC92';
   }
+
+  renderUserInfo = () => {
+    if (window.isCameraAccessAllowed) {
+      return (
+        <div className="user-info">
+          <div id="selfie-filter">
+            <div className="selfie-bg">
+              <img id="selfie-winkles" src={SelfieResultWinkles} />
+              <img id="selfie-preview" src={window.selfieURI} />
+            </div>
+            <div id="pulse-circle">
+              {/* <div className="circle pulse"></div> */}
+              <div id="circle2"></div>
+            </div>
+          </div>
+          <div className="info-container">
+            <div className="text-info">
+              <p>你的抗老力:</p>
+              <h3 id="progress-indicator-number">25</h3>
+              <h4>%</h4>
+            </div>
+            <div className="meter-bar">
+              <div className="meter-container">
+                <div className="meter">
+                  <span id="progress-indicator"></span>
+                </div>
+              </div>
+            </div>
+            <img id="play-info-bg" src={PlayInfoArea} />
+          </div>
+        </div>
+      )
+    }
+    return (
+      <div className="user-info no-camera">
+        <div className="info-container">
+          <div className="text-info">
+            <p>抗老力:</p>
+            <h3 id="progress-indicator-number">0</h3>
+            <h4>%</h4>
+          </div>
+          <div className="meter-bar">
+            <div className="meter-container">
+              <div className="meter">
+                <span id="progress-indicator"></span>
+              </div>
+            </div>
+          </div>
+          <img id="play-info-bg" src={PlayInfoAreaNoCamera} />
+        </div>
+      </div>
+    );
+  }  
 
   render() {
     const { counter, videoRef } = this.state;
@@ -445,33 +514,7 @@ class GamePage extends React.Component {
           </CountdownCircleTimer>
           </div>
           <div className="preview-container">
-            <div className="user-info">
-              <div id="selfie-filter">
-                <div className="selfie-bg">
-                  <img id="selfie-winkles" src={SelfieResultWinkles} />
-                  <img id="selfie-preview" src={window.selfieURI} />
-                </div>
-                <div id="pulse-circle">
-                  {/* <div className="circle pulse"></div> */}
-                  <div id="circle2"></div>
-                </div>
-              </div>
-              <div className="info-container">
-                <div className="text-info">
-                  <p>你的抗老力:</p>
-                  <h3 id="progress-indicator-number">25</h3>
-                  <h4>%</h4>
-                </div>
-                <div className="meter-bar">
-                  <div className="meter-container">
-                    <div className="meter">
-                      <span id="progress-indicator"></span>
-                    </div>
-                  </div>
-                </div>
-                <img id="play-info-bg" src={PlayInfoArea} />
-              </div>
-            </div>
+            {this.renderUserInfo()}
           </div>
         </div>
         <div className="catch-container">

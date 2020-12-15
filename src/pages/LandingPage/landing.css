@@ -258,6 +258,12 @@ section#page-issue {
   background-image: url('../../assets/Selfie_result_bg.png');
 }
 
+.switch-on-orientation .text-container {
+  font-size: 3.2vh;
+  color: white;
+  padding: 4vh;
+}
+
 .switch-on-orientation #orientation-guide {
   width: 100%;
   transform: translateY(-25vh);

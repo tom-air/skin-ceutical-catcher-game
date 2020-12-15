@@ -51,6 +51,14 @@
   touch-action: pan-y !important;
 }
 
+#screen-share .no-camera.prize-card {
+  height: 67.5vh;
+}
+
+#screen-share .no-camera #mockImg {
+  z-index: 1;
+}
+
 #screen-share #card-outline {
   position: absolute;
   top: 1.5vh;

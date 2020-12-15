@@ -17,7 +17,7 @@ import prizeCardQRcode from '../../assets/prize_card_qr_code.png';
 import skinCBottle from '../../assets/skin_c_bottle.png';
 import goldElementBg from '../../assets/prize_gold_element_bg.png';
 import prizeCardOutline from '../../assets/prize_card_outline.png';
-import LoadingLogo from '../../assets/loading.png';
+import prizeCardNoCamera from '../../assets/prize_card_no_camera.png';
 // const BrandLogo = `${config.assetsUrl}/Logo_white.png`;
 // const faceBefore = `${config.assetsUrl}/prize_face_picture_before.png`;
 // const faceAfter = `${config.assetsUrl}/prize_face_picture_after.png`;
@@ -31,7 +31,7 @@ import LoadingLogo from '../../assets/loading.png';
 // const prizeCardOutline = `${config.assetsUrl}/prize_card_outline.png`;
 // const LoadingLogo = `${config.assetsUrl}/loading.png`;
 // const PrizeCardCom = React.lazy(() => import('./PrizeCardCom'));
-// import '../PreviewPage/preview.css';
+import '../PreviewPage/preview.css';
 
 // const LoadingComp = () => ((
 //   <section id="share-loading">
@@ -63,13 +63,15 @@ const SharePage = () => {
       screen = document.getElementById('screen-share');
       disclaimer.style.position = 'relative';
       screen.appendChild(disclaimer);
+      setTimeout(() => {
+        setPageLoaded(true)
+      }, 2000);
       return unmount;
     }
   }, [])
 
   useEffect(() => {
     if (imgLoad.length === totalImg) {
-      // console.log('>all image load', imgLoad, totalImg)
       PrizeCardCom(() => setPageLoaded(true));
     }
   }, [imgLoad])
@@ -86,7 +88,6 @@ const SharePage = () => {
     if (imgLoad.indexOf(img) < 0) {
       setLoaded([...imgLoad, img]);
     }
-    // console.log('image load>', num)
   }
 
   const onClick = () => {
@@ -94,17 +95,9 @@ const SharePage = () => {
     window.location.href = '/aoxmobilegame2020';
   }
 
-  return (
-    <>
-      {!pageLoaded && <LoadingPage />}
-      <section id="screen-share">
-        <div className="top-section">
-          <img className="brand-logo" src={BrandLogo} />
-          <h2>恭喜你</h2>
-          <div className="highlight-box">
-            <p>提升满满抗老力 获享抗氧修护礼</p>
-          </div>
-        </div>
+  const renderPrizeCard = () => {
+    if (window.isCameraAccessAllowed) {
+      return (
         <div
           className="prize-card"
           id='prize-card'
@@ -134,6 +127,30 @@ const SharePage = () => {
           </div>
           <img src={prizeCardOutline} id="card-outline" />
         </div>
+      )
+    } return (
+      <div
+        className="prize-card no-camera"
+        id='prize-card'
+      >
+        <img src={prizeCardNoCamera} id="mockImg" />
+        <img src={prizeCardOutline} id="card-outline" />
+      </div>
+    )
+  }
+
+  return (
+    <>
+      {!pageLoaded && <LoadingPage />}
+      <section id="screen-share">
+        <div className="top-section">
+          <img className="brand-logo" src={BrandLogo} />
+          <h2>恭喜你</h2>
+          <div className="highlight-box">
+            <p>提升满满抗老力 获享抗氧修护礼</p>
+          </div>
+        </div>
+        {renderPrizeCard()}
         {/* <PrizeCardCom /> */}
         <div className="share-section">
           <p>长按储存图片，并分享至<br/>

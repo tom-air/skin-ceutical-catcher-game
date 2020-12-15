@@ -80,6 +80,16 @@ const PageModal = (props) => {
         </div>
       );
       break;
+    case 'grant-orientation':
+      pageContent = (
+        <div className="switch-on-orientation">
+          <div className="text-container">
+            <p>无法使用相机</p>
+            <p>关闭此游戏页面後，請重新访问游戏页面并允许网页移动和方向访问设置</p>
+          </div>
+        </div>
+      );
+      break;
     default:
       pageContent = (
         <div>detecting</div>

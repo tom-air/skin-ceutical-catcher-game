@@ -48,11 +48,15 @@ const LandingPage = () => {
         })
         .catch((error) => {
           console.log('navigator.MediaDevices.getUserMedia error: ', error.message, error.name);
+          window.isCameraAccessAllowed = false;
+          window.startApp = true;
+          history.push('/aoxmobilegame2020/game');
         });
     } else {
-      alert(
-        'Mobile camera is not supported by browser, or there is no camera detected/connected',
-      );
+      console.log('Mobile camera is not supported by browser, or there is no camera detected/connected');
+      window.isCameraAccessAllowed = false;
+      window.startApp = true;
+      history.push('/aoxmobilegame2020/game');
     }
   }
 
@@ -90,9 +94,15 @@ const LandingPage = () => {
         window.isAccessOrientationGranted = true;
         getCameraAccess();
         return true;
+      } else {
+        setIssue('grant-orientation');
+        return true;
       }
     })
-    .catch(console.error);
+    .catch((err) => {
+      console.log('orientation error: ', err);
+      setIssue('grant-orientation');
+    });
   }
 
   const getDeviceOrientationAccess = () => {
@@ -111,6 +121,9 @@ const LandingPage = () => {
 
   useEffect(() => {
     window.addEventListener('deviceorientation', updateDeviceOri);
+    setTimeout(() => {
+      setFullLoad(true);
+    }, 2000)
   }, [])
 
   useEffect(() => {
