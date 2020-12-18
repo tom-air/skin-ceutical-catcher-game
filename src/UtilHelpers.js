@@ -7,7 +7,9 @@ const config = {
 
 const trackEvent = (category, action, opt_label, opt_value) => {
   const hmt = window._hmt;
+  console.log('check', opt_label)
   if (hmt) {
+    console.log('did check', opt_label)
     hmt.push(['_trackEvent', category, action, opt_label, opt_value]);
   }
 }
