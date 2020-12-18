@@ -50,12 +50,14 @@ const LandingPage = () => {
           console.log('navigator.MediaDevices.getUserMedia error: ', error.message, error.name);
           window.isCameraAccessAllowed = false;
           window.startApp = true;
+          trackEvent('button', 'click', 'start-game');
           history.push('/aoxmobilegame2020/game');
         });
     } else {
       console.log('Mobile camera is not supported by browser, or there is no camera detected/connected');
       window.isCameraAccessAllowed = false;
       window.startApp = true;
+      trackEvent('button', 'click', 'start-game');
       history.push('/aoxmobilegame2020/game');
     }
   }
