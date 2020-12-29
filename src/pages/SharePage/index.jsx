@@ -18,6 +18,7 @@ import skinCBottle from '../../assets/skin_c_bottle.png';
 import goldElementBg from '../../assets/prize_gold_element_bg.png';
 import prizeCardOutline from '../../assets/prize_card_outline.png';
 import prizeCardNoCamera from '../../assets/prize_card_no_camera.png';
+import shopBtn from '../../assets/shop_btn.png';
 // const BrandLogo = `${config.assetsUrl}/Logo_white.png`;
 // const faceBefore = `${config.assetsUrl}/prize_face_picture_before.png`;
 // const faceAfter = `${config.assetsUrl}/prize_face_picture_after.png`;
@@ -194,6 +195,9 @@ const SharePage = () => {
             </div>
           </div>
         </div>
+        <img id="shop-btn" src={shopBtn} onClick={() => window.open("https://m.cdfgsanya.com/wap/index.html#/tabs/index/skinceuticalsIndex?random=91904560019745118460",'_blank')}/>
+        {/* <a id="shop-btn" href="https://m.cdfgsanya.com/wap/index.html#/tabs/index/skinceuticalsIndex?random=91904560019745118460" target="_blank">
+        </a> */}
       </section>
     </>
   );
