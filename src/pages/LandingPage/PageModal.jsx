@@ -7,6 +7,10 @@ import ErrorMotionSensor from '../../assets/error_motion_sensor.png';
 import Arrow from '../../assets/selfie_result_cta_arrow.png';
 import Safari from '../../assets/safari.svg';
 import Android from '../../assets/android.svg';
+import Camera from '../../assets/camera.svg';
+import Box from '../../assets/box.svg';
+import Box2 from '../../assets/box2.svg';
+import Box3 from '../../assets/box3.svg';
 import BtnAni from '../../assets/btn_animate.gif';
 
 // const StartBtnAni = `${config.assetsUrl}/start_btn_ani.png`;
@@ -84,8 +88,42 @@ const PageModal = (props) => {
       pageContent = (
         <div className="switch-on-orientation">
           <div className="text-container">
-            <p>无法使用相机</p>
-            <p>关闭此游戏页面後，請重新访问游戏页面并允许网页移动和方向访问设置</p>
+            <img id="camera-issue" src={Camera} />
+            <p id="issue-text">点选「允许」以允许访问相机</p>
+            <div className="list-item">
+              <div className="item-box">
+                <img src={Box} />
+              </div>
+              <h5>重启浏览器</h5>
+            </div>
+            <div className="list-item">
+              <div className="item-box">
+                <img src={Box2} />
+              </div>
+              <h5>在浏览器中粘贴链接</h5>
+            </div>
+            <div className="list-item">
+              <div className="item-box">
+                <img src={Box3} />
+              </div>
+              <h5>允许移动和方向访问</h5>
+            </div>
+            <div id="site-link">https://skinceuticalstrasia.cn/aoxmobilegame2020</div>
+            <CopyToShare target="site-link" msgToCopy="https://skinceuticalstrasia.cn/aoxmobilegame2020/">
+              <div className="start-game-btn">
+                <Spritesheet
+                  image={StartBtnAni}
+                  widthFrame={402}
+                  heightFrame={122}
+                  steps={60}
+                  fps={45}
+                  autoplay
+                  loop
+                  isResponsive
+                />
+                <p>复制链接</p>
+              </div>
+            </CopyToShare>
           </div>
         </div>
       );
