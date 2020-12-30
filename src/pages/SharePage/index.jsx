@@ -19,6 +19,7 @@ import goldElementBg from '../../assets/prize_gold_element_bg.png';
 import prizeCardOutline from '../../assets/prize_card_outline.png';
 import prizeCardNoCamera from '../../assets/prize_card_no_camera.png';
 import shopBtn from '../../assets/shop_btn.png';
+import resultTag from '../../assets/result_tag.png';
 // const BrandLogo = `${config.assetsUrl}/Logo_white.png`;
 // const faceBefore = `${config.assetsUrl}/prize_face_picture_before.png`;
 // const faceAfter = `${config.assetsUrl}/prize_face_picture_after.png`;
@@ -119,10 +120,12 @@ const SharePage = () => {
             </div>
             <div id="img-group">
               <img id="skin-c-bottle" onLoad={() => onImageLoad('skin-c-bottle')} src={skinCBottle} />
-              <div id="hash-text">
+              <img id="hash-text" src={resultTag} />
+              {/* <div id="hash-text">
                 <p>#修丽可#</p>
                 <p>#三亚国际免税城#</p>
-              </div>
+              </div> */}
+              {/* <div id="qr-code-text">扫码前往<br />三亚免税预购</div> */}
               <img id="prize-card-qr-code" onLoad={() => onImageLoad('qr-code')} src={prizeCardQRcode} />
             </div>
           </div>
@@ -195,7 +198,7 @@ const SharePage = () => {
             </div>
           </div>
         </div>
-        <img id="shop-btn" src={shopBtn} onClick={() => window.open("https://m.cdfgsanya.com/wap/index.html#/tabs/index/skinceuticalsIndex?random=91904560019745118460",'_blank')}/>
+        <img id="shop-btn" src={shopBtn} onClick={() => window.open("https://ad.doubleclick.net/ddm/clk/485169250;292072506;i",'_blank')}/>
         {/* <a id="shop-btn" href="https://m.cdfgsanya.com/wap/index.html#/tabs/index/skinceuticalsIndex?random=91904560019745118460" target="_blank">
         </a> */}
       </section>

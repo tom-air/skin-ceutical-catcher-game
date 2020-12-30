@@ -118,10 +118,11 @@
   position: absolute;
   right: 1.2vh;
   bottom: 3vh;
-  width: 9vh;
-  height: 9vh;
-  max-width: 9vh;
-  max-height: 9vh;
+  width: 9.4vh;
+  height: 14.1vh;
+  max-width: 9.4vh;
+  max-height: 14.1vh;
+  z-index: 2;
 }
 
 #screen-share #selfie-filter {
@@ -160,10 +161,11 @@
 
 #screen-share #hash-text {
   position: absolute;
-  bottom: 9%;
+  bottom: 7%;
   /* bottom: 2.8vh; */
-  left: 49%;
+  left: 48.5%;
   transform: translate(-50%);
+  width: 16.45vh;
 }
 
 #screen-share #hash-text p {
@@ -272,16 +274,16 @@
   width: 13.1vh;
   height: 5.2vh;
   margin: 2.5vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #screen-share .active-btn p {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   margin: 0;
   font-size: 2.4vh;
-  line-height: 3.5vh;
+  line-height: 4vh;
+  margin-top: 0.35vh;
 }
 
 #fix-loading {
@@ -353,9 +355,18 @@
   pointer-events: all !important;
   /* touch-action: auto !important; */
   position: fixed;
-  bottom: 0px;
-  right: 0px;
+  bottom: -2.5vh;
+  right: -1.6vh;
   z-index: 5;
-  width: 12.8vh;
-  height: 11.3vh;
+  width: 33.8vw;
+  height: 29.8vw;
+}
+
+#screen-share #qr-code-text {
+  position: absolute;
+  white-space: pre;
+  right: 1vh;
+  bottom: 12.5vh;
+  font-size: 1.5vh;
+  line-height: 2vh;
 }
